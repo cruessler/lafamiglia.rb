@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  x: 0
+  y: 0
+  name: New villa
+  player: one
+
+two:
+  x: 0
+  y: 1
+  name: New villa
+  player: two

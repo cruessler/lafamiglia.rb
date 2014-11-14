@@ -1,0 +1,12 @@
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name),
+                    html: { class: 'form-account' }) do |f| %>
+  <h2>Register</h2>
+
+  <%= f.input :email, required: true, autofocus: true %>
+  <%= f.input :password, required: true %>
+  <%= f.input :password_confirmation, required: true %>
+
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+
+  <%= render "devise/shared/links" %>
+<% end %>

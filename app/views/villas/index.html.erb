@@ -1,0 +1,5 @@
+Here you can view your villas. Currently their number is <%= @villas.count %>.
+
+<% @villas.each do |v| %>
+  <p><%= link_to coordinates(v), v %></p>
+<% end %>

@@ -1,0 +1,5 @@
+en:
+  villa:
+    default_name: "New Villa"
+  errors:
+    no_villa_left: "There is no space on the map to create a new villa for you."
