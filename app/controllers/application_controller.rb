@@ -1,9 +1,12 @@
+require_dependency 'lafamiglia'
+
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
   before_filter :authenticate_player!
+  before_filter :clock, if: -> { player_signed_in? }
   before_filter :check_for_villa!, if: -> { player_signed_in? }
 
   helper_method :current_villa
@@ -22,6 +25,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def clock
+    LaFamiglia.clock
+  end
+
   def current_villa
     @current_villa ||= begin
       villa = current_player.villas.where(id: session[:current_villa]).first
@@ -36,6 +43,7 @@ class ApplicationController < ActionController::Base
 
       unless villa.nil?
         session[:current_villa] = villa.id
+        villa.process_until! LaFamiglia.now
       end
 
       villa

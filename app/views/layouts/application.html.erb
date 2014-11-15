@@ -34,6 +34,7 @@
                 <li class="active"><a href="#">Home</a></li>
                 <li><%= link_to 'Villas', villas_path %></li>
                 <li><%= link_to coordinates(current_villa), current_villa %></li>
+                <li><%= resources current_villa %></li>
               </ul>
             <% end %>
             <ul class="nav navbar-nav navbar-right">

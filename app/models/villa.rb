@@ -3,6 +3,8 @@ require_dependency 'lafamiglia'
 class Villa < ActiveRecord::Base
   belongs_to :player
 
+  before_create :set_default_values
+
   def self.find_unused_coordinates(x_range = 0..LaFamiglia.max_x, y_range = 0..LaFamiglia.max_y)
     x_range_length = x_range.size
     y_range_length = y_range.size
@@ -32,5 +34,35 @@ class Villa < ActiveRecord::Base
     return nil unless coordinates
 
     Villa.create(x: coordinates[0], y: coordinates[1], name: I18n.t('villa.default_name'), player: player)
+  end
+
+  def set_default_values
+    self.last_processed = LaFamiglia.now
+    self.storage_capacity = 100
+    self.pizzas = self.concrete = self.suits = 0
+  end
+
+  def process_until!(timestamp)
+    time_diff = timestamp - self.last_processed
+
+    if time_diff != 0
+      add_resources!(resource_gains time_diff)
+    end
+
+    self.last_processed = timestamp
+  end
+
+  def add_resources!(resources)
+    self.pizzas = self.pizzas + resources[:pizzas]
+    self.concrete = self.concrete + resources[:concrete]
+    self.suits = self.suits + resources[:suits]
+  end
+
+  def resource_gains time
+    {
+      pizzas: time * 0.01,
+      concrete: time * 0.01,
+      suits: time * 0.01
+    }
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027211857) do
+ActiveRecord::Schema.define(version: 20141114234250) do
 
   create_table "players", force: true do |t|
     t.string   "name"
@@ -49,6 +49,11 @@ ActiveRecord::Schema.define(version: 20141027211857) do
     t.integer  "player_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "pizzas"
+    t.float    "concrete"
+    t.float    "suits"
+    t.integer  "storage_capacity"
+    t.integer  "last_processed"
   end
 
   add_index "villas", ["player_id"], name: "index_villas_on_player_id"
