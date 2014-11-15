@@ -53,9 +53,9 @@ class Villa < ActiveRecord::Base
   end
 
   def add_resources!(resources)
-    self.pizzas = self.pizzas + resources[:pizzas]
-    self.concrete = self.concrete + resources[:concrete]
-    self.suits = self.suits + resources[:suits]
+    self.pizzas = [ self.pizzas + resources[:pizzas], self.storage_capacity ].min
+    self.concrete = [ self.concrete + resources[:concrete], self.storage_capacity ].min
+    self.suits = [ self.suits + resources[:suits], self.storage_capacity ].min
   end
 
   def resource_gains time
