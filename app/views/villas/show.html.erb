@@ -1,1 +1,60 @@
-You’re viewing the villa located at <%= coordinates current_villa %>. That’s all you can do at the moment.
+<h2>
+  <%= current_villa.name %> <%= coordinates current_villa %>
+</h2>
+
+<div>
+  You’re viewing the villa located at <%= coordinates current_villa %>.
+</div>
+
+<h3>
+  Buildings
+</h3>
+
+<table class="col-md-8 table table-striped">
+  <tr>
+    <th><%= t 'building' %></th>
+    <th>Level</th>
+    <th>Costs</th>
+    <th>Build time</th>
+    <th>Build</th>
+  </tr>
+  <% LaFamiglia::BUILDINGS.each do |b| %>
+    <tr>
+      <td><%= b.name %></td>
+      <td><%= current_villa.level(b) %> (<%= current_villa.virtual_level(b) %>)</td>
+      <% if current_villa.virtual_level(b) < b.maxlevel %>
+        <td><%= costs b.costs(current_villa.virtual_level(b)) %></td>
+        <td><%= b.build_time current_villa.virtual_level(b) %></td>
+      <% else %>
+        <td></td>
+        <td></td>
+      <% end %>
+      <td>
+        <%= link_to_build_start b %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<h3>
+  Building queue
+</h3>
+
+<table class="col-md-8 table table-striped">
+  <tr>
+    <th><%= t 'building' %></th>
+    <th>Build time</th>
+    <th>Completion time</th>
+    <th>Cancel</th>
+  </tr>
+  <% current_villa.building_queue_items.each do |i| %>
+    <tr>
+      <td><%= i.building_id %></td>
+      <td><%= i.build_time %>
+      <td><%= l Time.at(i.completion_time) %></td>
+      <td>
+        <%= link_to_build_cancel i %>
+      </td>
+    </tr>
+  <% end %>
+</table>

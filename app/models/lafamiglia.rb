@@ -1,3 +1,5 @@
+require_dependency 'buildings'
+
 module LaFamiglia
   def self.clock
     @@now = Time.now.to_i

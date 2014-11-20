@@ -1,7 +1,10 @@
 require_dependency 'lafamiglia'
+require_dependency 'extensions/building_queue_extension'
 
 class Villa < ActiveRecord::Base
   belongs_to :player
+
+  has_many :building_queue_items, -> { extending BuildingQueueExtension }
 
   before_create :set_default_values
 
@@ -40,9 +43,26 @@ class Villa < ActiveRecord::Base
     self.last_processed = LaFamiglia.now
     self.storage_capacity = 100
     self.pizzas = self.concrete = self.suits = 0
+
+    self.house_of_the_family = 1
   end
 
   def process_until!(timestamp)
+    finished_items = building_queue_items.finished_until timestamp
+
+    transaction do
+      finished_items.each do |i|
+        gain_resources_until! i.completion_time
+        increment(i.building.key)
+        building_queue_items.destroy i
+      end
+
+      gain_resources_until! timestamp
+      save
+    end
+  end
+
+  def gain_resources_until! timestamp
     time_diff = timestamp - self.last_processed
 
     if time_diff != 0
@@ -56,6 +76,26 @@ class Villa < ActiveRecord::Base
     self.pizzas = [ self.pizzas + resources[:pizzas], self.storage_capacity ].min
     self.concrete = [ self.concrete + resources[:concrete], self.storage_capacity ].min
     self.suits = [ self.suits + resources[:suits], self.storage_capacity ].min
+  end
+
+  def subtract_resources!(resources)
+    self.pizzas = self.pizzas - resources[:pizzas]
+    self.concrete = self.concrete - resources[:concrete]
+    self.suits = self.suits - resources[:suits]
+  end
+
+  def has_resources?(resources)
+    self.pizzas >= resources[:pizzas] &&
+        self.concrete >= resources[:concrete] &&
+        self.suits >= resources[:suits]
+  end
+
+  def level building
+    send building.key
+  end
+
+  def virtual_level building
+    send(building.key) + building_queue_items.enqueued_count(building)
   end
 
   def resource_gains time

@@ -1,5 +1,15 @@
 en:
+  build: "build"
+  upgrade: "upgrade"
+  cancel: "cancel"
+  maxlevel_reached: "maximum level reached"
   villa:
     default_name: "New Villa"
+  buildings:
+    house_of_the_family: "House of the family"
   errors:
     no_villa_left: "There is no space on the map to create a new villa for you."
+    buildings:
+      already_at_maxlevel: "This building can’t be upgraded any further."
+      not_the_last_one: "You can only cancel the last upgrade of this building."
+      not_enough_resources: "You don’t have enough resources to build this building."
