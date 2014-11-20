@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141115220302) do
+ActiveRecord::Schema.define(version: 20141120162409) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20141115220302) do
     t.integer  "storage_capacity"
     t.integer  "last_processed"
     t.integer  "house_of_the_family"
+    t.integer  "building_queue_items_count"
   end
 
   add_index "villas", ["player_id"], name: "index_villas_on_player_id"

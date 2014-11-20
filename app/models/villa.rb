@@ -41,6 +41,8 @@ class Villa < ActiveRecord::Base
 
   def set_default_values
     self.last_processed = LaFamiglia.now
+    self.building_queue_items_count = 0
+
     self.storage_capacity = 100
     self.pizzas = self.concrete = self.suits = 0
 
@@ -48,17 +50,21 @@ class Villa < ActiveRecord::Base
   end
 
   def process_until!(timestamp)
-    finished_items = building_queue_items.finished_until timestamp
+    if building_queue_items_count > 0
+      finished_items = building_queue_items.finished_until timestamp
 
-    transaction do
-      finished_items.each do |i|
-        gain_resources_until! i.completion_time
-        increment(i.building.key)
-        building_queue_items.destroy i
+      transaction do
+        finished_items.each do |i|
+          gain_resources_until! i.completion_time
+          increment(i.building.key)
+          building_queue_items.destroy i
+        end
+
+        gain_resources_until! timestamp
+        save
       end
-
+    else
       gain_resources_until! timestamp
-      save
     end
   end
 
@@ -94,8 +100,16 @@ class Villa < ActiveRecord::Base
     send building.key
   end
 
+  def enqueued_count building
+    if building_queue_items_count > 0
+      building_queue_items.enqueued_count(building)
+    else
+      0
+    end
+  end
+
   def virtual_level building
-    send(building.key) + building_queue_items.enqueued_count(building)
+    send(building.key) + enqueued_count(building)
   end
 
   def resource_gains time
