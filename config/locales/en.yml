@@ -9,7 +9,7 @@ en:
   villa:
     default_name: "New Villa"
   buildings:
-    house_of_the_family: "House of the family"
+    building_1: "House of the family"
   units:
     unit_1: "Beppo"
   errors:

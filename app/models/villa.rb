@@ -55,7 +55,7 @@ class Villa < ActiveRecord::Base
     self.supply = 100
     self.used_supply = 0
     self.storage_capacity = 100
-    self.pizzas = self.concrete = self.suits = 0
+    self.resource_1 = self.resource_2 = self.resource_3 = 0
 
     self.house_of_the_family = 1
   end
@@ -117,21 +117,21 @@ class Villa < ActiveRecord::Base
   end
 
   def add_resources!(resources)
-    self.pizzas = [ self.pizzas + resources[:pizzas], self.storage_capacity ].min
-    self.concrete = [ self.concrete + resources[:concrete], self.storage_capacity ].min
-    self.suits = [ self.suits + resources[:suits], self.storage_capacity ].min
+    self.resource_1 = [ self.resource_1 + resources[:resource_1], self.storage_capacity ].min
+    self.resource_2 = [ self.resource_2 + resources[:resource_2], self.storage_capacity ].min
+    self.resource_3 = [ self.resource_3 + resources[:resource_3], self.storage_capacity ].min
   end
 
   def subtract_resources!(resources)
-    self.pizzas = self.pizzas - resources[:pizzas]
-    self.concrete = self.concrete - resources[:concrete]
-    self.suits = self.suits - resources[:suits]
+    self.resource_1 = self.resource_1 - resources[:resource_1]
+    self.resource_2 = self.resource_2 - resources[:resource_2]
+    self.resource_3 = self.resource_3 - resources[:resource_3]
   end
 
   def has_resources?(resources)
-    self.pizzas >= resources[:pizzas] &&
-        self.concrete >= resources[:concrete] &&
-        self.suits >= resources[:suits]
+    self.resource_1 >= resources[:resource_1] &&
+        self.resource_2 >= resources[:resource_2] &&
+        self.resource_3 >= resources[:resource_3]
   end
 
   def add_units!(units)
@@ -166,9 +166,9 @@ class Villa < ActiveRecord::Base
 
   def resource_gains time
     {
-      pizzas: time * 0.01,
-      concrete: time * 0.01,
-      suits: time * 0.01
+      resource_1: time * 0.01,
+      resource_2: time * 0.01,
+      resource_3: time * 0.01
     }
   end
 end

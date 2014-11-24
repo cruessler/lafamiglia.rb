@@ -24,9 +24,9 @@ module LaFamiglia
 
     def costs number = 1
       {
-        pizzas: number * 1,
-        concrete: 0,
-        suits: number * 1
+        resource_1: number * 1,
+        resource_2: 0,
+        resource_3: number * 1
       }
     end
 

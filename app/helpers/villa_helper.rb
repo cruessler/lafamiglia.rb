@@ -9,8 +9,8 @@ module VillaHelper
   end
 
   def costs costs
-    render partial: 'common/costs', locals: { pizzas: costs[:pizzas],
-                                              concrete: costs[:concrete],
-                                              suits: costs[:suits] }
+    render partial: 'common/costs', locals: { resource_1: costs[:resource_1],
+                                              resource_2: costs[:resource_2],
+                                              resource_3: costs[:resource_3] }
   end
 end

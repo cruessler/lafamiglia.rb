@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141123223257) do
+ActiveRecord::Schema.define(version: 20141124172138) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -73,12 +73,12 @@ ActiveRecord::Schema.define(version: 20141123223257) do
     t.integer  "player_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "pizzas"
-    t.float    "concrete"
-    t.float    "suits"
+    t.float    "resource_1"
+    t.float    "resource_2"
+    t.float    "resource_3"
     t.integer  "storage_capacity"
     t.integer  "last_processed"
-    t.integer  "house_of_the_family"
+    t.integer  "building_1"
     t.integer  "building_queue_items_count"
     t.integer  "unit_queue_items_count"
     t.integer  "used_supply"

@@ -1,6 +1,6 @@
 <div class="resources">
-  P: <%= villa.pizzas.to_i %> (+ <%= resource_gains[:pizzas].to_i %>/h),
-  C: <%= villa.concrete.to_i %> (+ <%= resource_gains[:concrete].to_i %>/h),
-  S: <%= villa.suits.to_i %> (+ <%= resource_gains[:suits].to_i %>/h),
+  P: <%= villa.resource_1.to_i %> (+ <%= resource_gains[:resource_1].to_i %>/h),
+  C: <%= villa.resource_2.to_i %> (+ <%= resource_gains[:resource_2].to_i %>/h),
+  S: <%= villa.resource_3.to_i %> (+ <%= resource_gains[:resource_3].to_i %>/h),
   <%= t 'supply' %> <%= current_villa.used_supply %>/<%= current_villa.supply %>
 </div>

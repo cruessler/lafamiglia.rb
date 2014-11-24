@@ -1,5 +1,9 @@
 module LaFamiglia
   class Building
+    def key
+      "building_#{id}".to_sym
+    end
+
     def name
       @name ||= I18n.t "buildings.#{key}"
     end
@@ -10,19 +14,15 @@ module LaFamiglia
       1
     end
 
-    def key
-      :house_of_the_family
-    end
-
     def build_time level
       level * 1 + 4
     end
 
     def costs level
       {
-        pizzas: level * 1 + 1,
-        concrete: level * 1 + 1,
-        suits: level * 1 + 1
+        resource_1: level * 1 + 1,
+        resource_2: level * 1 + 1,
+        resource_3: level * 1 + 1
       }
     end
 
