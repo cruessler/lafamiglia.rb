@@ -1,5 +1,6 @@
 class BuildingQueueItemsController < ApplicationController
-  before_filter :set_building_queue_item, only: [ :destroy ]
+  before_action :set_villa
+  before_action :set_building_queue_item, only: [ :destroy ]
 
   # POST /building_queue_items
   def create
@@ -24,6 +25,14 @@ class BuildingQueueItemsController < ApplicationController
   end
 
   private
+
+  def set_villa
+    @villa = current_player.villas.find(params[:villa_id])
+
+    @current_villa = @villa
+    @current_villa.process_until! LaFamiglia.now
+    session[:current_villa] = @villa.id
+  end
 
   def set_building_queue_item
     @building_queue_item = current_villa.building_queue_items.find(params[:id])

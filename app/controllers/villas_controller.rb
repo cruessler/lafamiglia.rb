@@ -1,9 +1,9 @@
 class VillasController < ApplicationController
   power :villas
 
-  skip_before_action :check_for_villa!
+  skip_before_filter :check_for_villa!
   before_action :set_villa, only: [ :show ]
-  before_action :check_for_villa!
+  before_filter :check_for_villa!
 
   # GET /villa/1
   def show
