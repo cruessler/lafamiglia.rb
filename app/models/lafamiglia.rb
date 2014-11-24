@@ -1,4 +1,5 @@
 require_dependency 'buildings'
+require_dependency 'units'
 
 module LaFamiglia
   def self.clock

@@ -37,24 +37,80 @@
 </table>
 
 <h3>
-  Building queue
+  Units
 </h3>
 
 <table class="col-md-8 table table-striped">
   <tr>
-    <th><%= t 'building' %></th>
+    <th><%= t 'unit' %></th>
+    <th>Number</th>
+    <th>Costs</th>
     <th>Build time</th>
-    <th>Completion time</th>
-    <th>Cancel</th>
+    <th>Build</th>
   </tr>
-  <% current_villa.building_queue_items.each do |i| %>
+  <% LaFamiglia::UNITS.each do |u| %>
     <tr>
-      <td><%= i.building_id %></td>
-      <td><%= i.build_time %>
-      <td><%= l Time.at(i.completion_time) %></td>
+      <td><%= u.name %></td>
+      <td><%= current_villa.unit_number(u) %></td>
+      <td><%= costs u.costs %></td>
+      <td><%= u.build_time %></td>
       <td>
-        <%= link_to_build_cancel i %>
+        <% [ 1, 5, 20, 100 ].each do |n| %>
+          <%= link_to_recruit_start u, n %>
+        <% end %>
       </td>
     </tr>
   <% end %>
 </table>
+
+<% if current_villa.building_queue_items_count > 0 %>
+  <h3>
+    Building queue
+  </h3>
+
+  <table class="col-md-8 table table-striped">
+    <tr>
+      <th><%= t 'building' %></th>
+      <th>Build time</th>
+      <th>Completion time</th>
+      <th>Cancel</th>
+    </tr>
+    <% current_villa.building_queue_items.each do |i| %>
+      <tr>
+        <td><%= i.building_id %></td>
+        <td><%= i.build_time %>
+        <td><%= l Time.at(i.completion_time) %></td>
+        <td>
+          <%= link_to_build_cancel i %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% if current_villa.unit_queue_items_count > 0 %>
+  <h3>
+    Unit queue
+  </h3>
+
+  <table class="col-md-8 table table-striped">
+    <tr>
+      <th><%= t 'unit' %></th>
+      <th>Number</th>
+      <th>Build time</th>
+      <th>Completion time</th>
+      <th>Cancel</th>
+    </tr>
+    <% current_villa.unit_queue_items.each do |i| %>
+      <tr>
+        <td><%= i.unit_id %></td>
+        <td><%= i.number %></td>
+        <td><%= i.build_time %>
+        <td><%= l Time.at(i.completion_time) %></td>
+        <td>
+          <%= link_to_recruit_cancel i %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

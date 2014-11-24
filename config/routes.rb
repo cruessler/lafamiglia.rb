@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :villas, only: [ :index, :show ] do
     resources :building_queue_items, only: [ :create, :destroy ]
+    resources :unit_queue_items, only: [ :create, :destroy ]
   end
 
   root 'villas#index'

@@ -1,12 +1,20 @@
 require_dependency 'lafamiglia'
 require_dependency 'extensions/building_queue_extension'
+require_dependency 'extensions/unit_queue_extension'
 
 class Villa < ActiveRecord::Base
   belongs_to :player
 
-  has_many :building_queue_items, -> { extending BuildingQueueExtension }
+  has_many :building_queue_items, -> { extending BuildingQueueExtension }, dependent: :delete_all,
+           after_add: ->(v, i) { v.building_queue_items_count = v.building_queue_items_count + 1 },
+           after_remove: ->(v, i) { v.building_queue_items_count = v.building_queue_items_count - 1 }
+  has_many :unit_queue_items, -> { extending UnitQueueExtension }, dependent: :delete_all,
+           after_add: ->(v, i) { v.unit_queue_items_count = v.unit_queue_items_count + 1 },
+           after_remove: ->(v, i) { v.unit_queue_items_count = v.unit_queue_items_count - 1 }
 
   before_create :set_default_values
+
+  after_update :save_unit_queue
 
   def self.find_unused_coordinates(x_range = 0..LaFamiglia.max_x, y_range = 0..LaFamiglia.max_y)
     x_range_length = x_range.size
@@ -42,37 +50,67 @@ class Villa < ActiveRecord::Base
   def set_default_values
     self.last_processed = LaFamiglia.now
     self.building_queue_items_count = 0
+    self.unit_queue_items_count = 0
 
+    self.supply = 100
+    self.used_supply = 0
     self.storage_capacity = 100
     self.pizzas = self.concrete = self.suits = 0
 
     self.house_of_the_family = 1
   end
 
-  def process_until!(timestamp)
-    if building_queue_items_count > 0
-      finished_items = building_queue_items.finished_until timestamp
-
-      transaction do
-        finished_items.each do |i|
-          gain_resources_until! i.completion_time
-          increment(i.building.key)
-          building_queue_items.destroy i
-        end
-
-        gain_resources_until! timestamp
-        save
+  def save_unit_queue
+    if unit_queue_items_count > 0
+      if (first = unit_queue_items.first).changed?
+        first.save(validate: false)
       end
-    else
-      gain_resources_until! timestamp
     end
   end
 
-  def gain_resources_until! timestamp
+  def process_until!(timestamp)
+    finished_items = []
+
+    if building_queue_items_count > 0
+      finished_items.concat building_queue_items.finished_until(timestamp)
+    end
+
+    if unit_queue_items_count > 0
+      finished_items.concat unit_queue_items.finished_until(timestamp)
+    end
+
+    if finished_items.length > 0
+      finished_items.sort_by! { |i| i.completion_time }
+
+      transaction do
+        finished_items.each do |i|
+          process_virtually_until! i.completion_time
+
+          case i
+          when BuildingQueueItem
+            increment(i.building.key)
+            building_queue_items.destroy i
+          when UnitQueueItem
+            unit_queue_items.destroy i
+          end
+        end
+
+        save(validate: false)
+      end
+    end
+
+    process_virtually_until! timestamp
+  end
+
+  def process_virtually_until! timestamp
     time_diff = timestamp - self.last_processed
 
     if time_diff != 0
       add_resources!(resource_gains time_diff)
+
+      if unit_queue_items_count > 0
+        add_units!(unit_queue_items.first.recruit_units_between!(self.last_processed, timestamp))
+      end
     end
 
     self.last_processed = timestamp
@@ -96,6 +134,16 @@ class Villa < ActiveRecord::Base
         self.suits >= resources[:suits]
   end
 
+  def add_units!(units)
+    units.each_pair do |key, number|
+      write_attribute(key, read_attribute(key) + number)
+    end
+  end
+
+  def has_supply?(supply)
+    self.used_supply + supply <= self.supply
+  end
+
   def level building
     send building.key
   end
@@ -110,6 +158,10 @@ class Villa < ActiveRecord::Base
 
   def virtual_level building
     send(building.key) + enqueued_count(building)
+  end
+
+  def unit_number unit
+    send unit.key
   end
 
   def resource_gains time

@@ -42,18 +42,17 @@ module BuildingQueueExtension
       if villa.has_resources? costs
         build_time = building.build_time(level)
 
-        new_item = BuildingQueueItem.new(villa_id: villa.id,
-                                        building_id: building.id,
-                                        build_time: build_time,
-                                        completion_time: completion_time + build_time)
-        villa.subtract_resources! building.costs(level)
+        new_item = proxy_association.build(building_id: building.id,
+                                           build_time: build_time,
+                                           completion_time: completion_time + build_time)
+        villa.subtract_resources! costs
 
-        transaction do
+        return transaction do
           new_item.save
           villa.save
-        end
 
-        return true
+          true
+        end
       else
         villa.errors[:base] << I18n.t('errors.buildings.not_enough_resources')
 
@@ -79,14 +78,14 @@ module BuildingQueueExtension
       building = LaFamiglia.building(queue_item.building_id)
 
       refund_ratio = time_diff.to_f / queue_item.build_time
-      level = villa.virtual_level(building) - 1
-      refunds = building.costs level
+      previous_level = villa.virtual_level(building) - 1
+      refunds = building.costs previous_level
 
       refunds.each_pair do |k, v|
         refunds[k] = v * refund_ratio
       end
 
-      transaction do
+      return transaction do
         destroy(queue_item)
 
         each do |i|
@@ -98,9 +97,9 @@ module BuildingQueueExtension
 
         villa.add_resources!(refunds)
         villa.save
-      end
 
-      return true
+        true
+      end
     else
       villa.errors[:base] << I18n.t('errors.buildings.not_the_last_one')
 
