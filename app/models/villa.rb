@@ -52,12 +52,14 @@ class Villa < ActiveRecord::Base
     self.building_queue_items_count = 0
     self.unit_queue_items_count = 0
 
-    self.supply = 100
-    self.used_supply = 0
     self.storage_capacity = 100
     self.resource_1 = self.resource_2 = self.resource_3 = 0
 
-    self.house_of_the_family = 1
+    self.building_1 = 1
+
+    self.supply = 100
+    self.used_supply = 0
+    self.unit_1 = 0
   end
 
   def save_unit_queue
