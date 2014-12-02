@@ -1,13 +1,18 @@
 require_dependency 'lafamiglia'
+require_dependency 'extensions/queue_extension'
 require_dependency 'extensions/building_queue_extension'
+require_dependency 'extensions/research_queue_extension'
 require_dependency 'extensions/unit_queue_extension'
 
 class Villa < ActiveRecord::Base
   belongs_to :player
 
-  has_many :building_queue_items, -> { extending BuildingQueueExtension }, dependent: :delete_all,
+  has_many :building_queue_items, -> { extending QueueExtension, BuildingQueueExtension }, dependent: :delete_all,
            after_add: ->(v, i) { v.building_queue_items_count = v.building_queue_items_count + 1 },
            after_remove: ->(v, i) { v.building_queue_items_count = v.building_queue_items_count - 1 }
+  has_many :research_queue_items, -> { extending QueueExtension, ResearchQueueExtension }, dependent: :delete_all,
+           after_add: ->(v, i) { v.research_queue_items_count = v.research_queue_items_count + 1 },
+           after_remove: ->(v, i) { v.research_queue_items_count = v.research_queue_items_count - 1 }
   has_many :unit_queue_items, -> { extending UnitQueueExtension }, dependent: :delete_all,
            after_add: ->(v, i) { v.unit_queue_items_count = v.unit_queue_items_count + 1 },
            after_remove: ->(v, i) { v.unit_queue_items_count = v.unit_queue_items_count - 1 }
@@ -50,12 +55,16 @@ class Villa < ActiveRecord::Base
   def set_default_values
     self.last_processed = LaFamiglia.now
     self.building_queue_items_count = 0
+    self.research_queue_items_count = 0
     self.unit_queue_items_count = 0
 
     self.storage_capacity = 100
     self.resource_1 = self.resource_2 = self.resource_3 = 0
 
     self.building_1 = 1
+    self.building_2 = 0
+
+    self.research_1 = 0
 
     self.supply = 100
     self.used_supply = 0
@@ -77,6 +86,10 @@ class Villa < ActiveRecord::Base
       finished_items.concat building_queue_items.finished_until(timestamp)
     end
 
+    if research_queue_items_count > 0
+      finished_items.concat research_queue_items.finished_until(timestamp)
+    end
+
     if unit_queue_items_count > 0
       finished_items.concat unit_queue_items.finished_until(timestamp)
     end
@@ -92,6 +105,9 @@ class Villa < ActiveRecord::Base
           when BuildingQueueItem
             increment(i.building.key)
             building_queue_items.destroy i
+          when ResearchQueueItem
+            increment(i.research.key)
+            research_queue_items.destroy i
           when UnitQueueItem
             unit_queue_items.destroy i
           end
@@ -146,8 +162,8 @@ class Villa < ActiveRecord::Base
     self.used_supply + supply <= self.supply
   end
 
-  def level building
-    send building.key
+  def level building_or_research
+    send building_or_research.key
   end
 
   def enqueued_count building
@@ -158,8 +174,20 @@ class Villa < ActiveRecord::Base
     end
   end
 
-  def virtual_level building
+  def virtual_building_level building
     send(building.key) + enqueued_count(building)
+  end
+
+  def enqueued_researches_count research
+    if research_queue_items_count > 0
+      research_queue_items.enqueued_count(research)
+    else
+      0
+    end
+  end
+
+  def virtual_research_level research
+    send(research.key) + enqueued_researches_count(research)
   end
 
   def unit_number unit

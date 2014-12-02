@@ -1,6 +1,6 @@
 module BuildingQueueItemsHelper
   def link_to_build_start building
-    level = current_villa.virtual_level building
+    level = current_villa.virtual_building_level building
 
     if level < building.maxlevel
       if level > 0
@@ -10,7 +10,7 @@ module BuildingQueueItemsHelper
       end
 
       link_to title, villa_building_queue_items_path(villa_id: current_villa.id, building_id: building.id),
-                    method: :post, class: "btn btn-primary"
+                     method: :post, class: "btn btn-primary"
     else
       link_to t('maxlevel_reached'), '#', class: "btn btn-primary disabled"
     end

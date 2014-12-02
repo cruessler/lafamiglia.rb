@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124172138) do
+ActiveRecord::Schema.define(version: 20141124205453) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -54,6 +54,18 @@ ActiveRecord::Schema.define(version: 20141124172138) do
   add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
   add_index "players", ["unlock_token"], name: "index_players_on_unlock_token", unique: true
 
+  create_table "research_queue_items", force: true do |t|
+    t.integer  "villa_id"
+    t.integer  "research_id"
+    t.integer  "research_time"
+    t.integer  "completion_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "research_queue_items", ["completion_time"], name: "index_research_queue_items_on_completion_time"
+  add_index "research_queue_items", ["villa_id"], name: "index_research_queue_items_on_villa_id"
+
   create_table "unit_queue_items", force: true do |t|
     t.integer  "villa_id"
     t.integer  "unit_id"
@@ -84,6 +96,9 @@ ActiveRecord::Schema.define(version: 20141124172138) do
     t.integer  "used_supply"
     t.integer  "supply"
     t.integer  "unit_1"
+    t.integer  "research_queue_items_count"
+    t.integer  "building_2"
+    t.integer  "research_1"
   end
 
   add_index "villas", ["player_id"], name: "index_villas_on_player_id"

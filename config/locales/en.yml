@@ -2,6 +2,7 @@ en:
   build: "build"
   upgrade: "upgrade"
   cancel: "cancel"
+  requirements_not_met: "requirements not met"
   maxlevel_reached: "maximum level reached"
   building: "Building"
   unit: "Unit"
@@ -10,6 +11,9 @@ en:
     default_name: "New Villa"
   buildings:
     building_1: "House of the family"
+    building_2: "House of the inventor"
+  researches:
+    research_1: "Tommy gun"
   units:
     unit_1: "Beppo"
   errors:

@@ -7,6 +7,10 @@ module LaFamiglia
     def name
       @name ||= I18n.t "buildings.#{key}"
     end
+
+    def requirements_met? villa
+      true
+    end
   end
 
   class HouseOfTheFamily < Building
@@ -31,7 +35,29 @@ module LaFamiglia
     end
   end
 
-  BUILDINGS = [ HouseOfTheFamily.new ]
+  class InventorsHouse < Building
+    def id
+      2
+    end
+
+    def build_time level
+      level * 1 + 4
+    end
+
+    def costs level
+      {
+        resource_1: level * 1 + 1,
+        resource_2: level * 1 + 1,
+        resource_3: level * 1 + 1
+      }
+    end
+
+    def maxlevel
+      10
+    end
+  end
+
+  BUILDINGS = [ HouseOfTheFamily.new, InventorsHouse.new ]
 
   def self.building building_id
     BUILDINGS.find do |b|

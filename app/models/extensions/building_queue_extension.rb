@@ -1,18 +1,4 @@
 module BuildingQueueExtension
-  def finished_until timestamp
-    select do |i|
-      i.completion_time <= timestamp
-    end
-  end
-
-  def completion_time
-    if last
-      last.completion_time
-    else
-      LaFamiglia.now
-    end
-  end
-
   def last_of_its_kind? queue_item
     building = LaFamiglia.building(queue_item.building_id)
 
@@ -28,82 +14,41 @@ module BuildingQueueExtension
   end
 
   def enqueued_count building
-    count do |i|
-      i.id == building.id
-    end
+    # count does not work here as it always hits the database
+    # and ignores the block.
+    # Since this method is only called when the items have
+    # already been loaded another database query is not necessary.
+    select do |i|
+      i.building_id == building.id
+    end.length
   end
 
-  def enqueue building
-    villa = proxy_association.owner
-    level = villa.virtual_level building
-    costs = building.costs level
+  def refunds queue_item, time_diff
+    building = LaFamiglia.building(queue_item.building_id)
 
-    if level < building.maxlevel
-      if villa.has_resources? costs
-        build_time = building.build_time(level)
+    refund_ratio = time_diff.to_f / queue_item.build_time
+    previous_level = villa.virtual_building_level(building) - 1
+    refunds = building.costs previous_level
 
-        new_item = proxy_association.build(building_id: building.id,
-                                           build_time: build_time,
-                                           completion_time: completion_time + build_time)
-        villa.subtract_resources! costs
-
-        return transaction do
-          new_item.save
-          villa.save
-
-          true
-        end
-      else
-        villa.errors[:base] << I18n.t('errors.buildings.not_enough_resources')
-
-        return false
-      end
-    else
-      villa.errors[:base] << I18n.t('errors.buildings.already_at_maxlevel')
-
-      return false
+    refunds.each_pair do |k, v|
+      refunds[k] = v * refund_ratio
     end
+
+    refunds
   end
 
-  def dequeue queue_item
-    villa = proxy_association.owner
+  def virtual_level building
+    villa.virtual_building_level building
+  end
 
-    if last_of_its_kind? queue_item
-      if queue_item == first
-        time_diff = queue_item.completion_time - LaFamiglia.now
-      else
-        time_diff = queue_item.build_time
-      end
+  def build_item building, level
+    build_time = building.build_time(level)
+    proxy_association.build(building_id: building.id,
+                            build_time: build_time,
+                            completion_time: completion_time + build_time)
+  end
 
-      building = LaFamiglia.building(queue_item.building_id)
-
-      refund_ratio = time_diff.to_f / queue_item.build_time
-      previous_level = villa.virtual_level(building) - 1
-      refunds = building.costs previous_level
-
-      refunds.each_pair do |k, v|
-        refunds[k] = v * refund_ratio
-      end
-
-      return transaction do
-        destroy(queue_item)
-
-        each do |i|
-          if i.completion_time > queue_item.completion_time
-            i.completion_time = i.completion_time - time_diff
-            i.save
-          end
-        end
-
-        villa.add_resources!(refunds)
-        villa.save
-
-        true
-      end
-    else
-      villa.errors[:base] << I18n.t('errors.buildings.not_the_last_one')
-
-      return false
-    end
+  def error_message key
+    I18n.t("errors.buildings.#{key}")
   end
 end
