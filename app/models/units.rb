@@ -11,6 +11,10 @@ module LaFamiglia
     def building
       @building ||= LaFamiglia.building building_id
     end
+
+    def requirements_met? villa
+      true
+    end
   end
 
   class Beppo < Unit

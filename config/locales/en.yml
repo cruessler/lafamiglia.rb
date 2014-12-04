@@ -25,3 +25,4 @@ en:
     units:
       not_enough_supply: "You don’t have enough supply to build these units."
       not_enough_resources: "You don’t have enough resources to build these units."
+      requirements_not_met: "The requirements of these units are not met."
