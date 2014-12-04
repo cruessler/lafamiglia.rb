@@ -22,6 +22,12 @@ en:
       already_at_maxlevel: "This building can’t be upgraded any further."
       not_the_last_one: "You can only cancel the last upgrade of this building."
       not_enough_resources: "You don’t have enough resources to build this building."
+      requirements_not_met: "The requirements of this building are not met."
+    researches:
+      already_at_maxlevel: "This research can’t be researched any further."
+      not_the_last_one: "You can only cancel the last research of a kind."
+      not_enough_resources: "You don’t have enough resources for this research."
+      requirements_not_met: "The requirements of this research are not met."
     units:
       not_enough_supply: "You don’t have enough supply to build these units."
       not_enough_resources: "You don’t have enough resources to build these units."
