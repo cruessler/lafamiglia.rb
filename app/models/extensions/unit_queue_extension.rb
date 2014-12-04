@@ -18,35 +18,35 @@ module UnitQueueExtension
     costs = unit.costs number
     supply = unit.supply number
 
-    if unit.requirements_met? villa
-      if villa.has_supply? supply
-        if villa.has_resources? costs
-          new_item = proxy_association.build(unit_id: unit.id,
-                                            number: number,
-                                            completion_time: completion_time + unit.build_time(number))
-          villa.subtract_resources! costs
-          villa.used_supply = villa.used_supply + supply
-
-          return transaction do
-            new_item.save
-            villa.save
-
-            true
-          end
-        else
-          villa.errors[:base] << I18n.t('errors.units.not_enough_resources')
-
-          return false
-        end
-      else
-        villa.errors[:base] << I18n.t('errors.units.not_enough_supply')
-
-        return false
-      end
-    else
+    unless unit.requirements_met? villa
       villa.errors[:base] << I18n.t('errors.units.requirements_not_met')
 
       return false
+    end
+
+    unless villa.has_supply? supply
+      villa.errors[:base] << I18n.t('errors.units.not_enough_supply')
+
+      return false
+    end
+
+    unless villa.has_resources? costs
+      villa.errors[:base] << I18n.t('errors.units.not_enough_resources')
+
+      return false
+    end
+
+    new_item = proxy_association.build(unit_id: unit.id,
+                                      number: number,
+                                      completion_time: completion_time + unit.build_time(number))
+    villa.subtract_resources! costs
+    villa.used_supply = villa.used_supply + supply
+
+    return transaction do
+      new_item.save
+      villa.save
+
+      true
     end
   end
 
@@ -83,7 +83,5 @@ module UnitQueueExtension
 
       true
     end
-
-    false
   end
 end
