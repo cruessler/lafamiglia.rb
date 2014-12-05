@@ -34,6 +34,7 @@
                 <li class="active"><a href="#">Home</a></li>
                 <li><%= link_to 'Villas', villas_path %></li>
                 <li><%= link_to coordinates(current_villa), current_villa %></li>
+                <li><%= link_to 'Map', map_url(x: current_villa.x, y: current_villa.y) %></li>
                 <li><%= resources current_villa %></li>
               </ul>
             <% end %>

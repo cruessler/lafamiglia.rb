@@ -7,5 +7,7 @@ Rails.application.routes.draw do
     resources :unit_queue_items, only: [ :create, :destroy ]
   end
 
+  get '/map(/:x/:y)', to: 'map#show', as: :map
+
   root 'villas#index'
 end

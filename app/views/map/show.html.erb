@@ -1,0 +1,23 @@
+<div class="page-header">
+  <h1>Map</h1>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="map col-md-8 col-md-offset-2">
+      <% @villas.each do |row| %>
+        <div class="row">
+          <% row.each do |v| %>
+            <div class="cell">
+              <div class="villa">
+                <% unless v.nil? %>
+                  <%= v.name %> (<%= v.x %>|<%= v.y %>)
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
