@@ -43,7 +43,7 @@ module LaFamiglia
     end
 
     def speed
-      5
+      100
     end
   end
 
