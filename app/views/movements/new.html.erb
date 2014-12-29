@@ -1,0 +1,37 @@
+<h2>
+  Attack on <%= villa_to_s @movement.target %>
+</h2>
+
+<%= simple_form_for @movement, as: :movement, url: villa_movements_path(current_villa), wrapper: :horizontal_form,  html: { class: 'form-horizontal' } do |f| %>
+  <%= f.error_notification %>
+
+  <% unless @movement.errors[:base].empty? %>
+    <ul class="errors_on_base">
+      <% @movement.errors[:base].each do |m| %>
+        <li><%= m %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= f.hidden_field :target_id, value: @movement.target.id %>
+
+  <div class="form-group">
+    <div class="col-sm-3 villa-label"><%= t '.origin' %></div>
+    <div class="col-sm-9"><%= link_to villa_to_s(@movement.origin), @movement.origin, class: 'villa-link' %></div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-3 villa-label"><%= t '.target' %></div>
+    <div class="col-sm-9"><%= link_to villa_to_s(@movement.target), @movement.target, class: 'villa-link' %></div>
+  </div>
+
+  <% LaFamiglia::UNITS.each do |u| %>
+    <%= f.input u.key, hint: t('.units_available') % current_villa.unit_number(u) %>
+  <% end %>
+
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel'),
+                :back, :class => 'btn btn-default' %>
+  </div>
+<% end %>

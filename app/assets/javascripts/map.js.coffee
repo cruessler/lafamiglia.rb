@@ -1,3 +1,10 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+$ ->
+  $('#attackModal').on 'show.bs.modal', (event) ->
+    button = $(event.relatedTarget)
+    modal = $(this)
+
+    modal.find('#movement_target_id').val(button.data('target-id'))
+    modal.find('#target').text(button.data('target-name'))
+
+  $('#attackButton').on 'click', (event) ->
+    $(this).parent().parent().find('form').submit()

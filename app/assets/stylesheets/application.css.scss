@@ -8,10 +8,21 @@ $headings-font-weight: normal;
 @import "devise";
 
 @import "map";
+@import "movements";
 @import "villa";
 
 body {
   padding-top: 70px;
   padding-bottom: 40px;
   background-color: #eee;
+}
+
+div.error_notification,
+ul.errors_on_base {
+  @extend .alert;
+  @extend .alert-danger;
+}
+
+ul.errors_on_base {
+  padding-left: 30px;
 }

@@ -17,6 +17,11 @@ class Villa < ActiveRecord::Base
            after_add: ->(v, i) { v.unit_queue_items_count = v.unit_queue_items_count + 1 },
            after_remove: ->(v, i) { v.unit_queue_items_count = v.unit_queue_items_count - 1 }
 
+  has_many :outgoings,
+           -> { includes(:target).order(:arrival) },
+           class_name: 'Movement',
+           foreign_key: 'origin_id'
+
   before_create :set_default_values
 
   after_update :save_unit_queue
@@ -155,6 +160,12 @@ class Villa < ActiveRecord::Base
   def add_units!(units)
     units.each_pair do |key, number|
       write_attribute(key, read_attribute(key) + number)
+    end
+  end
+
+  def subtract_units!(units)
+    units.each_pair do |key, number|
+      write_attribute(key, read_attribute(key) - number)
     end
   end
 

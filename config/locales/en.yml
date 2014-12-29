@@ -32,3 +32,51 @@ en:
       not_enough_supply: "You don’t have enough supply to build these units."
       not_enough_resources: "You don’t have enough resources to build these units."
       requirements_not_met: "The requirements of these units are not met."
+    movements:
+      invalid_number: "The number of units is invalid."
+      no_unit_selected: "You have to select units for an attack."
+      target_is_own: "You can’t attack your own villa."
+
+  layouts:
+    application:
+      overview: "Overview"
+      movements: "Troop movements"
+  map:
+    attack_modal:
+      close: "Close"
+      attack: "Attack"
+  movements:
+    created: "Your attack is on the way."
+    cancelled: "Your attack has been cancelled."
+    index:
+      header: "Troop movements"
+      arrival: "Arrival"
+      time_remaining: "Time remaining"
+      no_movements: "There are no movements."
+    new:
+      origin: "Origin"
+      target: "Target"
+      units_available: "Number of units available: %d"
+      cancel: "Cancel"
+  villas:
+    show:
+      building: "Building"
+      level: "Level"
+      costs: "Costs"
+      build_time: "Build time"
+      build: "Build"
+      research: "Research"
+      research_time: "Research time"
+      research!: "Research"
+
+  activerecord:
+    attributes:
+      movement:
+        unit_1: "Beppo"
+
+  helpers:
+    links:
+      cancel: "Cancel"
+    submit:
+      movement:
+        create: "Attack!"

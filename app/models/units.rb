@@ -41,6 +41,10 @@ module LaFamiglia
     def building_id
       1
     end
+
+    def speed
+      5
+    end
   end
 
   UNITS = [ Beppo.new ]

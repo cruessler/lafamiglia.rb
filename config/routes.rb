@@ -5,7 +5,11 @@ Rails.application.routes.draw do
     resources :building_queue_items, only: [ :create, :destroy ]
     resources :research_queue_items, only: [ :create, :destroy ]
     resources :unit_queue_items, only: [ :create, :destroy ]
+
+    resources :movements, only: [ :create, :index ]
   end
+
+  resources :movements, only: :destroy
 
   get '/map(/:x/:y)', to: 'map#show', as: :map
 

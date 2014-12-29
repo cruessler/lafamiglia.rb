@@ -1,0 +1,26 @@
+<div class="page-header">
+  <h1><%= t '.header' %></h1>
+</div>
+
+<% unless current_villa.outgoings.empty? %>
+  <table class="table table-striped">
+    <tr>
+      <th>
+      </th>
+      <th><%= t '.arrival' %></th>
+      <th><%= t '.time_remaining' %></th>
+      <th>
+      </th>
+    </tr>
+    <% current_villa.outgoings.each do |movement| %>
+      <tr>
+        <td><%= movement.id %> <%= movement.type %></td>
+        <td><%= l Time.at(movement.arrival) %></td>
+        <td><%= countdown_to movement.arrival %></td>
+        <td><%= link_to_movement_cancel movement if movement.cancellable? %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p><%= t '.no_movements' %></p>
+<% end %>

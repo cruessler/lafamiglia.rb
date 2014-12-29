@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124205453) do
+ActiveRecord::Schema.define(version: 20141227151106) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -24,6 +24,20 @@ ActiveRecord::Schema.define(version: 20141124205453) do
 
   add_index "building_queue_items", ["completion_time"], name: "index_building_queue_items_on_completion_time"
   add_index "building_queue_items", ["villa_id"], name: "index_building_queue_items_on_villa_id"
+
+  create_table "movements", force: true do |t|
+    t.string   "type"
+    t.integer  "arrival"
+    t.integer  "origin_id"
+    t.integer  "target_id"
+    t.integer  "unit_1"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "movements", ["arrival"], name: "index_movements_on_arrival"
+  add_index "movements", ["origin_id"], name: "index_movements_on_origin_id"
+  add_index "movements", ["target_id"], name: "index_movements_on_target_id"
 
   create_table "players", force: true do |t|
     t.string   "name"

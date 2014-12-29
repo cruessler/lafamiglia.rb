@@ -12,6 +12,12 @@
               <div class="villa">
                 <% unless v.nil? %>
                   <%= v.name %> (<%= v.x %>|<%= v.y %>)
+                  <button type="button" class="btn btn-xs btn-primary"
+                          data-toggle="modal" data-target="#attackModal"
+                          data-target-name="<%= v.name %> (<%= v.x %>|<%= v.y %>)"
+                          data-target-id="<%= v.id %>">
+                    A!
+                  </button>
                 <% end %>
               </div>
             </div>
@@ -21,3 +27,5 @@
     </div>
   </div>
 </div>
+
+<%= render partial: 'attack_modal' %>
