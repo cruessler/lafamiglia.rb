@@ -15,14 +15,15 @@ module Dispatcher
       @running = true
 
       while @running
-        LaFamiglia.clock
-        now = LaFamiglia.now
+        now = Time.now.to_i
         events = Event.find_until(now)
 
         if events.count > 0
           puts "handling #{events.count} events until #{now}"
           until events.empty?
-            events.shift.handle
+            event = events.shift
+            LaFamiglia.clock event.time
+            event.handle
           end
         else
           puts "nothing to handle until #{now}"

@@ -3,8 +3,8 @@ require_dependency 'researches'
 require_dependency 'units'
 
 module LaFamiglia
-  def self.clock
-    @@now = Time.now.to_i
+  def self.clock now = Time.now.to_i
+    @@now = now
   end
 
   def self.now

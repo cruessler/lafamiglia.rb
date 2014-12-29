@@ -12,6 +12,20 @@ class Movement < ActiveRecord::Base
     self.unit_1 = 0 if self.unit_1.nil?
   end
 
+  def units
+    @units ||= begin
+      units = {}
+
+      LaFamiglia::UNITS.each do |u|
+        if (number = self.send u.key) > 0
+          units[u.key] = number
+        end
+      end
+
+      units
+    end
+  end
+
   def duration
     @duration ||= begin
       distance = Math.hypot origin.x - target.x, origin.y - target.y

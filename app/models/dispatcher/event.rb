@@ -12,4 +12,6 @@ module Dispatcher
   end
 end
 
+require_dependency 'dispatcher/attack_event'
 require_dependency 'dispatcher/build_event'
+require_dependency 'dispatcher/comeback_event'

@@ -4,7 +4,7 @@ class AttackMovement < Movement
 
   after_validation :calculate_arrival, on: :create
 
-  after_create :subtract_units
+  after_create :subtract_units_from_origin!
 
   def enough_units
     LaFamiglia::UNITS.each do |u|
@@ -33,14 +33,7 @@ class AttackMovement < Movement
     self.arrival = LaFamiglia.now + duration
   end
 
-  def subtract_units
-    units = {}
-    LaFamiglia::UNITS.each do |u|
-      if (number = self.send u.key) > 0
-        units[u.key] = number
-      end
-    end
-
+  def subtract_units_from_origin!
     origin.subtract_units! units
     origin.save
   end
