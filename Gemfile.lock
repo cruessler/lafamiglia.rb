@@ -62,7 +62,7 @@ GEM
     edge_rider (0.3.0)
       activerecord
     erubis (2.7.0)
-    eventmachine (1.0.3)
+    eventmachine (1.0.4)
     execjs (2.2.2)
     hike (1.2.3)
     i18n (0.6.11)
