@@ -8,6 +8,10 @@ module Dispatcher
       end
     end
 
+    def self.find_time_of_first
+      AttackMovement.minimum :arrival
+    end
+
     def initialize attack_movement
       @attack_movement = attack_movement
     end
@@ -17,7 +21,7 @@ module Dispatcher
     end
 
     def handle
-      puts "processing attack movement (id: #{@attack_movement.id})"
+      puts "processing attack movement (id: #{@attack_movement.id}, time: #{Time.at(time)})"
       @attack_movement.cancel!
     end
   end

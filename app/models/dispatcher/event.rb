@@ -9,6 +9,12 @@ module Dispatcher
         event.time
       end
     end
+
+    def self.find_time_of_first
+      subclasses.collect do |c|
+        c.find_time_of_first
+      end.compact.min
+    end
   end
 end
 

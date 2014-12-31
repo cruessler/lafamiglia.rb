@@ -17,6 +17,15 @@ class ApplicationController < ActionController::Base
     Power.new(current_player)
   end
 
+  def notify_dispatcher timestamp
+    begin
+      Socket.unix(Dir.home + "/tmp/lafamiglia.sock") do |socket|
+        socket << timestamp.to_s
+      end
+    rescue Exception => _
+    end
+  end
+
   private
 
   def check_for_villa!

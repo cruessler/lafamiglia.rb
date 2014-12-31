@@ -11,6 +11,7 @@ class MovementsController < ApplicationController
     @movement = AttackMovement.create_with(origin: current_villa).new(movement_params)
 
     if @movement.save
+      notify_dispatcher @movement.arrival
       redirect_to :back, notice: I18n.t('movements.created')
     else
       render action: 'new'
@@ -19,7 +20,8 @@ class MovementsController < ApplicationController
 
   # DELETE /movements
   def destroy
-    if @movement.cancel!
+    if @comeback = @movement.cancel!
+      notify_dispatcher @comeback.arrival
       redirect_to :back, notice: I18n.t('movements.cancelled')
     else
       redirect_to villa_movements_url(current_villa), alert: @movement.errors[:base].join

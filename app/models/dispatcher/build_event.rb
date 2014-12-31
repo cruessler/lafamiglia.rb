@@ -8,6 +8,10 @@ module Dispatcher
       end
     end
 
+    def self.find_time_of_first
+      BuildingQueueItem.minimum :completion_time
+    end
+
     def initialize queue_item
       @queue_item = queue_item
     end
@@ -17,7 +21,7 @@ module Dispatcher
     end
 
     def handle
-      puts "processing build event (id: #{@queue_item.id})"
+      puts "processing build event (id: #{@queue_item.id}, time: #{Time.at(time)})"
       @queue_item.villa.process_until!(@queue_item.completion_time)
     end
   end

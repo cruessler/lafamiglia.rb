@@ -52,6 +52,8 @@ class AttackMovement < Movement
     transaction do
       destroy
       comeback.save
+
+      comeback
     end
   end
 end

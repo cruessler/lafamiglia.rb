@@ -46,7 +46,7 @@ module QueueExtension
       new_item.save
       villa.save
 
-      true
+      new_item
     end
   end
 

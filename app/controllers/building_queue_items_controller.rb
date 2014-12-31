@@ -7,7 +7,8 @@ class BuildingQueueItemsController < ApplicationController
     building = LaFamiglia.building(params[:building_id].to_i)
 
     if building
-      if current_villa.building_queue_items.enqueue building
+      if @building_queue_item = current_villa.building_queue_items.enqueue(building)
+        notify_dispatcher @building_queue_item.completion_time
         redirect_to current_villa
       else
         redirect_to current_villa, alert: current_villa.errors[:base].join
