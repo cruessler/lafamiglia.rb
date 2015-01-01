@@ -20,7 +20,7 @@ class MovementsController < ApplicationController
 
   # DELETE /movements
   def destroy
-    if @comeback = @movement.cancel!
+    if @movement.cancellable? && @comeback = @movement.cancel!
       notify_dispatcher @comeback.arrival
       redirect_to :back, notice: I18n.t('movements.cancelled')
     else
