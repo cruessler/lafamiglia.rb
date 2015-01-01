@@ -52,7 +52,7 @@ gem 'rails-i18n', '~> 4.0.0.pre' # For 4.0.x
 # Be sure to go back to using the gem as soon as appropriate
 gem 'simple_form', git: 'https://github.com/plataformatec/simple_form.git', tag: 'v3.1.0.rc1'
 
-gem 'devise'
+gem 'devise', '~> 3.4.0'
 gem 'devise-i18n'
 
 # https://github.com/makandra/consul
