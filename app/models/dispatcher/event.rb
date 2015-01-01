@@ -1,19 +1,21 @@
 module Dispatcher
   class Event
-    def self.find_until timestamp
-      events = subclasses.collect do |c|
-        c.find_until timestamp
-      end.flatten
+    include Comparable
 
-      events.sort_by do |event|
-        event.time
-      end
+    def self.find_until timestamp
+      subclasses.collect do |c|
+        c.find_until timestamp
+      end.flatten.sort
     end
 
-    def self.find_time_of_first
+    def self.find_time_of_next
       subclasses.collect do |c|
-        c.find_time_of_first
+        c.find_time_of_next
       end.compact.min
+    end
+
+    def <=> other
+      self.time <=> other.time
     end
   end
 end

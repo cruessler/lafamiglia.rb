@@ -8,7 +8,7 @@ module Dispatcher
       end
     end
 
-    def self.find_time_of_first
+    def self.find_time_of_next
       ComebackMovement.minimum :arrival
     end
 
@@ -20,7 +20,7 @@ module Dispatcher
       @comeback_movement.arrival
     end
 
-    def handle
+    def handle dispatcher
       puts "processing comeback movement (id: #{@comeback_movement.id}, time: #{Time.at(time)})"
       @comeback_movement.arrive!
     end

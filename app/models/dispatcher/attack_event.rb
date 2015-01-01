@@ -8,7 +8,7 @@ module Dispatcher
       end
     end
 
-    def self.find_time_of_first
+    def self.find_time_of_next
       AttackMovement.minimum :arrival
     end
 
@@ -20,9 +20,9 @@ module Dispatcher
       @attack_movement.arrival
     end
 
-    def handle
+    def handle dispatcher
       puts "processing attack movement (id: #{@attack_movement.id}, time: #{Time.at(time)})"
-      @attack_movement.cancel!
+      dispatcher.add_event_to_queue ComebackEvent.new(@attack_movement.cancel!)
     end
   end
 end
