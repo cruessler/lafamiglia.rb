@@ -11,6 +11,20 @@ module LaFamiglia
     def requirements_met? villa
       true
     end
+
+    def defense level
+      0
+    end
+  end
+
+  module Buildings
+    module Readers
+      def buildings
+        LaFamiglia::BUILDINGS.each_with_object({}) do |b, hash|
+          hash[b.key] = self.send(b.key)
+        end
+      end
+    end
   end
 
   class HouseOfTheFamily < Building
@@ -32,6 +46,10 @@ module LaFamiglia
 
     def maxlevel
       8
+    end
+
+    def defense level
+      10
     end
   end
 

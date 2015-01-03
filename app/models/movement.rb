@@ -1,4 +1,6 @@
 class Movement < ActiveRecord::Base
+  include LaFamiglia::Units::Accessors
+
   belongs_to :origin, class_name: 'Villa'
   belongs_to :target, class_name: 'Villa'
 
@@ -10,20 +12,6 @@ class Movement < ActiveRecord::Base
 
   def set_default_values
     self.unit_1 = 0 if self.unit_1.nil?
-  end
-
-  def units
-    @units ||= begin
-      units = {}
-
-      LaFamiglia::UNITS.each do |u|
-        if (number = self.send u.key) > 0
-          units[u.key] = number
-        end
-      end
-
-      units
-    end
   end
 
   def duration

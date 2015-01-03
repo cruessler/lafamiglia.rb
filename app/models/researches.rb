@@ -13,6 +13,16 @@ module LaFamiglia
     end
   end
 
+  module Researches
+    module Readers
+      def researches
+        LaFamiglia::RESEARCHES.each_with_object({}) do |r, hash|
+          hash[r.key] = self.send(r.key)
+        end
+      end
+    end
+  end
+
   class TommyGun < Research
     def id
       1

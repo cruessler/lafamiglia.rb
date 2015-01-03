@@ -17,6 +17,22 @@ module LaFamiglia
     end
   end
 
+  module Units
+    module Accessors
+      def units
+        LaFamiglia::UNITS.each_with_object({}) do |u, hash|
+          hash[u.key] = self.send(u.key)
+        end
+      end
+
+      def units= units
+        LaFamiglia::UNITS.each do |u|
+          self[u.key] = units[u.key]
+        end
+      end
+    end
+  end
+
   class Beppo < Unit
     def id
       1
@@ -44,6 +60,14 @@ module LaFamiglia
 
     def speed
       100
+    end
+
+    def attack number
+      number * 2
+    end
+
+    def defense number
+      number * 2
     end
   end
 

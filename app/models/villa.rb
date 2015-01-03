@@ -5,6 +5,11 @@ require_dependency 'extensions/research_queue_extension'
 require_dependency 'extensions/unit_queue_extension'
 
 class Villa < ActiveRecord::Base
+  include LaFamiglia::Resources::Readers
+  include LaFamiglia::Buildings::Readers
+  include LaFamiglia::Researches::Readers
+  include LaFamiglia::Units::Accessors
+
   belongs_to :player
 
   has_many :building_queue_items, -> { extending QueueExtension, BuildingQueueExtension }, dependent: :delete_all,
