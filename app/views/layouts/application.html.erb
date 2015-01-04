@@ -44,20 +44,29 @@
                   </ul>
                 </li>
 
-                <li><%= link_to 'Map', map_url(x: current_villa.x, y: current_villa.y) %></li>
+                <li><%= link_to t('.map'), map_url(x: current_villa.x, y: current_villa.y) %></li>
                 <li><%= resources current_villa %></li>
               </ul>
             <% end %>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <span class="glyphicon glyphicon-envelope"></span> <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><%= link_to t('.reports'), reports_url %></li>
+                </ul>
+              </li>
+
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <span class="glyphicon glyphicon-user"></span> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><%= link_to 'Log out', destroy_player_session_path, method: :delete %></li>
+                  <li><%= link_to t('.player.logout'), destroy_player_session_path, method: :delete %></li>
                   <li class="divider"></li>
                   <li class="dropdown-header">Account</li>
-                  <li><%= link_to 'Edit', edit_player_registration_path %></li>
+                  <li><%= link_to t('.player.edit'), edit_player_registration_path %></li>
                 </ul>
               </li>
             </ul>

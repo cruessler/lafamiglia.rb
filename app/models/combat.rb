@@ -37,6 +37,18 @@ class Combat
     @attacker_survived ||= attacker_after_combat.any? { |pair| pair[1] > 0 }
   end
 
+  def attacker_before_combat
+    @attacker_before_combat ||= LaFamiglia::UNITS.each_with_object({}) do |u, hash|
+      hash[u.key] = @attacker[u.key]
+    end
+  end
+
+  def defender_before_combat
+    @defender_before_combat ||= LaFamiglia::UNITS.each_with_object({}) do |u, hash|
+      hash[u.key] = @defender[u.key]
+    end
+  end
+
   def attacker_loss
     @attacker_loss = LaFamiglia::UNITS.each_with_object({}) do |u, hash|
       hash[u.key] = (@attacker[u.key] * @attacker_percent_loss).to_i
@@ -65,5 +77,13 @@ class Combat
     @defender_supply_loss ||= LaFamiglia::UNITS.inject(0) do |supply, u|
       supply + u.supply(defender_loss[u.key])
     end
+  end
+
+  def report_data
+    { winner: winner,
+      attacker_before_combat: attacker_before_combat,
+      attacker_loss: attacker_loss,
+      defender_before_combat: defender_before_combat,
+      defender_loss: defender_loss }
   end
 end

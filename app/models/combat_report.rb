@@ -1,0 +1,2 @@
+class CombatReport < Report
+end

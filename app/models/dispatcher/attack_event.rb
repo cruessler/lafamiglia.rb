@@ -49,6 +49,9 @@ module Dispatcher
         origin.used_supply -= combat.attacker_supply_loss
         target.save
         origin.save
+
+        report = CombatReportGenerator.new(@attack_movement.arrival, combat.report_data)
+        report.deliver!(origin, target)
       end
     end
   end

@@ -5,4 +5,8 @@ class Player < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :villas
+
+  def to_s
+    name || "player #{id}"
+  end
 end

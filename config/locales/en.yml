@@ -41,6 +41,11 @@ en:
     application:
       overview: "Overview"
       movements: "Troop movements"
+      map: "Map"
+      reports: "Reports"
+      player:
+        logout: "Log out"
+        edit: "Edit"
   map:
     attack_modal:
       close: "Close"
@@ -68,6 +73,17 @@ en:
       research: "Research"
       research_time: "Research time"
       research!: "Research"
+  reports:
+    index:
+      header: "Reports"
+      time: "Time"
+      title: "Title"
+      no_reports: "You have no reports."
+    attack:
+      title:
+        same_player: "Attack of %{origin} on %{target}"
+        on_player: "Attack of %{origin} on %{target_player} – %{target}"
+        from_player: "Attack of %{origin_player} – %{origin} on %{target}"
 
   activerecord:
     attributes:

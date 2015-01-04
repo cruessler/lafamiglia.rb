@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141227151106) do
+ActiveRecord::Schema.define(version: 20150102181130) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -67,6 +67,19 @@ ActiveRecord::Schema.define(version: 20141227151106) do
   add_index "players", ["name"], name: "index_players_on_name", unique: true
   add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
   add_index "players", ["unlock_token"], name: "index_players_on_unlock_token", unique: true
+
+  create_table "reports", force: true do |t|
+    t.string   "type"
+    t.integer  "player_id"
+    t.integer  "time"
+    t.string   "title"
+    t.text     "data"
+    t.boolean  "read"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reports", ["player_id"], name: "index_reports_on_player_id"
 
   create_table "research_queue_items", force: true do |t|
     t.integer  "villa_id"

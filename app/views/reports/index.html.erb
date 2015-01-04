@@ -1,0 +1,20 @@
+<div class="page-header">
+  <h1><%= t '.header' %></h1>
+</div>
+
+<% unless @reports.empty? %>
+  <table class="table table-striped">
+    <tr>
+      <th><%= t '.time' %></th>
+      <th><%= t '.title' %></th>
+    </tr>
+    <% @reports.each do |report| %>
+      <tr>
+        <td><%= l Time.at(report.time) %></td>
+        <td><%= report.title %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p><%= t '.no_reports' %></p>
+<% end %>

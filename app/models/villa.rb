@@ -217,4 +217,8 @@ class Villa < ActiveRecord::Base
       resource_3: time * 0.01
     }
   end
+
+  def to_s
+    "#{name} (#{x}|#{y})"
+  end
 end

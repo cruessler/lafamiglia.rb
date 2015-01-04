@@ -8,4 +8,8 @@ class Power
   power :villas do
     Villa.where(player_id: @player.id)
   end
+
+  power :reports do
+    Report.where(player_id: @player.id)
+  end
 end
