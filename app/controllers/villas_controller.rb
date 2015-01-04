@@ -5,7 +5,7 @@ class VillasController < ApplicationController
   before_action :set_villa, only: [ :show ]
   before_filter :check_for_villa!
 
-  # GET /villa/1
+  # GET /villas/1
   def show
   end
 
