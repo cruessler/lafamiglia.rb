@@ -151,9 +151,9 @@ class Villa < ActiveRecord::Base
   end
 
   def subtract_resources!(resources)
-    self.resource_1 = self.resource_1 - resources[:resource_1]
-    self.resource_2 = self.resource_2 - resources[:resource_2]
-    self.resource_3 = self.resource_3 - resources[:resource_3]
+    self.resource_1 -= resources[:resource_1]
+    self.resource_2 -= resources[:resource_2]
+    self.resource_3 -= resources[:resource_3]
   end
 
   def has_resources?(resources)
