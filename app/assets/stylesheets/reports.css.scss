@@ -1,3 +1,8 @@
-// Place all the styles related to the Reports controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+table.units {
+  tr {
+    td:first-child {
+      width: 10%;
+      min-width: 10em;
+    }
+  }
+}

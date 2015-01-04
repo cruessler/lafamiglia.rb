@@ -84,6 +84,15 @@ en:
         same_player: "Attack of %{origin} on %{target}"
         on_player: "Attack of %{origin} on %{target_player} – %{target}"
         from_player: "Attack of %{origin_player} – %{origin} on %{target}"
+  combat_reports:
+    combat_report:
+      attacker: "Attacker"
+      defender: "Defender"
+      attacker_won: "The attacker has won."
+      defender_won: "The defender has won."
+    units:
+      before_combat: "before combat"
+      losses: "losses"
 
   activerecord:
     attributes:

@@ -1,0 +1,34 @@
+<h3><%= @report.title %></h3>
+
+<div>
+  <%= l Time.at(@report.time) %>
+</div>
+
+<h4>
+  <% if @report.attacker_won? %>
+    <%= t '.attacker_won' %>
+  <% else %>
+    <%= t '.defender_won' %>
+  <% end %>
+</h4>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= t '.attacker' %>:
+    <%= @report.origin %>
+  </div>
+  <div class="col-md-6">
+    <%= t '.defender' %>:
+    <%= @report.target %>
+  </div>
+</div>
+
+<h4><%= t '.attacker' %></h4>
+<%= render partial: 'combat_reports/units',
+           locals: { before_combat: @report.data[:attacker_before_combat],
+                     losses: @report.data[:attacker_loss] } %>
+
+<h4><%= t '.defender' %></h4>
+<%= render partial: 'combat_reports/units',
+           locals: { before_combat: @report.data[:defender_before_combat],
+                     losses: @report.data[:defender_loss] } %>
