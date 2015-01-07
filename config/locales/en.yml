@@ -64,6 +64,10 @@ en:
       units_available: "Number of units available: %d"
       cancel: "Cancel"
   villas:
+    index:
+      header: "Your villas"
+      name: "Name"
+      show_on_map: "Show on map"
     show:
       building: "Building"
       level: "Level"
