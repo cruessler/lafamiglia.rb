@@ -12,12 +12,14 @@
               <div class="villa">
                 <% unless v.nil? %>
                   <%= v %>
-                  <button type="button" class="btn btn-xs btn-primary"
-                          data-toggle="modal" data-target="#attackModal"
-                          data-target-name="<%= v.player %> – <%= v %>"
-                          data-target-id="<%= v.id %>">
-                    A!
-                  </button>
+                  <% if v.player != current_player %>
+                    <button type="button" class="btn btn-xs btn-primary"
+                            data-toggle="modal" data-target="#attackModal"
+                            data-target-name="<%= v.player %> – <%= v %>"
+                            data-target-id="<%= v.id %>">
+                      A!
+                    </button>
+                  <% end %>
                 <% end %>
               </div>
             </div>
