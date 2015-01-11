@@ -4,6 +4,23 @@
 
 div.map div.row {
   clear: both;
+  position: relative;
+}
+
+div.x-axis-label {
+  float: left;
+  width: percentage(1/7);
+  text-align: center;
+  margin-bottom: 0.3em;
+}
+div.y-axis-label {
+  position: absolute;
+  left: -1.6em;
+  width: 1em;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 /* The following rules are based on the blog entry found at:

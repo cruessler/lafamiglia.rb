@@ -5,8 +5,16 @@
 <div class="container-fluid">
   <div class="row">
     <div class="map col-md-8 col-md-offset-2">
+      <div class="row">
+        <% @min_x.upto @max_x do |x| %>
+          <div class="x-axis-label"><%= x %></div>
+        <% end %>
+      </div>
+
       <% @villas.each do |row| %>
         <div class="row">
+          <div class="y-axis-label"><%= @y = ((@y || @min_y - 1) + 1) %></div>
+
           <% row.each do |v| %>
             <div class="cell">
               <div class="villa">
