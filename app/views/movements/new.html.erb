@@ -1,5 +1,5 @@
 <h2>
-  Attack on <%= villa_to_s @movement.target %>
+  Attack on <%= @movement.target %>
 </h2>
 
 <%= simple_form_for @movement, as: :movement, url: villa_movements_path(current_villa), wrapper: :horizontal_form,  html: { class: 'form-horizontal' } do |f| %>
@@ -17,12 +17,12 @@
 
   <div class="form-group">
     <div class="col-sm-3 villa-label"><%= t '.origin' %></div>
-    <div class="col-sm-9"><%= link_to villa_to_s(@movement.origin), @movement.origin, class: 'villa-link' %></div>
+    <div class="col-sm-9"><%= link_to @movement.origin, @movement.origin, class: 'villa-link' %></div>
   </div>
 
   <div class="form-group">
     <div class="col-sm-3 villa-label"><%= t '.target' %></div>
-    <div class="col-sm-9"><%= link_to villa_to_s(@movement.target), @movement.target, class: 'villa-link' %></div>
+    <div class="col-sm-9"><%= link_to @movement.target, @movement.target, class: 'villa-link' %></div>
   </div>
 
   <% LaFamiglia::UNITS.each do |u| %>
