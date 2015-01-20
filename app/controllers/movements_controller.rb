@@ -18,7 +18,7 @@ class MovementsController < ApplicationController
     end
   end
 
-  # DELETE /movements
+  # DELETE /movements/1
   def destroy
     if @movement.cancellable? && @comeback = @movement.cancel!
       notify_dispatcher @comeback.arrival
