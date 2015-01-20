@@ -83,6 +83,10 @@ en:
       time: "Time"
       title: "Title"
       no_reports: "You have no reports."
+    show:
+      delete: "Delete"
+    destroy:
+      deleted: "The report has been deleted."
     attack:
       title:
         same_player: "Attack of %{origin} on %{target}"
