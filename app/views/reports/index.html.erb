@@ -7,11 +7,17 @@
     <tr>
       <th><%= t '.time' %></th>
       <th><%= t '.title' %></th>
+      <th></th>
     </tr>
     <% @reports.each do |report| %>
       <tr>
         <td><%= l Time.at(report.time) %></td>
         <td><%= link_to report.title, report_path(report) %></td>
+        <td>
+          <% unless report.read %>
+            <span class="glyphicon glyphicon-envelope"></span>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </table>

@@ -16,5 +16,6 @@ class ReportsController < ApplicationController
 
   def set_report
     @report = current_power.reports.find(params[:id])
+    @report.mark_as_read! unless @report.read
   end
 end
