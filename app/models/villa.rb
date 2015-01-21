@@ -13,14 +13,16 @@ class Villa < ActiveRecord::Base
   belongs_to :player
 
   has_many :building_queue_items, -> { extending QueueExtension, BuildingQueueExtension }, dependent: :delete_all,
-           after_add: ->(v, i) { v.building_queue_items_count = v.building_queue_items_count + 1 },
-           after_remove: ->(v, i) { v.building_queue_items_count = v.building_queue_items_count - 1 }
+           after_add: ->(v, i) { v.building_queue_items_count += 1 },
+           after_remove: ->(v, i) { v.building_queue_items_count -= 1 }
   has_many :research_queue_items, -> { extending QueueExtension, ResearchQueueExtension }, dependent: :delete_all,
-           after_add: ->(v, i) { v.research_queue_items_count = v.research_queue_items_count + 1 },
-           after_remove: ->(v, i) { v.research_queue_items_count = v.research_queue_items_count - 1 }
+           after_add: ->(v, i) { v.research_queue_items_count += 1 },
+           after_remove: ->(v, i) { v.research_queue_items_count -= 1 }
   has_many :unit_queue_items, -> { extending UnitQueueExtension }, dependent: :delete_all,
-           after_add: ->(v, i) { v.unit_queue_items_count = v.unit_queue_items_count + 1 },
-           after_remove: ->(v, i) { v.unit_queue_items_count = v.unit_queue_items_count - 1 }
+           after_add: ->(v, i) { v.unit_queue_items_count += 1 },
+           after_remove: ->(v, i) { v.unit_queue_items_count -= 1 }
+           # These hooks have to be used because Rails’ counter caching
+           # only updates the database.
 
   has_many :outgoings,
            -> { includes(:target).order(:arrival) },
