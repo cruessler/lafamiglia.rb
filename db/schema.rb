@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150102181130) do
+ActiveRecord::Schema.define(version: 20150121174825) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -33,6 +33,9 @@ ActiveRecord::Schema.define(version: 20150102181130) do
     t.integer  "unit_1"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "resource_1"
+    t.float    "resource_2"
+    t.float    "resource_3"
   end
 
   add_index "movements", ["arrival"], name: "index_movements_on_arrival"
