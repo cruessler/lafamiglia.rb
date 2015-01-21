@@ -2,6 +2,8 @@
 
 one:
   name: First player
+  email: jane@doe.com
 
 two:
   name: Second player
+  email: john@doe.com
