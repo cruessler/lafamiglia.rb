@@ -1,5 +1,5 @@
 class Movement < ActiveRecord::Base
-  include LaFamiglia::Resources::Readers
+  include LaFamiglia::Resources::Accessors
   include LaFamiglia::Units::Accessors
 
   belongs_to :origin, class_name: 'Villa'

@@ -36,7 +36,11 @@ module Dispatcher
       Villa.transaction do
         if combat.attacker_survived?
           comeback = @attack_movement.cancel!
+
           comeback.units = combat.attacker_after_combat
+          comeback.resources = combat.plundered_resources
+          target.subtract_resources!(combat.plundered_resources)
+
           comeback.save
 
           dispatcher.add_event_to_queue ComebackEvent.new(comeback)

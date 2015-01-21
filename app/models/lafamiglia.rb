@@ -22,10 +22,16 @@ module LaFamiglia
   RESOURCES = [ :resource_1, :resource_2, :resource_3 ]
 
   module Resources
-    module Readers
+    module Accessors
       def resources
         LaFamiglia::RESOURCES.each_with_object({}) do |r, hash|
           hash[r] = self.send r
+        end
+      end
+
+      def resources= resources
+        LaFamiglia::RESOURCES.each do |r|
+          self[r] = resources[r]
         end
       end
     end

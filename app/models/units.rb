@@ -69,6 +69,10 @@ module LaFamiglia
     def defense number
       number * 2
     end
+
+    def load number
+      number * 10
+    end
   end
 
   UNITS = [ Beppo.new ]

@@ -98,6 +98,7 @@ en:
       defender: "Defender"
       attacker_won: "The attacker has won."
       defender_won: "The defender has won."
+      plundered_resources: "Plundered resources"
     units:
       before_combat: "before combat"
       losses: "losses"

@@ -5,7 +5,7 @@ require_dependency 'extensions/research_queue_extension'
 require_dependency 'extensions/unit_queue_extension'
 
 class Villa < ActiveRecord::Base
-  include LaFamiglia::Resources::Readers
+  include LaFamiglia::Resources::Accessors
   include LaFamiglia::Buildings::Readers
   include LaFamiglia::Researches::Readers
   include LaFamiglia::Units::Accessors
