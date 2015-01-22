@@ -9,6 +9,8 @@ module ApplicationHelper
   end
 
   def countdown_to timestamp
-    time_diff timestamp - LaFamiglia.now
+    content_tag :span,
+                time_diff(timestamp - LaFamiglia.now),
+                class: 'countdown'
   end
 end
