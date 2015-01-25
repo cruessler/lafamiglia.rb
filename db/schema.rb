@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150121174825) do
+ActiveRecord::Schema.define(version: 20150123103755) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -24,6 +24,33 @@ ActiveRecord::Schema.define(version: 20150121174825) do
 
   add_index "building_queue_items", ["completion_time"], name: "index_building_queue_items_on_completion_time"
   add_index "building_queue_items", ["villa_id"], name: "index_building_queue_items_on_villa_id"
+
+  create_table "message_statuses", force: true do |t|
+    t.integer  "player_id"
+    t.integer  "message_id"
+    t.boolean  "read"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "message_statuses", ["message_id"], name: "index_message_statuses_on_message_id"
+  add_index "message_statuses", ["player_id"], name: "index_message_statuses_on_player_id"
+
+  create_table "messages", force: true do |t|
+    t.integer  "sender_id"
+    t.text     "text"
+    t.integer  "time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "messages_receivers", id: false, force: true do |t|
+    t.integer "message_id", null: false
+    t.integer "player_id",  null: false
+  end
+
+  add_index "messages_receivers", ["message_id"], name: "index_messages_receivers_on_message_id"
+  add_index "messages_receivers", ["player_id"], name: "index_messages_receivers_on_player_id"
 
   create_table "movements", force: true do |t|
     t.string   "type"
