@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resources :movements, only: :destroy
 
+  resources :messages, only: [ :index ]
   resources :reports, only: [ :index, :show, :destroy ]
 
   get '/map(/:x/:y)', to: 'map#show', as: :map

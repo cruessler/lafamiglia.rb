@@ -6,10 +6,14 @@ class Power
   end
 
   power :villas do
-    Villa.where(player_id: @player.id)
+    @player.villas
+  end
+
+  power :message_statuses do
+    @player.message_statuses
   end
 
   power :reports do
-    Report.where(player_id: @player.id)
+    @player.reports
   end
 end
