@@ -82,6 +82,7 @@ GEM
     mime-types (2.4.3)
     minitest (5.5.0)
     multi_json (1.10.1)
+    mysql2 (0.3.18)
     orm_adapter (0.5.0)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -154,6 +155,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   kaminari (~> 0.16.0)
+  mysql2
   rails (~> 4.1.0)
   rails-i18n (~> 4.0.0.pre)
   sass-rails (~> 4.0.2)
