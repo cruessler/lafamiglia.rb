@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123103755) do
+ActiveRecord::Schema.define(version: 20150222113406) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 20150123103755) do
     t.datetime "updated_at"
   end
 
-  add_index "reports", ["player_id"], name: "index_reports_on_player_id"
+  add_index "reports", ["player_id", "time"], name: "index_reports_on_player_id_and_time"
 
   create_table "research_queue_items", force: true do |t|
     t.integer  "villa_id"
