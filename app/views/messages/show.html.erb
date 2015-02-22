@@ -1,0 +1,16 @@
+<h3>
+  <%= t '.message_from', from: @message.sender %>
+  <small><%= t '.sent_to', receivers: @message.receivers.join(', ') %></small>
+</h3>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= l Time.at(@message.time) %>
+  </div>
+  <div class="panel-body">
+    <%= @message.text %>
+  </div>
+</div>
+
+<%= link_to t('.delete'), message_url(@message),
+                          method: :delete, class: "btn btn-primary" %>

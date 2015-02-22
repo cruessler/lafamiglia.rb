@@ -13,7 +13,7 @@
     <% @message_statuses.each do |status| %>
       <% message = status.message %>
       <tr>
-        <td><%= l Time.at(message.time) %></td>
+        <td><%= link_to (l Time.at(message.time)), message_path(message) %></td>
         <td><%= message.sender %></td>
         <td><%= message.receivers.join ', ' %></td>
         <td>

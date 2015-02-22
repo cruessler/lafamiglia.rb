@@ -14,4 +14,8 @@ class MessageStatus < ActiveRecord::Base
       message.destroy
     end
   end
+
+  def mark_as_read!
+    update_attribute :read, true
+  end
 end

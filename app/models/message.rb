@@ -21,4 +21,8 @@ class Message < ActiveRecord::Base
       message_statuses.create(player: r)
     end
   end
+
+  def status_for player
+    message_statuses.find_by(player: player)
+  end
 end

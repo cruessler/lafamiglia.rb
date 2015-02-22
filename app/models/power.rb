@@ -9,6 +9,10 @@ class Power
     @player.villas
   end
 
+  power :messages do
+    @player.messages
+  end
+
   power :message_statuses do
     @player.message_statuses
   end

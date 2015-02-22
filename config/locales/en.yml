@@ -85,6 +85,12 @@ en:
       receivers: "To"
       time: "Time"
       no_messages: "You have no messages."
+    show:
+      message_from: "Message from %{from}"
+      sent_to: "sent to: %{receivers}"
+      delete: "Delete"
+    destroy:
+      deleted: "The message has been deleted."
   reports:
     index:
       header: "Reports"
