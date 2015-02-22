@@ -31,3 +31,6 @@
 
 # Ignore capistrano’s metrics.
 /.capistrano
+
+# Ignore capistrano tasks specific to a certain server.
+/lib/capistrano/tasks/copy_assets_to_public_dir.rake
