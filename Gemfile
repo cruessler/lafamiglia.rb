@@ -38,7 +38,10 @@ end
 # gem 'unicorn'
 
 # Use Capistrano for deployment
-# gem 'capistrano', group: :development
+# http://capistranorb.com/documentation/getting-started/installation/
+group :development do
+  gem 'capistrano-rails', '~> 1.1.1'
+end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
