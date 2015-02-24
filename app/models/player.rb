@@ -10,7 +10,10 @@ class Player < ActiveRecord::Base
   has_many :message_statuses
   has_many :messages, through: :message_statuses
 
+  validates_presence_of :name
+  validates_uniqueness_of :name
+
   def to_s
-    name || "player #{id}"
+    name
   end
 end

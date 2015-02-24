@@ -26,6 +26,7 @@ en:
           password: 'Minimum 8 characters.'
     placeholders:
       defaults:
+        name: 'Name'
         email: 'E-mail'
         password: 'Password'
         password_confirmation: 'Confirm password'
