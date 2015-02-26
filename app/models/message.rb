@@ -11,7 +11,7 @@ class Message < ActiveRecord::Base
   after_create :create_message_statuses
 
   def set_time
-    time = LaFamiglia.now
+    self.time = LaFamiglia.now
   end
 
   def create_message_statuses
