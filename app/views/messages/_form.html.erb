@@ -1,0 +1,12 @@
+<%= message_form_for @message,
+                    wrapper: :horizontal_form,
+                    html: { class: 'form-horizontal' } do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.players :receivers %>
+  <%= f.input :text %>
+
+  <div class="form-actions">
+    <%= f.button :submit, t('.create'), class: 'btn-primary' %>
+  </div>
+<% end %>

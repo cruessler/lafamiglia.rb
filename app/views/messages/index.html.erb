@@ -3,12 +3,12 @@
 </div>
 
 <% unless @message_statuses.empty? %>
-  <table class="table table-striped">
+  <table class="table table-striped messages">
     <tr>
-      <th><%= t '.time' %></th>
-      <th><%= t '.sender' %></th>
-      <th><%= t '.receivers' %></th>
-      <th></th>
+      <th class="time"><%= t '.time' %></th>
+      <th class="sender"><%= t '.sender' %></th>
+      <th class="receivers"><%= t '.receivers' %></th>
+      <th class="status"></th>
     </tr>
     <% @message_statuses.each do |status| %>
       <% message = status.message %>
@@ -27,3 +27,9 @@
 <% else %>
   <p><%= t '.no_messages' %></p>
 <% end %>
+
+<h3>
+  <%= t '.new' %>
+</h3>
+
+<%= render partial: 'form' %>

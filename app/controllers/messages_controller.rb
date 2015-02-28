@@ -7,9 +7,26 @@ class MessagesController < ApplicationController
   def show
   end
 
+  def create
+    @message = Message.create_with(sender: current_player)
+                      .new(message_params)
+
+    respond_to do |format|
+      if @message.save
+        format.html { redirect_to messages_path, notice: t('.created') }
+      else
+        format.html do
+          set_message_statuses
+          render action: 'index'
+        end
+      end
+    end
+  end
+
   # GET /messages
   def index
-    @message_statuses = current_power.message_statuses.includes(:message)
+    @message = Message.new
+    set_message_statuses
   end
 
   # DELETE /messages/1
@@ -24,5 +41,14 @@ class MessagesController < ApplicationController
     @message = current_power.messages.find(params[:id])
     @message_status = @message.status_for current_player
     @message_status.mark_as_read! unless @message_status.read
+  end
+
+  def set_message_statuses
+    @message_statuses = current_power.message_statuses.includes(:message)
+                                                      .order('messages.time DESC')
+  end
+
+  def message_params
+    params.require(:message).permit(:text, :receiver_ids => [])
   end
 end

@@ -79,18 +79,23 @@ en:
       research_time: "Research time"
       research!: "Research"
   messages:
+    create:
+      created: "The message has been sent."
     index:
       header: "Messages"
       sender: "From"
       receivers: "To"
       time: "Time"
       no_messages: "You have no messages."
+      new: "New message"
     show:
       message_from: "Message from %{from}"
       sent_to: "sent to: %{receivers}"
       delete: "Delete"
     destroy:
       deleted: "The message has been deleted."
+    form:
+      create: "Send message"
   reports:
     index:
       header: "Reports"
