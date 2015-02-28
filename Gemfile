@@ -66,3 +66,6 @@ gem 'consul', '~> 0.12.0'
 
 # https://github.com/amatsuda/kaminari
 gem 'kaminari', '~> 0.16.0'
+
+# https://github.com/leshill/handlebars_assets
+gem 'handlebars_assets', '~> 0.17'

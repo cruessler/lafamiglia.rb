@@ -128,3 +128,9 @@ en:
     submit:
       movement:
         create: "Attack!"
+    placeholders:
+      players: "Choose players"
+    typeahead:
+      remove: "Remove"
+      players:
+        header: "Choose a player"

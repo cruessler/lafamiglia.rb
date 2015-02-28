@@ -24,4 +24,7 @@
 //= require bootstrap-sass-official/assets/javascripts/bootstrap/modal
 //= require bootstrap-sass-official/assets/javascripts/bootstrap/tooltip
 //= require bootstrap-sass-official/assets/javascripts/bootstrap/popover
+//= require handlebars.runtime
+//= require typeahead.js/dist/typeahead.bundle
+//= require globals
 //= require_tree .

@@ -2,10 +2,15 @@ $icon-font-path: 'bootstrap-sass-official/assets/fonts/bootstrap/';
 $font-family-sans-serif: Lato, 'DejaVu Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $headings-font-weight: normal;
 
+$dropdown-link-hover-bg: darken(#f5f5f5, 7.5%);
+
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap";
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap/theme";
 
+@import "typeahead.js-bootstrap3.less/typeahead";
+
 @import "devise";
+@import "selectors";
 
 @import "map";
 @import "movements";
