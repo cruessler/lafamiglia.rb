@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   devise_for :players
 
+  resources :players, only: [] do
+    collection do
+      get 'search(/:query)', to: :search, as: 'search', constraints: { query: /.*/ }
+    end
+  end
+
   resources :villas, only: [ :index, :show ] do
     resources :building_queue_items, only: [ :create, :destroy ]
     resources :research_queue_items, only: [ :create, :destroy ]
