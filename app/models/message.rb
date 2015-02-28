@@ -9,6 +9,11 @@ class Message < ActiveRecord::Base
 
   before_create :set_time
   after_create :create_message_statuses
+  before_validation :remove_sender_from_receivers
+
+  def remove_sender_from_receivers
+    self.receivers = receivers.reject { |r| r.id == sender.id }
+  end
 
   def set_time
     self.time = LaFamiglia.now
