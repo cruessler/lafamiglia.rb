@@ -20,7 +20,7 @@ class Message < ActiveRecord::Base
   end
 
   def create_message_statuses
-    message_statuses.create(player: sender)
+    message_statuses.create(player: sender, read: true)
 
     receivers.each do |r|
       message_statuses.create(player: r)
