@@ -103,6 +103,7 @@
       <th><%= t 'building' %></th>
       <th>Build time</th>
       <th>Completion time</th>
+      <th></th>
       <th>Cancel</th>
     </tr>
     <% current_villa.building_queue_items.each do |i| %>
@@ -110,6 +111,7 @@
         <td><%= i.building_id %></td>
         <td><%= i.build_time %>
         <td><%= l Time.at(i.completion_time) %></td>
+        <td><%= countdown_to i.completion_time %></td>
         <td>
           <%= link_to_build_cancel i %>
         </td>
@@ -128,6 +130,7 @@
       <th><%= t 'research' %></th>
       <th>Research time</th>
       <th>Completion time</th>
+      <th></th>
       <th>Cancel</th>
     </tr>
     <% current_villa.research_queue_items.each do |i| %>
@@ -135,6 +138,7 @@
         <td><%= i.research_id %></td>
         <td><%= i.research_time %>
         <td><%= l Time.at(i.completion_time) %></td>
+        <td><%= countdown_to i.completion_time %></td>
         <td>
           <%= link_to_research_cancel i %>
         </td>
@@ -154,6 +158,7 @@
       <th>Number</th>
       <th>Build time</th>
       <th>Completion time</th>
+      <th></th>
       <th>Cancel</th>
     </tr>
     <% current_villa.unit_queue_items.each do |i| %>
@@ -162,6 +167,7 @@
         <td><%= i.number %></td>
         <td><%= i.build_time %>
         <td><%= l Time.at(i.completion_time) %></td>
+        <td><%= countdown_to i.completion_time %></td>
         <td>
           <%= link_to_recruit_cancel i %>
         </td>
