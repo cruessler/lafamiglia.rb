@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301192525) do
+ActiveRecord::Schema.define(version: 20150301195120) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -90,11 +90,13 @@ ActiveRecord::Schema.define(version: 20150301192525) do
     t.integer  "failed_attempts",        default: 0,  null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.integer  "points"
   end
 
   add_index "players", ["confirmation_token"], name: "index_players_on_confirmation_token", unique: true
   add_index "players", ["email"], name: "index_players_on_email", unique: true
   add_index "players", ["name"], name: "index_players_on_name", unique: true
+  add_index "players", ["points"], name: "index_players_on_points"
   add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
   add_index "players", ["unlock_token"], name: "index_players_on_unlock_token", unique: true
 

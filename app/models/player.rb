@@ -13,6 +13,10 @@ class Player < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
 
+  def recalc_points!
+    update_attribute :points, villas.sum(:points)
+  end
+
   def to_s
     name
   end

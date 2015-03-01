@@ -100,6 +100,7 @@ class Villa < ActiveRecord::Base
   end
 
   def process_until!(timestamp)
+    points_changed = false
     finished_items = []
 
     if building_queue_items_count > 0
@@ -125,6 +126,7 @@ class Villa < ActiveRecord::Base
           when BuildingQueueItem
             increment(i.building.key)
             recalc_points
+            points_changed = true
             building_queue_items.destroy i
           when ResearchQueueItem
             increment(i.research.key)
@@ -135,6 +137,7 @@ class Villa < ActiveRecord::Base
         end
 
         save(validate: false)
+        player.recalc_points! if points_changed
       end
     end
 
