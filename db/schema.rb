@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222113406) do
+ActiveRecord::Schema.define(version: 20150301192525) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(version: 20150222113406) do
     t.integer  "research_queue_items_count"
     t.integer  "building_2"
     t.integer  "research_1"
+    t.integer  "points"
   end
 
   add_index "villas", ["player_id"], name: "index_villas_on_player_id"

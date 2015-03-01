@@ -68,8 +68,10 @@ en:
     index:
       header: "Your villas"
       name: "Name"
+      points: "Points"
       show_on_map: "Show on map"
     show:
+      points: "Points"
       building: "Building"
       level: "Level"
       costs: "Costs"

@@ -3,7 +3,8 @@
 </h2>
 
 <div>
-  You’re viewing the villa located at <%= coordinates current_villa %>.
+  You’re viewing the villa located at <%= coordinates current_villa %>.<br />
+  This villa has <%= current_villa.points %> points.
 </div>
 
 <h3>
@@ -14,6 +15,7 @@
   <tr>
     <th><%= t '.building' %></th>
     <th><%= t '.level' %></th>
+    <th><%= t '.points' %></th>
     <th><%= t '.costs' %></th>
     <th><%= t '.build_time' %></th>
     <th><%= t '.build' %></th>
@@ -22,6 +24,7 @@
     <tr>
       <td><%= b.name %></td>
       <td><%= current_villa.level(b) %> (<%= current_villa.virtual_building_level(b) %>)</td>
+      <td><%= b.points(current_villa.level(b)) %></td>
       <% if current_villa.virtual_building_level(b) < b.maxlevel %>
         <td><%= costs b.costs(current_villa.virtual_building_level(b)) %></td>
         <td><%= b.build_time current_villa.virtual_building_level(b) %></td>

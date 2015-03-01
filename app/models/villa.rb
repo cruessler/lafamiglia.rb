@@ -81,6 +81,8 @@ class Villa < ActiveRecord::Base
     self.supply = 100
     self.used_supply = 0
     self.unit_1 = 0
+
+    recalc_points
   end
 
   def save_unit_queue
@@ -88,6 +90,12 @@ class Villa < ActiveRecord::Base
       if (first = unit_queue_items.first).changed?
         first.save(validate: false)
       end
+    end
+  end
+
+  def recalc_points
+    self.points = LaFamiglia::BUILDINGS.inject(0) do |sum, b|
+      sum + b.points(level b)
     end
   end
 
@@ -116,6 +124,7 @@ class Villa < ActiveRecord::Base
           case i
           when BuildingQueueItem
             increment(i.building.key)
+            recalc_points
             building_queue_items.destroy i
           when ResearchQueueItem
             increment(i.research.key)

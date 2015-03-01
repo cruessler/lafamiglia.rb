@@ -15,6 +15,10 @@ module LaFamiglia
     def defense level
       0
     end
+
+    def points level
+      (level ** 1.5).to_i
+    end
   end
 
   module Buildings
