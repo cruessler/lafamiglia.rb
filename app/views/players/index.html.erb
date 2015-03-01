@@ -1,0 +1,16 @@
+<h2><%= t '.header' %></h2>
+
+<h4>Currently the number of players is <%= Player.count %>.</h4>
+
+<table class="table table-striped table-condensed">
+  <tr>
+    <th><%= t '.name' %></th>
+    <th><%= t '.points' %></th>
+  </tr>
+  <% @players.each do |p| %>
+    <tr>
+      <td><%= p.name %></td>
+      <td><%= p.points %></td>
+    </tr>
+  <% end %>
+</table>

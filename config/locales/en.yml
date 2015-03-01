@@ -40,6 +40,8 @@ en:
   layouts:
     application:
       overview: "Overview"
+      villas: "Villas"
+      players: "Players"
       movements: "Troop movements"
       map: "Map"
       messages: "Messages"
@@ -64,6 +66,11 @@ en:
       target: "Target"
       units_available: "Number of units available: %d"
       cancel: "Cancel"
+  players:
+    index:
+      header: "Player ranking"
+      name: "Name"
+      points: "Points"
   villas:
     index:
       header: "Your villas"

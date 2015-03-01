@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :players
 
-  resources :players, only: [] do
+  resources :players, only: [ :index ] do
     collection do
       get 'search(/:query)', to: :search, as: 'search', constraints: { query: /.*/ }
     end

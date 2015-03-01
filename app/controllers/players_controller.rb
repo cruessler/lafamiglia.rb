@@ -1,6 +1,11 @@
 class PlayersController < ApplicationController
   SEARCH_FIELD_ITEM_LIMIT = 10
 
+  # GET /players
+  def index
+    @players = Player.all.order('players.points DESC')
+  end
+
   # GET /sources/search/for.json
   def search
     respond_to do |format|
