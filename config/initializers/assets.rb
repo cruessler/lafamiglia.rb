@@ -13,3 +13,7 @@ Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets', 'co
 # Thus the font directory of bootstrap has to be added to the asset search paths.
 # https://github.com/twbs/bootstrap-sass/issues/592#issuecomment-46108968
 Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets', 'components', 'bootstrap-sass-official', 'assets', 'fonts')
+
+# Minimum Sass number precision required by bootstrap-sass.
+# See https://github.com/twbs/bootstrap-sass#bower-with-rails
+::Sass::Script::Number.precision = [ 8, ::Sass::Script::Number.precision ].max
