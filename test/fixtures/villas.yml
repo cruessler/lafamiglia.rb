@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  last_processed: <%= Time.now.to_i %>
   player: one
   x: 0
   y: 0
