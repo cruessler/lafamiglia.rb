@@ -64,6 +64,13 @@ module QueueExtension
     end
 
     return transaction do
+      # refunds has to be called before destroy(queue_item) as it uses
+      # villa.building_queue_items to calculate the refunds. If the item
+      # would have been destroyed here already, the villa would gain
+      # incorrect refunds.
+      villa.add_resources!(refunds queue_item, time_diff)
+      villa.save
+
       destroy(queue_item)
 
       each do |i|
@@ -72,9 +79,6 @@ module QueueExtension
           i.save
         end
       end
-
-      villa.add_resources!(refunds queue_item, time_diff)
-      villa.save
 
       true
     end
