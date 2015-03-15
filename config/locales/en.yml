@@ -5,6 +5,7 @@ en:
   requirements_not_met: "requirements not met"
   maxlevel_reached: "maximum level reached"
   building: "Building"
+  research: "Research"
   unit: "Unit"
   supply: "Supply"
   villa:
