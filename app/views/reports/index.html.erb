@@ -5,13 +5,13 @@
 <% unless @reports.empty? %>
   <table class="table table-striped">
     <tr>
-      <th><%= t '.time' %></th>
+      <th><%= t '.delivered_at' %></th>
       <th><%= t '.title' %></th>
       <th></th>
     </tr>
     <% @reports.each do |report| %>
       <tr>
-        <td><%= l Time.at(report.time) %></td>
+        <td><%= l report.delivered_at %></td>
         <td><%= link_to report.title, report_path(report) %></td>
         <td>
           <% unless report.read %>

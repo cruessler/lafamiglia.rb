@@ -7,7 +7,7 @@ class Message < ActiveRecord::Base
   validates_presence_of :receivers, on: :create
   validates_presence_of :text, on: :create
 
-  before_create :set_time
+  before_create :set_sent_at
   after_create :create_message_statuses
   before_validation :remove_sender_from_receivers
 
@@ -15,8 +15,8 @@ class Message < ActiveRecord::Base
     self.receivers = receivers.reject { |r| r.id == sender.id }
   end
 
-  def set_time
-    self.time = LaFamiglia.now
+  def set_sent_at
+    self.sent_at = LaFamiglia.now
   end
 
   def create_message_statuses

@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
 
   # GET /reports
   def index
-    @reports = current_power.reports.order 'time DESC'
+    @reports = current_power.reports.order 'reports.delivered_at DESC'
   end
 
   # DELETE /reports/1

@@ -1,7 +1,7 @@
 module Dispatcher
   class CombatReportGenerator
-    def initialize(time, combat_data)
-      @time, @combat_data = time, combat_data
+    def initialize(delivered_at, combat_data)
+      @delivered_at, @combat_data = delivered_at, combat_data
     end
 
     def deliver!(origin, target)
@@ -10,13 +10,13 @@ module Dispatcher
       CombatReport.create(player: @origin.player,
                           title: title_for(@origin),
                           data: data,
-                          time: @time)
+                          delivered_at: @delivered_at)
 
       if @origin.player != @target.player
         CombatReport.create(player: @target.player,
                             title: title_for(@target),
                             data: data,
-                            time: @time)
+                            delivered_at: @delivered_at)
       end
     end
 

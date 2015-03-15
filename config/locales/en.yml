@@ -58,7 +58,7 @@ en:
     cancelled: "Your attack has been cancelled."
     index:
       header: "Troop movements"
-      arrival: "Arrival"
+      arrives_at: "Arrives at"
       time_remaining: "Time remaining"
       no_movements: "There are no movements."
     new:
@@ -94,7 +94,7 @@ en:
       header: "Messages"
       sender: "From"
       receivers: "To"
-      time: "Time"
+      sent_at: "Sent at"
       no_messages: "You have no messages."
       new: "New message"
     show:
@@ -108,7 +108,7 @@ en:
   reports:
     index:
       header: "Reports"
-      time: "Time"
+      delivered_at: "Delivered at"
       title: "Title"
       no_reports: "You have no reports."
     show:

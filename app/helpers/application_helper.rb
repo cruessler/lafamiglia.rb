@@ -12,9 +12,9 @@ module ApplicationHelper
     '%02d:%02d:%02d' % [ diff / 3600, (diff % 3600) / 60, diff % 60 ]
   end
 
-  def countdown_to timestamp
+  def countdown_to time
     content_tag :span,
-                time_diff(timestamp - LaFamiglia.now),
+                time_diff(time - LaFamiglia.now),
                 class: 'countdown'
   end
 end

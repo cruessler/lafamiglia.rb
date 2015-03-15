@@ -2,7 +2,7 @@ class AttackMovement < Movement
   validate :enough_units, :units_selected,
            :target_not_owned_by_attacker
 
-  after_validation :calculate_arrival, on: :create
+  after_validation :calculate_arrives_at, on: :create
 
   after_create :subtract_units_from_origin!
 
@@ -29,8 +29,8 @@ class AttackMovement < Movement
     errors.add(:base, I18n.t('errors.movements.target_is_own')) if target.player == origin.player
   end
 
-  def calculate_arrival
-    self.arrival = LaFamiglia.now + duration
+  def calculate_arrives_at
+    self.arrives_at = LaFamiglia.now + duration
   end
 
   def subtract_units_from_origin!
@@ -39,15 +39,17 @@ class AttackMovement < Movement
   end
 
   def cancellable?
-    arrival > LaFamiglia.now
+    arrives_at > LaFamiglia.now
   end
 
   def cancel!
-    #           = LaFamiglia.now + duration - (arrival - LaFamiglia.now)
-    new_arrival = LaFamiglia.now + LaFamiglia.now - arrival + duration
+    # new_arrives_at = LaFamiglia.now + duration_of_return
+    # duration_of_return = duration - time_remaining
+    # time_remaining = arrives_at - LaFamiglia.now
+    new_arrives_at = LaFamiglia.now + duration - (arrives_at - LaFamiglia.now)
     new_attributes = attributes
     new_attributes.delete('type')
-    new_attributes[:arrival] = new_arrival
+    new_attributes[:arrives_at] = new_arrives_at
     comeback = ComebackMovement.new(new_attributes)
     transaction do
       destroy

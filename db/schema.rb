@@ -11,18 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301195120) do
+ActiveRecord::Schema.define(version: 20150314203354) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
     t.integer  "building_id"
-    t.integer  "completion_time"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "build_time"
+    t.datetime "completed_at"
   end
 
-  add_index "building_queue_items", ["completion_time"], name: "index_building_queue_items_on_completion_time"
   add_index "building_queue_items", ["villa_id"], name: "index_building_queue_items_on_villa_id"
 
   create_table "message_statuses", force: true do |t|
@@ -39,9 +38,9 @@ ActiveRecord::Schema.define(version: 20150301195120) do
   create_table "messages", force: true do |t|
     t.integer  "sender_id"
     t.text     "text"
-    t.integer  "time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "sent_at"
   end
 
   create_table "messages_receivers", id: false, force: true do |t|
@@ -54,7 +53,6 @@ ActiveRecord::Schema.define(version: 20150301195120) do
 
   create_table "movements", force: true do |t|
     t.string   "type"
-    t.integer  "arrival"
     t.integer  "origin_id"
     t.integer  "target_id"
     t.integer  "unit_1"
@@ -63,9 +61,9 @@ ActiveRecord::Schema.define(version: 20150301195120) do
     t.float    "resource_1"
     t.float    "resource_2"
     t.float    "resource_3"
+    t.datetime "arrives_at"
   end
 
-  add_index "movements", ["arrival"], name: "index_movements_on_arrival"
   add_index "movements", ["origin_id"], name: "index_movements_on_origin_id"
   add_index "movements", ["target_id"], name: "index_movements_on_target_id"
 
@@ -103,38 +101,36 @@ ActiveRecord::Schema.define(version: 20150301195120) do
   create_table "reports", force: true do |t|
     t.string   "type"
     t.integer  "player_id"
-    t.integer  "time"
     t.string   "title"
     t.text     "data"
     t.boolean  "read"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "delivered_at"
   end
 
-  add_index "reports", ["player_id", "time"], name: "index_reports_on_player_id_and_time"
+  add_index "reports", ["player_id", "delivered_at"], name: "index_reports_on_player_id_and_delivered_at"
 
   create_table "research_queue_items", force: true do |t|
     t.integer  "villa_id"
     t.integer  "research_id"
     t.integer  "research_time"
-    t.integer  "completion_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "completed_at"
   end
 
-  add_index "research_queue_items", ["completion_time"], name: "index_research_queue_items_on_completion_time"
   add_index "research_queue_items", ["villa_id"], name: "index_research_queue_items_on_villa_id"
 
   create_table "unit_queue_items", force: true do |t|
     t.integer  "villa_id"
     t.integer  "unit_id"
     t.integer  "number"
-    t.integer  "completion_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "completed_at"
   end
 
-  add_index "unit_queue_items", ["completion_time"], name: "index_unit_queue_items_on_completion_time"
   add_index "unit_queue_items", ["villa_id"], name: "index_unit_queue_items_on_villa_id"
 
   create_table "villas", force: true do |t|
@@ -148,7 +144,6 @@ ActiveRecord::Schema.define(version: 20150301195120) do
     t.float    "resource_2"
     t.float    "resource_3"
     t.integer  "storage_capacity"
-    t.integer  "last_processed"
     t.integer  "building_1"
     t.integer  "building_queue_items_count"
     t.integer  "unit_queue_items_count"
@@ -159,6 +154,7 @@ ActiveRecord::Schema.define(version: 20150301195120) do
     t.integer  "building_2"
     t.integer  "research_1"
     t.integer  "points"
+    t.datetime "processed_until"
   end
 
   add_index "villas", ["player_id"], name: "index_villas_on_player_id"

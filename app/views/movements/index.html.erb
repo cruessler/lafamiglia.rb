@@ -7,7 +7,7 @@
     <tr>
       <th>
       </th>
-      <th><%= t '.arrival' %></th>
+      <th><%= t '.arrives_at' %></th>
       <th><%= t '.time_remaining' %></th>
       <th>
       </th>
@@ -15,8 +15,8 @@
     <% current_villa.outgoings.each do |movement| %>
       <tr>
         <td><%= movement.id %> <%= movement.type %></td>
-        <td><%= l Time.at(movement.arrival) %></td>
-        <td><%= countdown_to movement.arrival %></td>
+        <td><%= l movement.arrives_at %></td>
+        <td><%= countdown_to movement.arrives_at %></td>
         <td><%= link_to_movement_cancel movement if movement.cancellable? %></td>
       </tr>
     <% end %>

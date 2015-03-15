@@ -42,7 +42,7 @@ module ResearchQueueExtension
     research_time = research.research_time(level)
     proxy_association.build(research_id: research.id,
                             research_time: research_time,
-                            completion_time: completion_time + research_time)
+                            completed_at: completed_at + research_time)
   end
 
   def error_message key

@@ -1,7 +1,7 @@
 module Dispatcher
   class ComebackEvent < Event
-    def self.find_until timestamp
-      comeback_movements = ComebackMovement.where([ 'arrival <= ?', timestamp ])
+    def self.find_until time
+      comeback_movements = ComebackMovement.where([ 'arrives_at <= ?', time ])
 
       comeback_movements.collect do |movement|
         ComebackEvent.new movement
@@ -9,19 +9,19 @@ module Dispatcher
     end
 
     def self.find_time_of_next
-      ComebackMovement.minimum :arrival
+      ComebackMovement.minimum :arrives_at
     end
 
     def initialize comeback_movement
       @comeback_movement = comeback_movement
     end
 
-    def time
-      @comeback_movement.arrival
+    def happens_at
+      @comeback_movement.arrives_at
     end
 
     def handle dispatcher
-      puts "processing comeback movement (id: #{@comeback_movement.id}, time: #{Time.at(time)})"
+      puts "processing comeback movement (id: #{@comeback_movement.id}, time: #{happens_at})"
       @comeback_movement.arrive!
     end
   end

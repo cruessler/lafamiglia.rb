@@ -19,10 +19,10 @@ class ApplicationController < ActionController::Base
     Power.new(current_player)
   end
 
-  def notify_dispatcher timestamp
+  def notify_dispatcher time
     begin
       Socket.unix(Dir.home + "/tmp/lafamiglia.sock") do |socket|
-        socket << timestamp.to_s
+        socket << time.to_s
       end
     rescue Exception => _
     end

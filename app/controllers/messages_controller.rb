@@ -45,7 +45,7 @@ class MessagesController < ApplicationController
 
   def set_message_statuses
     @message_statuses = current_power.message_statuses.includes(:message)
-                                                      .order('messages.time DESC')
+                                                      .order('messages.sent_at DESC')
   end
 
   def message_params

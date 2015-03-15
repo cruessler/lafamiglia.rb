@@ -3,15 +3,15 @@ module QueueExtension
     proxy_association.owner
   end
 
-  def finished_until timestamp
+  def finished_until time
     select do |i|
-      i.completion_time <= timestamp
+      i.completed_at <= time
     end
   end
 
-  def completion_time
+  def completed_at
     if last
-      last.completion_time
+      last.completed_at
     else
       LaFamiglia.now
     end
@@ -58,7 +58,7 @@ module QueueExtension
     end
 
     if queue_item == first
-      time_diff = queue_item.completion_time - LaFamiglia.now
+      time_diff = queue_item.completed_at - LaFamiglia.now
     else
       time_diff = queue_item.build_time
     end
@@ -67,8 +67,8 @@ module QueueExtension
       destroy(queue_item)
 
       each do |i|
-        if i.completion_time > queue_item.completion_time
-          i.completion_time = i.completion_time - time_diff
+        if i.completed_at > queue_item.completed_at
+          i.completed_at = i.completed_at - time_diff
           i.save
         end
       end

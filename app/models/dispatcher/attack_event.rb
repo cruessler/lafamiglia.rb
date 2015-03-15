@@ -1,7 +1,7 @@
 module Dispatcher
   class AttackEvent < Event
-    def self.find_until timestamp
-      attack_movements = AttackMovement.where([ 'arrival <= ?', timestamp ])
+    def self.find_until time
+      attack_movements = AttackMovement.where([ 'arrives_at <= ?', time ])
 
       attack_movements.collect do |movement|
         AttackEvent.new movement
@@ -9,26 +9,26 @@ module Dispatcher
     end
 
     def self.find_time_of_next
-      AttackMovement.minimum :arrival
+      AttackMovement.minimum :arrives_at
     end
 
     def initialize attack_movement
       @attack_movement = attack_movement
     end
 
-    def time
-      @attack_movement.arrival
+    def happens_at
+      @attack_movement.arrives_at
     end
 
     def handle dispatcher
-      puts "processing attack movement (id: #{@attack_movement.id}, time: #{Time.at(time)})"
+      puts "processing attack movement (id: #{@attack_movement.id}, time: #{happens_at})"
       origin, target = @attack_movement.origin, @attack_movement.target
 
       attacker = @attack_movement.units.merge(origin.researches)
       defender = target.buildings.merge(target.units).merge(target.researches).merge(target.resources)
 
-      origin.process_until! @attack_movement.arrival
-      target.process_until! @attack_movement.arrival
+      origin.process_until! @attack_movement.arrives_at
+      target.process_until! @attack_movement.arrives_at
 
       combat = Combat.new(attacker, defender)
       combat.calculate
@@ -54,7 +54,7 @@ module Dispatcher
         target.save
         origin.save
 
-        report = CombatReportGenerator.new(@attack_movement.arrival, combat.report_data)
+        report = CombatReportGenerator.new(@attack_movement.arrives_at, combat.report_data)
         report.deliver!(origin, target)
       end
     end

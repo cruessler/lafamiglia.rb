@@ -2,9 +2,9 @@ module Dispatcher
   class Event
     include Comparable
 
-    def self.find_until timestamp
+    def self.find_until time
       subclasses.collect do |c|
-        c.find_until timestamp
+        c.find_until time
       end.flatten.sort
     end
 
@@ -15,7 +15,7 @@ module Dispatcher
     end
 
     def <=> other
-      self.time <=> other.time
+      self.happens_at <=> other.happens_at
     end
   end
 end

@@ -3,21 +3,21 @@ require_dependency 'lafamiglia'
 module Dispatcher
   class Dispatcher
     def add_event_to_queue event
-      if event.time <= @process_until
+      if event.happens_at <= @process_until
         @events << event
         @events.sort!
       end
     end
 
-    def process_events_until! timestamp
-      @process_until = timestamp
+    def process_events_until! time
+      @process_until = time
       @events = Event.find_until @process_until
 
       if @events.count > 0
         puts "handling #{@events.count} events until #{Time.at(@process_until)}"
         until @events.empty?
           event = @events.shift
-          LaFamiglia.clock event.time
+          LaFamiglia.clock event.happens_at
           event.handle self
         end
       else
@@ -31,12 +31,12 @@ module Dispatcher
       if read_sockets # notification from webapp: event created
         if read_socket = read_sockets[0]
           client = read_socket.accept
-          time = client[0].read.to_i
+          happens_at = Time.parse(client[0].read)
           client[0].close
 
-          if time > Time.now.to_i
-            if @time_of_next_event.nil? || time < @time_of_next_event
-              @time_of_next_event = time
+          if happens_at > Time.now
+            if @time_of_next_event.nil? || happens_at < @time_of_next_event
+              @time_of_next_event = happens_at
             end
           end
         end
@@ -52,14 +52,14 @@ module Dispatcher
         @socket = socket
 
         loop do
-          now = Time.now.to_i
+          now = Time.now
 
           case
           when @time_of_next_event.nil?
             puts "IO.select without timeout"
             wait_for_next_event
           when @time_of_next_event > now
-            timeout = @time_of_next_event - now
+            timeout = (@time_of_next_event - now).ceil
             puts "IO.select with timeout #{timeout}"
             wait_for_next_event timeout
           else

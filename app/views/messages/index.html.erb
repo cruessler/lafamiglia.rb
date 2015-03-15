@@ -5,7 +5,7 @@
 <% unless @message_statuses.empty? %>
   <table class="table table-striped messages">
     <tr>
-      <th class="time"><%= t '.time' %></th>
+      <th class="sent_at"><%= t '.sent_at' %></th>
       <th class="sender"><%= t '.sender' %></th>
       <th class="receivers"><%= t '.receivers' %></th>
       <th class="status"></th>
@@ -13,7 +13,7 @@
     <% @message_statuses.each do |status| %>
       <% message = status.message %>
       <tr>
-        <td><%= link_to (l Time.at(message.time)), message_path(message) %></td>
+        <td><%= link_to (l message.sent_at), message_path(message) %></td>
         <td><%= message.sender %></td>
         <td><%= message.receivers.join ', ' %></td>
         <td>

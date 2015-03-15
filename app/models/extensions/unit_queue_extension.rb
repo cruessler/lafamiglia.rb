@@ -1,13 +1,13 @@
 module UnitQueueExtension
-  def finished_until timestamp
+  def finished_until time
     select do |i|
-      i.completion_time <= timestamp
+      i.completed_at <= time
     end
   end
 
-  def completion_time
+  def completed_at
     if last
-      last.completion_time
+      last.completed_at
     else
       LaFamiglia.now
     end
@@ -38,7 +38,7 @@ module UnitQueueExtension
 
     new_item = proxy_association.build(unit_id: unit.id,
                                       number: number,
-                                      completion_time: completion_time + unit.build_time(number))
+                                      completed_at: completed_at + unit.build_time(number))
     villa.subtract_resources! costs
     villa.used_supply = villa.used_supply + supply
 
@@ -54,7 +54,7 @@ module UnitQueueExtension
     villa = proxy_association.owner
 
     if queue_item == first
-      time_diff = queue_item.completion_time - LaFamiglia.now
+      time_diff = queue_item.completed_at - LaFamiglia.now
     else
       time_diff = queue_item.build_time
     end
@@ -65,14 +65,14 @@ module UnitQueueExtension
     # has not been touched by current_villa.process_until!
     # queue_item.number is likely to return a wrong number.
     # Thus, the number of units left has to be computed here.
-    number_left = ((queue_item.completion_time - LaFamiglia.now) / unit.build_time).to_i
+    number_left = ((queue_item.completed_at - LaFamiglia.now) / unit.build_time).to_i
 
     return transaction do
       destroy(queue_item)
 
       each do |i|
-        if i.completion_time > queue_item.completion_time
-          i.completion_time = i.completion_time - time_diff
+        if i.completed_at > queue_item.completed_at
+          i.completed_at = i.completed_at - time_diff
           i.save
         end
       end

@@ -45,7 +45,7 @@ module BuildingQueueExtension
     build_time = building.build_time(level)
     proxy_association.build(building_id: building.id,
                             build_time: build_time,
-                            completion_time: completion_time + build_time)
+                            completed_at: completed_at + build_time)
   end
 
   def error_message key

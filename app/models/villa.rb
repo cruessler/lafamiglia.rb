@@ -25,7 +25,7 @@ class Villa < ActiveRecord::Base
            # only updates the database.
 
   has_many :outgoings,
-           -> { includes(:target).order(:arrival) },
+           -> { includes(:target).order(:arrives_at) },
            class_name: 'Movement',
            foreign_key: 'origin_id'
 
@@ -65,7 +65,7 @@ class Villa < ActiveRecord::Base
   end
 
   def set_default_values
-    self.last_processed = LaFamiglia.now
+    self.processed_until = LaFamiglia.now
     self.building_queue_items_count = 0
     self.research_queue_items_count = 0
     self.unit_queue_items_count = 0
@@ -99,28 +99,28 @@ class Villa < ActiveRecord::Base
     end
   end
 
-  def process_until!(timestamp)
+  def process_until!(time)
     points_changed = false
     finished_items = []
 
     if building_queue_items_count > 0
-      finished_items.concat building_queue_items.finished_until(timestamp)
+      finished_items.concat building_queue_items.finished_until(time)
     end
 
     if research_queue_items_count > 0
-      finished_items.concat research_queue_items.finished_until(timestamp)
+      finished_items.concat research_queue_items.finished_until(time)
     end
 
     if unit_queue_items_count > 0
-      finished_items.concat unit_queue_items.finished_until(timestamp)
+      finished_items.concat unit_queue_items.finished_until(time)
     end
 
     if finished_items.length > 0
-      finished_items.sort_by! { |i| i.completion_time }
+      finished_items.sort_by! { |i| i.completed_at }
 
       transaction do
         finished_items.each do |i|
-          process_virtually_until! i.completion_time
+          process_virtually_until! i.completed_at
 
           case i
           when BuildingQueueItem
@@ -141,21 +141,30 @@ class Villa < ActiveRecord::Base
       end
     end
 
-    process_virtually_until! timestamp
+    process_virtually_until! time
   end
 
-  def process_virtually_until! timestamp
-    time_diff = timestamp - self.last_processed
+  # Processes resource gains and recruiting of units without saving
+  # the results to the database.
+  #
+  # Relies on the fact that the difference between self.processed_until
+  # and time makes sense for unit_queue_items.first.
+  #
+  # Must not be called more than once in a row as otherwise the amount
+  # of units recruited would be incorrect due to unit_queue_items.first
+  # not being saved in between.
+  def process_virtually_until! time
+    time_diff = time - self.processed_until
 
     if time_diff != 0
       add_resources!(resource_gains time_diff)
 
       if unit_queue_items_count > 0
-        add_units!(unit_queue_items.first.recruit_units_between!(self.last_processed, timestamp))
+        add_units!(unit_queue_items.first.recruit_units_between!(self.processed_until, time))
       end
     end
 
-    self.last_processed = timestamp
+    self.processed_until = time
   end
 
   def add_resources!(resources)
@@ -224,11 +233,11 @@ class Villa < ActiveRecord::Base
     send unit.key
   end
 
-  def resource_gains time
+  def resource_gains time_diff
     {
-      resource_1: time * 0.01,
-      resource_2: time * 0.01,
-      resource_3: time * 0.01
+      resource_1: time_diff * 0.01,
+      resource_2: time_diff * 0.01,
+      resource_3: time_diff * 0.01
     }
   end
 
