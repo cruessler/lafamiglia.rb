@@ -3,7 +3,7 @@ require 'test_helper'
 class VillaTest < ActiveSupport::TestCase
   setup do
     @v = villas(:one)
-    @v.processed_until = LaFamiglia.clock
+    @v.processed_until = LaFamiglia.now
   end
 
   test "should update counter caches" do
