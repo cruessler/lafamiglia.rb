@@ -2,6 +2,8 @@ ENV["RAILS_ENV"] ||= "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
+require 'lafamiglia'
+
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
 
@@ -14,5 +16,27 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   setup do
     LaFamiglia.clock
+  end
+
+  module Logout
+    def logout
+      delete_via_redirect "/players/sign_out"
+    end
+  end
+
+  def login player, test_module
+    open_session do |sess|
+      sess.extend Logout
+      sess.extend test_module
+
+      p = players(player)
+      # Setting the password in the fixture is not possible.
+      p.password = 'password'
+      p.save
+
+      sess.post_via_redirect "/players/sign_in", player: { email: p.email, password: 'password' }
+
+      assert_equal p, sess.assigns(:current_player)
+    end
   end
 end
