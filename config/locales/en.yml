@@ -70,6 +70,7 @@ en:
   players:
     index:
       header: "Player ranking"
+      position: "Position"
       name: "Name"
       points: "Points"
   villas:
