@@ -59,7 +59,7 @@ module LaFamiglia
     end
 
     def speed
-      100
+      2
     end
 
     def attack number

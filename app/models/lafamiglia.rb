@@ -19,6 +19,10 @@ module LaFamiglia
     10
   end
 
+  def self.unit_speed
+    10
+  end
+
   RESOURCES = [ :resource_1, :resource_2, :resource_3 ]
 
   module Resources
