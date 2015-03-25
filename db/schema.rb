@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150314203354) do
+ActiveRecord::Schema.define(version: 20150325222829) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -89,6 +89,8 @@ ActiveRecord::Schema.define(version: 20150314203354) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.integer  "points"
+    t.integer  "unread_messages_count"
+    t.integer  "unread_reports_count"
   end
 
   add_index "players", ["confirmation_token"], name: "index_players_on_confirmation_token", unique: true
