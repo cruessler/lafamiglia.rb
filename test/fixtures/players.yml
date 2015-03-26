@@ -3,7 +3,11 @@
 one:
   name: First player
   email: jane@doe.com
+  unread_messages_count: 0
+  unread_reports_count: 0
 
 two:
   name: Second player
   email: john@doe.com
+  unread_messages_count: 0
+  unread_reports_count: 0

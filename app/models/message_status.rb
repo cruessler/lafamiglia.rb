@@ -17,5 +17,6 @@ class MessageStatus < ActiveRecord::Base
 
   def mark_as_read!
     update_attribute :read, true
+    player.decrement! :unread_messages_count
   end
 end

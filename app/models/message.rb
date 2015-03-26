@@ -9,6 +9,7 @@ class Message < ActiveRecord::Base
 
   before_create :set_sent_at
   after_create :create_message_statuses
+  after_create :increment_unread_counter_cache_for_player
   before_validation :remove_sender_from_receivers
 
   def remove_sender_from_receivers
@@ -24,6 +25,12 @@ class Message < ActiveRecord::Base
 
     receivers.each do |r|
       message_statuses.create(player: r)
+    end
+  end
+
+  def increment_unread_counter_cache_for_player
+    receivers.each do |r|
+      r.increment! :unread_messages_count
     end
   end
 
