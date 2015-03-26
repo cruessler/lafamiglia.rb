@@ -1,11 +1,11 @@
 class Report < ActiveRecord::Base
   belongs_to :player
 
-  after_initialize :set_default_values
+  before_create :set_default_values
   after_create :increment_unread_counter_cache_for_player
 
   def set_default_values
-    self.read = false if self.read.nil?
+    self.read = false
   end
 
   def increment_unread_counter_cache_for_player
