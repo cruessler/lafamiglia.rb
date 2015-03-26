@@ -13,6 +13,15 @@ class Player < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
 
+  before_create :set_default_values
+
+  def set_default_values
+    self.unread_messages_count = 0
+    self.unread_reports_count = 0
+
+    recalc_points!
+  end
+
   def recalc_points!
     update_attribute :points, villas.sum(:points)
   end
