@@ -15,8 +15,8 @@ namespace :data do
 
     Player.transaction do
       Player.all.each do |p|
-        p.update_attribute :unread_messages_count, p.message_statuses.where('read = ?', false).count
-        p.update_attribute :unread_reports_count, p.reports.where('read = ?', false).count
+        p.update_attribute :unread_messages_count, p.message_statuses.where(read: false).count
+        p.update_attribute :unread_reports_count, p.reports.where(read: false).count
       end
     end
   end
