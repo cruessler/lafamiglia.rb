@@ -7,10 +7,11 @@ class Message < ActiveRecord::Base
   validates_presence_of :receivers, on: :create
   validates_presence_of :text, on: :create
 
+  before_validation :remove_sender_from_receivers
+
   before_create :set_sent_at
   after_create :create_message_statuses
   after_create :increment_unread_counter_cache_for_player
-  before_validation :remove_sender_from_receivers
 
   def remove_sender_from_receivers
     self.receivers = receivers.reject { |r| r.id == sender.id }
