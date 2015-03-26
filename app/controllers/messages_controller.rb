@@ -40,7 +40,11 @@ class MessagesController < ApplicationController
   def set_message
     @message = current_power.messages.find(params[:id])
     @message_status = @message.status_for current_player
-    @message_status.mark_as_read! unless @message_status.read
+
+    unless @message_status.read
+      @message_status.mark_as_read!
+      current_player.decrement :unread_messages_count
+    end
   end
 
   def set_message_statuses
