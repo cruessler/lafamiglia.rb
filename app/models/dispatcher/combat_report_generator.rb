@@ -10,12 +10,14 @@ module Dispatcher
       CombatReport.create(player: @origin.player,
                           title: title_for(@origin),
                           data: data,
+                          read: false,
                           delivered_at: @delivered_at)
 
       if @origin.player != @target.player
         CombatReport.create(player: @target.player,
                             title: title_for(@target),
                             data: data,
+                            read: false,
                             delivered_at: @delivered_at)
       end
     end

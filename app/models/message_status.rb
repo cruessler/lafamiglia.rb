@@ -2,6 +2,8 @@ class MessageStatus < ActiveRecord::Base
   belongs_to :player
   belongs_to :message
 
+  validates_inclusion_of :read, in: [ true, false ]
+
   after_destroy :destroy_associated_message_if_necessary
 
   def destroy_associated_message_if_necessary
