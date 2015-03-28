@@ -22,5 +22,24 @@ class PlayerTest < ActiveSupport::TestCase
     end
 
     assert_equal 8, receiver.unread_messages_count
+
+    Report.transaction do
+      1.upto(10) do |i|
+        Report.create(player:       sender,
+                      read:         false,
+                      title:        "This is a title",
+                      delivered_at: LaFamiglia.now)
+      end
+    end
+
+    assert_equal 10, sender.unread_reports_count
+
+    Report.transaction do
+      sender.reports[-2..-1].each do |r|
+        r.mark_as_read!
+      end
+    end
+
+    assert_equal 8, sender.unread_reports_count
   end
 end
