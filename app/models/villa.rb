@@ -1,4 +1,3 @@
-require_dependency 'lafamiglia'
 require_dependency 'extensions/queue_extension'
 require_dependency 'extensions/building_queue_extension'
 require_dependency 'extensions/research_queue_extension'
@@ -33,24 +32,29 @@ class Villa < ActiveRecord::Base
 
   after_update :save_unit_queue
 
-  def self.find_unused_coordinates(x_range = 0..LaFamiglia.max_x, y_range = 0..LaFamiglia.max_y)
+  def self.find_unused_coordinates(x_range = 0..LaFamiglia.config.max_x,
+                                   y_range = 0..LaFamiglia.config.max_y)
     x_range_length = x_range.size
     y_range_length = y_range.size
 
     if Villa.where([ 'x BETWEEN ? AND ? AND y BETWEEN ? AND ?',
-                     x_range.first, x_range.last, y_range.first, y_range.last ]).count <
-        x_range_length * y_range_length
+                     x_range.first,
+                     x_range.last,
+                     y_range.first,
+                     y_range.last ]).count < x_range_length * y_range_length
 
       return [ x_range.first, y_range.first ] if x_range_length * y_range_length == 1
 
       if x_range_length < y_range_length
         new_y_ranges = [ y_range.first..(y_range.first + y_range_length / 2 - 1),
           (y_range.first + y_range_length / 2)..y_range.last ].sort_by { rand }
+
         find_unused_coordinates(x_range, new_y_ranges.first) or
           find_unused_coordinates(x_range, new_y_ranges.last)
       else
         new_x_ranges = [ x_range.first..(x_range.first + x_range_length / 2 - 1),
           (x_range.first + x_range_length / 2)..x_range.last ].sort_by { rand }
+
         find_unused_coordinates(new_x_ranges.first, y_range) or
           find_unused_coordinates(new_x_ranges.last, y_range)
       end

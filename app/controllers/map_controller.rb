@@ -7,15 +7,15 @@ class MapController < ApplicationController
     if x < 0
       x = 0
     end
-    if x > LaFamiglia.max_x
-      x = LaFamiglia.max_x
+    if x > LaFamiglia.config.max_x
+      x = LaFamiglia.config.max_x
     end
 
     if y < 0
       y = 0
     end
-    if y > LaFamiglia.max_y
-      y = LaFamiglia.max_y
+    if y > LaFamiglia.config.max_y
+      y = LaFamiglia.config.max_y
     end
 
     @min_x, @max_x = x - MAP_RADIUS, x + MAP_RADIUS

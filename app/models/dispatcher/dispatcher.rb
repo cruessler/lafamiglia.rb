@@ -1,5 +1,3 @@
-require_dependency 'lafamiglia'
-
 module Dispatcher
   class Dispatcher
     def add_event_to_queue event

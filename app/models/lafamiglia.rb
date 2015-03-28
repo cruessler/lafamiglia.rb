@@ -11,16 +11,8 @@ module LaFamiglia
     @@now
   end
 
-  def self.max_x
-    10
-  end
-
-  def self.max_y
-    10
-  end
-
-  def self.unit_speed
-    10
+  def self.config
+    @@config ||= Configuration.new
   end
 
   RESOURCES = [ :resource_1, :resource_2, :resource_3 ]
