@@ -26,10 +26,7 @@ class Movement < ActiveRecord::Base
   end
 
   def speed
-    @speed ||= begin
-      raw_speed = LaFamiglia::UNITS.reject { |unit| self[unit.key] < 1 }
+    @speed ||= LaFamiglia.units.reject { |unit| self[unit.key] < 1 }
                                .collect { |unit| unit.speed }.min.to_f / 3600
-      raw_speed * LaFamiglia.config.unit_speed
-    end
   end
 end

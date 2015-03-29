@@ -8,7 +8,7 @@
       <div class="modal-body">
         <%= simple_form_for(AttackMovement.new, as: :movement, url: villa_movements_url(current_villa), wrapper: :horizontal_form, html: { class: 'form-horizontal' }) do |f| %>
           <%= f.hidden_field :target_id %>
-          <% LaFamiglia::UNITS.each do |u| %>
+          <% LaFamiglia.units.each do |u| %>
             <%= f.input u.key %>
           <% end %>
         <% end %>

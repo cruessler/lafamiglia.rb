@@ -98,7 +98,7 @@ class Villa < ActiveRecord::Base
   end
 
   def recalc_points
-    self.points = LaFamiglia::BUILDINGS.inject(0) do |sum, b|
+    self.points = LaFamiglia.buildings.inject(0) do |sum, b|
       sum + b.points(level b)
     end
   end

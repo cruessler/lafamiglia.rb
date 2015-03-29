@@ -12,78 +12,50 @@ module LaFamiglia
       true
     end
 
+    attr_accessor :id
+    attr_accessor :maxlevel
+    attr_writer :build_time, :costs, :defense, :points
+
+    def build_time level
+      @build_time[level]
+    end
+
+    def costs level
+      @costs[level]
+    end
+
     def defense level
-      0
+      @defense[level]
     end
 
     def points level
-      (level ** 1.5).to_i
+      @points[level].to_i
+    end
+  end
+
+  @@buildings ||= []
+
+  def @@buildings.add
+    @@buildings.push(Building.new)
+
+    yield @@buildings.last
+  end
+
+  mattr_accessor :buildings
+
+  def self.building building_id
+    buildings.find do |b|
+      b.id == building_id
     end
   end
 
   module Buildings
     module Readers
       def buildings
-        LaFamiglia::BUILDINGS.each_with_object({}) do |b, hash|
+        LaFamiglia.buildings.each_with_object({}) do |b, hash|
           hash[b.key] = self.send(b.key)
         end
       end
-    end
-  end
-
-  class HouseOfTheFamily < Building
-    def id
-      1
-    end
-
-    def build_time level
-      level * 1 + 4
-    end
-
-    def costs level
-      {
-        resource_1: level * 1 + 1,
-        resource_2: level * 1 + 1,
-        resource_3: level * 1 + 1
-      }
-    end
-
-    def maxlevel
-      8
-    end
-
-    def defense level
-      10
-    end
-  end
-
-  class InventorsHouse < Building
-    def id
-      2
-    end
-
-    def build_time level
-      level * 1 + 4
-    end
-
-    def costs level
-      {
-        resource_1: level * 1 + 1,
-        resource_2: level * 1 + 1,
-        resource_3: level * 1 + 1
-      }
-    end
-
-    def maxlevel
-      10
-    end
-  end
-
-  BUILDINGS = [ HouseOfTheFamily.new, InventorsHouse.new ]
-
-  def self.building building_id
-    BUILDINGS.find do |b|
-      b.id == building_id
     end
   end
 end

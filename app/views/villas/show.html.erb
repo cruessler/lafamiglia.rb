@@ -20,7 +20,7 @@
     <th><%= t '.build_time' %></th>
     <th><%= t '.build' %></th>
   </tr>
-  <% LaFamiglia::BUILDINGS.each do |b| %>
+  <% LaFamiglia.buildings.each do |b| %>
     <tr>
       <td><%= b.name %></td>
       <td><%= current_villa.level(b) %> (<%= current_villa.virtual_building_level(b) %>)</td>
@@ -51,7 +51,7 @@
     <th><%= t '.research_time' %></th>
     <th><%= t '.research!' %></th>
   </tr>
-  <% LaFamiglia::RESEARCHES.each do |r| %>
+  <% LaFamiglia.researches.each do |r| %>
     <tr>
       <td><%= r.name %></td>
       <td><%= current_villa.level(r) %> (<%= current_villa.virtual_research_level(r) %>)</td>
@@ -81,7 +81,7 @@
     <th>Build time</th>
     <th>Build</th>
   </tr>
-  <% LaFamiglia::UNITS.each do |u| %>
+  <% LaFamiglia.units.each do |u| %>
     <tr>
       <td><%= u.name %></td>
       <td><%= current_villa.unit_number(u) %></td>

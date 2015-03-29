@@ -25,7 +25,7 @@
 /config/secrets.yml
 /config/environments/production.rb
 /config/initializers/devise.rb
-/config/initializers/lafamiglia.rb
+/config/initializers/la_famiglia.rb
 /config/initializers/secret_token.rb
 /config/deploy.rb
 /config/deploy/production.rb

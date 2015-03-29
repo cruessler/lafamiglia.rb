@@ -15,18 +15,20 @@ module LaFamiglia
     @@config ||= Configuration.new
   end
 
-  RESOURCES = [ :resource_1, :resource_2, :resource_3 ]
+  def self.resources
+    [ :resource_1, :resource_2, :resource_3 ]
+  end
 
   module Resources
     module Accessors
       def resources
-        LaFamiglia::RESOURCES.each_with_object({}) do |r, hash|
+        LaFamiglia.resources.each_with_object({}) do |r, hash|
           hash[r] = self.send r
         end
       end
 
       def resources= resources
-        LaFamiglia::RESOURCES.each do |r|
+        LaFamiglia.resources.each do |r|
           self[r] = resources[r]
         end
       end

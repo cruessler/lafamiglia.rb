@@ -13,11 +13,11 @@ class Combat
     @plundered_resources = {}
     @unplundered_resources = {}
 
-    LaFamiglia::UNITS.each do |u|
+    LaFamiglia.units.each do |u|
       @attack_value += u.attack(attacker[u.key])
       @defense_value += u.defense(defender[u.key])
     end
-    LaFamiglia::BUILDINGS.each do |b|
+    LaFamiglia.buildings.each do |b|
       @defense_value += b.defense(defender[b.key])
     end
 
@@ -41,17 +41,17 @@ class Combat
   end
 
   def calculate_plundered_resources
-    LaFamiglia::RESOURCES.each do |resource|
+    LaFamiglia.resources.each do |resource|
       @plundered_resources[resource] = 0
       @unplundered_resources[resource] = @defender[resource]
     end
 
-    load_remaining = LaFamiglia::UNITS.inject(0) do |acc, unit|
+    load_remaining = LaFamiglia.units.inject(0) do |acc, unit|
       acc += unit.load attacker_after_combat[unit.key]
     end
 
     while load_remaining > 0
-      resources_remaining = LaFamiglia::RESOURCES.inject(0) do |acc, resource|
+      resources_remaining = LaFamiglia.resources.inject(0) do |acc, resource|
         acc + @unplundered_resources[resource]
       end
 
@@ -59,7 +59,7 @@ class Combat
 
       plunderable_per_resource = [ [ load_remaining, resources_remaining ].min / 3, 1 ].max
 
-      LaFamiglia::RESOURCES.each do |resource|
+      LaFamiglia.resources.each do |resource|
         amount = [ plunderable_per_resource, @unplundered_resources[resource] ].min
         @unplundered_resources[resource] -= amount
         @plundered_resources[resource] += amount
@@ -73,43 +73,43 @@ class Combat
   end
 
   def attacker_before_combat
-    @attacker_before_combat ||= LaFamiglia::UNITS.each_with_object({}) do |u, hash|
+    @attacker_before_combat ||= LaFamiglia.units.each_with_object({}) do |u, hash|
       hash[u.key] = @attacker[u.key]
     end
   end
 
   def defender_before_combat
-    @defender_before_combat ||= LaFamiglia::UNITS.each_with_object({}) do |u, hash|
+    @defender_before_combat ||= LaFamiglia.units.each_with_object({}) do |u, hash|
       hash[u.key] = @defender[u.key]
     end
   end
 
   def attacker_loss
-    @attacker_loss = LaFamiglia::UNITS.each_with_object({}) do |u, hash|
+    @attacker_loss = LaFamiglia.units.each_with_object({}) do |u, hash|
       hash[u.key] = (@attacker[u.key] * @attacker_percent_loss).to_i
     end
   end
 
   def defender_loss
-    @defender_loss = LaFamiglia::UNITS.each_with_object({}) do |u, hash|
+    @defender_loss = LaFamiglia.units.each_with_object({}) do |u, hash|
       hash[u.key] = (@defender[u.key] * @defender_percent_loss).to_i
     end
   end
 
   def attacker_after_combat
-    @attacker_after_combat ||= LaFamiglia::UNITS.each_with_object({}) do |u, hash|
+    @attacker_after_combat ||= LaFamiglia.units.each_with_object({}) do |u, hash|
       hash[u.key] = @attacker[u.key] - attacker_loss[u.key]
     end
   end
 
   def attacker_supply_loss
-    @attacker_supply_loss ||= LaFamiglia::UNITS.inject(0) do |supply, u|
+    @attacker_supply_loss ||= LaFamiglia.units.inject(0) do |supply, u|
       supply + u.supply(attacker_loss[u.key])
     end
   end
 
   def defender_supply_loss
-    @defender_supply_loss ||= LaFamiglia::UNITS.inject(0) do |supply, u|
+    @defender_supply_loss ||= LaFamiglia.units.inject(0) do |supply, u|
       supply + u.supply(defender_loss[u.key])
     end
   end

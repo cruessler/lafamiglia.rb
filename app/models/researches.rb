@@ -11,45 +11,43 @@ module LaFamiglia
     def requirements_met? villa
       villa.building_2 > 0
     end
+
+    attr_accessor :id
+    attr_accessor :maxlevel
+    attr_writer :research_time, :costs
+
+    def research_time level
+      @research_time[level]
+    end
+
+    def costs level
+      @costs[level]
+    end
+  end
+
+  @@researches ||= []
+
+  def @@researches.add
+    @@researches.push(Research.new)
+
+    yield @@researches.last
+  end
+
+  mattr_accessor :researches
+
+  def self.research research_id
+    researches.find do |r|
+      r.id == research_id
+    end
   end
 
   module Researches
     module Readers
       def researches
-        LaFamiglia::RESEARCHES.each_with_object({}) do |r, hash|
+        LaFamiglia.researches.each_with_object({}) do |r, hash|
           hash[r.key] = self.send(r.key)
         end
       end
-    end
-  end
-
-  class TommyGun < Research
-    def id
-      1
-    end
-
-    def research_time level
-      level * 1 + 4
-    end
-
-    def costs level
-      {
-        resource_1: level * 1 + 1,
-        resource_2: level * 1 + 1,
-        resource_3: level * 1 + 1
-      }
-    end
-
-    def maxlevel
-      8
-    end
-  end
-
-  RESEARCHES = [ TommyGun.new ]
-
-  def self.research research_id
-    RESEARCHES.find do |r|
-      r.id == research_id
     end
   end
 end

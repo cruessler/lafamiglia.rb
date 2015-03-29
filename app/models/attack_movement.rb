@@ -7,14 +7,14 @@ class AttackMovement < Movement
   after_create :subtract_units_from_origin!
 
   def enough_units
-    LaFamiglia::UNITS.each do |u|
+    LaFamiglia.units.each do |u|
       number = self.send(u.key)
       errors.add(u.key, I18n.t('errors.movements.invalid_number')) unless number > 0 && number <= origin.unit_number(u)
     end
   end
 
   def units_selected
-    total = LaFamiglia::UNITS.inject(0) do |sum, u|
+    total = LaFamiglia.units.inject(0) do |sum, u|
       if (number = self.send(u.key)) > 0
         sum + number
       else

@@ -25,7 +25,7 @@
     <div class="col-sm-9"><%= link_to @movement.target, @movement.target, class: 'villa-link' %></div>
   </div>
 
-  <% LaFamiglia::UNITS.each do |u| %>
+  <% LaFamiglia.units.each do |u| %>
     <%= f.input u.key, hint: t('.units_available') % current_villa.unit_number(u) %>
   <% end %>
 
