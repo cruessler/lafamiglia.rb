@@ -1,6 +1,6 @@
 module BuildingQueueExtension
   def last_of_its_kind? queue_item
-    building = LaFamiglia.building(queue_item.building_id)
+    building = LaFamiglia.buildings.get_by_id queue_item.building_id
 
     reverse.each do |i|
       break if i == queue_item
@@ -24,7 +24,7 @@ module BuildingQueueExtension
   end
 
   def refunds queue_item, time_diff
-    building = LaFamiglia.building(queue_item.building_id)
+    building = LaFamiglia.buildings.get_by_id queue_item.building_id
 
     refund_ratio = time_diff.to_f / queue_item.build_time
     previous_level = villa.virtual_building_level(building) - 1

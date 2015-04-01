@@ -4,7 +4,7 @@ class ResearchQueueItemsController < ApplicationController
 
   # POST /research_queue_items
   def create
-    research = LaFamiglia.research(params[:research_id].to_i)
+    research = LaFamiglia.researches.get_by_id params[:research_id].to_i
 
     if research
       if current_villa.research_queue_items.enqueue research

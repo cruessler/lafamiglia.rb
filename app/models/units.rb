@@ -9,7 +9,7 @@ module LaFamiglia
     end
 
     def building
-      @building ||= LaFamiglia.building building_id
+      @building ||= LaFamiglia.buildings.get_by_id building_id
     end
 
     def requirements_met? villa
@@ -61,13 +61,13 @@ module LaFamiglia
     yield @@units.last
   end
 
-  mattr_accessor :units
-
-  def self.unit unit_id
-    units.find do |u|
+  def @@units.get_by_id unit_id
+    @@units.find do |u|
       u.id == unit_id
     end
   end
+
+  mattr_accessor :units
 
   module Units
     module Accessors

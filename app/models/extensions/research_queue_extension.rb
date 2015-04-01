@@ -1,6 +1,6 @@
 module ResearchQueueExtension
   def last_of_its_kind? queue_item
-    research = LaFamiglia.research(queue_item.research_id)
+    research = LaFamiglia.researches.get_by_id queue_item.research_id
 
     reverse.each do |i|
       break if i == queue_item
@@ -21,7 +21,7 @@ module ResearchQueueExtension
   end
 
   def refunds queue_item, time_diff
-    research = LaFamiglia.research(queue_item.research_id)
+    research = LaFamiglia.researches.get_by_id queue_item.research_id
 
     refund_ratio = time_diff.to_f / queue_item.research_time
     previous_level = villa.virtual_research_level(research) - 1

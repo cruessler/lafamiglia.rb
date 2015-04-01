@@ -41,13 +41,13 @@ module LaFamiglia
     yield @@buildings.last
   end
 
-  mattr_accessor :buildings
-
-  def self.building building_id
-    buildings.find do |b|
+  def @@buildings.get_by_id building_id
+    @@buildings.find do |b|
       b.id == building_id
     end
   end
+
+  mattr_accessor :buildings
 
   module Buildings
     module Readers

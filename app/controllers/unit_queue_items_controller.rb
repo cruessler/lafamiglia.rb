@@ -4,7 +4,7 @@ class UnitQueueItemsController < ApplicationController
 
   # POST /unit_queue_items
   def create
-    unit = LaFamiglia.unit(params[:unit_id].to_i)
+    unit = LaFamiglia.units.get_by_id params[:unit_id].to_i
     number = [ params[:number].to_i, 0 ].max
 
     if unit

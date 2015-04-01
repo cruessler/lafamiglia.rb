@@ -2,7 +2,7 @@ class UnitQueueItem < ActiveRecord::Base
   belongs_to :villa, counter_cache: true
 
   def unit
-    @unit ||= LaFamiglia.unit unit_id
+    @unit ||= LaFamiglia.units.get_by_id unit_id
   end
 
   def building

@@ -33,13 +33,13 @@ module LaFamiglia
     yield @@researches.last
   end
 
-  mattr_accessor :researches
-
-  def self.research research_id
-    researches.find do |r|
+  def @@researches.get_by_id research_id
+    @@researches.find do |r|
       r.id == research_id
     end
   end
+
+  mattr_accessor :researches
 
   module Researches
     module Readers

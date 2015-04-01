@@ -4,7 +4,7 @@ class BuildingQueueItemsController < ApplicationController
 
   # POST /building_queue_items
   def create
-    building = LaFamiglia.building(params[:building_id].to_i)
+    building = LaFamiglia.buildings.get_by_id params[:building_id].to_i
 
     if building
       if @building_queue_item = current_villa.building_queue_items.enqueue(building)

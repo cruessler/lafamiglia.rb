@@ -7,7 +7,7 @@ class VillaTest < ActiveSupport::TestCase
   end
 
   test "should update counter caches" do
-    @v.building_queue_items.enqueue LaFamiglia.building(1)
+    @v.building_queue_items.enqueue LaFamiglia.buildings.get_by_id 1
     @v.save
 
     assert_equal 1, @v.building_queue_items_count
@@ -27,7 +27,7 @@ class VillaTest < ActiveSupport::TestCase
 
   test "should return resources on cancel" do
     old_resources = @v.resources
-    @v.building_queue_items.enqueue LaFamiglia.building(1)
+    @v.building_queue_items.enqueue LaFamiglia.buildings.get_by_id 1
     @v.building_queue_items.dequeue @v.building_queue_items.last
 
     @v.resources.each_pair do |r, v|
@@ -42,7 +42,7 @@ class VillaTest < ActiveSupport::TestCase
   end
 
   test "should return virtual building level" do
-    b = LaFamiglia.building 1
+    b = LaFamiglia.buildings.get_by_id 1
     old_level = @v.level b
 
     2.times do
@@ -53,7 +53,7 @@ class VillaTest < ActiveSupport::TestCase
   end
 
   test "should recruit units" do
-    u = LaFamiglia.unit 1
+    u = LaFamiglia.units.get_by_id 1
     units = @v.units
 
     @v.unit_queue_items.enqueue u, 10
@@ -66,7 +66,7 @@ class VillaTest < ActiveSupport::TestCase
   end
 
   test "should recruit units virtually" do
-    u = LaFamiglia.unit 1
+    u = LaFamiglia.units.get_by_id 1
     units = @v.units
 
     @v.unit_queue_items.enqueue u, 10
