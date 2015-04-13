@@ -21,7 +21,7 @@ class MapController < ApplicationController
     @min_x, @max_x = x - MAP_RADIUS, x + MAP_RADIUS
     @min_y, @max_y = y - MAP_RADIUS, y + MAP_RADIUS
 
-    villas = Villa.where([ 'x BETWEEN ? AND ? AND y BETWEEN ? AND ?', @min_x, @max_x, @min_y, @max_y ]).load
+    villas = Villa.in_rectangle(@min_x, @max_x, @min_y, @max_y).load
 
     @villas = Array.new(@max_y - @min_y + 1) { Array.new(@max_x - @min_x + 1) }
 
