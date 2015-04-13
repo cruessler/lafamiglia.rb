@@ -25,15 +25,15 @@ class MessageCountTest < ActionDispatch::IntegrationTest
 
       player = assigns(:current_player)
       assert_equal player.unread_messages_count,
-                   player.message_statuses.where('read = ?', false).count
+                   player.message_statuses.where(read: false).count
 
-      unread_message = player.message_statuses.where('read = ?', false).first
+      unread_message = player.message_statuses.where(read: false).first
 
       get "/messages/#{unread_message.id}"
 
       player = assigns(:current_player)
       assert_equal player.unread_messages_count,
-                   player.message_statuses.where('read = ?', false).count
+                   player.message_statuses.where(read: false).count
     end
   end
 end
