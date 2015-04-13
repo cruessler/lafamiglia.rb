@@ -74,4 +74,20 @@ class VillaTest < ActiveSupport::TestCase
     @v.process_virtually_until! LaFamiglia.now + u.build_time(5)
     assert_equal units[u.key] + 5, @v.unit_number(u)
   end
+
+  test "should find an empty space for a new ville" do
+    assert_not_nil Villa.empty_coordinates
+  end
+
+  test "should create new villas" do
+    p = players :one
+
+    villas_count = p.villas.count
+
+    1.upto 5 do
+      assert Villa.create_for(p).persisted?
+    end
+
+    assert_equal villas_count + 5, p.villas.count
+  end
 end

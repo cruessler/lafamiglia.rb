@@ -32,40 +32,49 @@ class Villa < ActiveRecord::Base
 
   after_update :save_unit_queue
 
-  def self.find_unused_coordinates(x_range = 0..LaFamiglia.config.max_x,
-                                   y_range = 0..LaFamiglia.config.max_y)
-    x_range_length = x_range.size
-    y_range_length = y_range.size
+  def self.empty_coordinates(x_1 = 0, x_2 = LaFamiglia.config.max_x,
+                             y_1 = 0, y_2 = LaFamiglia.config.max_y)
+    x_range_length = x_2 - x_1
+    y_range_length = y_2 - y_1
+    max_villas_in_rectangle = x_range_length * y_range_length
 
-    if Villa.where([ 'x BETWEEN ? AND ? AND y BETWEEN ? AND ?',
-                     x_range.first,
-                     x_range.last,
-                     y_range.first,
-                     y_range.last ]).count < x_range_length * y_range_length
-
-      return [ x_range.first, y_range.first ] if x_range_length * y_range_length == 1
+    if Villa.in_rectangle(x_1, x_2, y_1, y_2).count < max_villas_in_rectangle
+      if max_villas_in_rectangle == 1
+        return [ x_1, y_1 ]
+      end
 
       if x_range_length < y_range_length
-        new_y_ranges = [ y_range.first..(y_range.first + y_range_length / 2 - 1),
-          (y_range.first + y_range_length / 2)..y_range.last ].sort_by { rand }
+        y_range_mean = y_1 + y_range_length / 2
 
-        find_unused_coordinates(x_range, new_y_ranges.first) or
-          find_unused_coordinates(x_range, new_y_ranges.last)
+        new_y_ranges = [ [ y_1, y_range_mean - 1 ],
+                         [ y_range_mean, y_2 ] ].sort_by { rand }
+
+        empty_coordinates(x_1, x_2, *new_y_ranges.first) or
+          empty_coordinates(x_1, x_2, *new_y_ranges.last)
       else
-        new_x_ranges = [ x_range.first..(x_range.first + x_range_length / 2 - 1),
-          (x_range.first + x_range_length / 2)..x_range.last ].sort_by { rand }
+        x_range_mean = x_1 + x_range_length / 2
 
-        find_unused_coordinates(new_x_ranges.first, y_range) or
-          find_unused_coordinates(new_x_ranges.last, y_range)
+        new_x_ranges = [ [ x_1, x_range_mean - 1 ],
+                         [ x_range_mean, x_2 ] ].sort_by { rand }
+
+        empty_coordinates(*new_x_ranges.first, y_1, y_2) or
+          empty_coordinates(*new_x_ranges.last, y_1, y_2)
       end
     end
   end
 
-  def self.create_for player
-    coordinates = find_unused_coordinates
-    return nil unless coordinates
+  def self.in_rectangle x_1, x_2, y_1, y_2
+    where [ 'x BETWEEN ? AND ? AND y BETWEEN ? AND ?',
+            x_1, x_2, y_1, y_2 ]
+  end
 
-    Villa.create(x: coordinates[0], y: coordinates[1], name: I18n.t('villa.default_name'), player: player)
+  def self.create_for player
+    return nil unless (coordinates = empty_coordinates)
+
+    Villa.create(x: coordinates[0],
+                 y: coordinates[1],
+                 name: I18n.t('villa.default_name'),
+                 player: player)
   end
 
   def set_default_values
