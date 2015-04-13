@@ -17,7 +17,7 @@ module LaFamiglia
     attr_writer :build_time, :costs, :defense, :points
 
     def build_time level
-      @build_time[level]
+      (@build_time[level] / LaFamiglia.config.game_speed).round
     end
 
     def costs level

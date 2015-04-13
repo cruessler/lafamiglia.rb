@@ -1,6 +1,7 @@
 LaFamiglia.config.max_x = 10
 LaFamiglia.config.max_y = 10
 
+LaFamiglia.config.game_speed = 1.0
 LaFamiglia.config.unit_speed = 10
 
 LaFamiglia.buildings.add do |b|

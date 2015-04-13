@@ -90,4 +90,13 @@ class VillaTest < ActiveSupport::TestCase
 
     assert_equal villas_count + 5, p.villas.count
   end
+
+  test "should respect game speed" do
+    building = LaFamiglia.buildings.get_by_id 1
+    build_time = building.build_time 1
+
+    LaFamiglia.config.game_speed *= 2
+
+    assert_not_equal build_time, building.build_time(1)
+  end
 end

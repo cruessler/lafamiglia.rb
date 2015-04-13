@@ -17,7 +17,7 @@ module LaFamiglia
     attr_writer :research_time, :costs
 
     def research_time level
-      @research_time[level]
+      (@research_time[level] / LaFamiglia.config.game_speed).round
     end
 
     def costs level
