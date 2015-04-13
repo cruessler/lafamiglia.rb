@@ -11,3 +11,9 @@ two:
   email: john@doe.com
   unread_messages_count: 0
   unread_reports_count: 0
+
+three:
+  name: Third player
+  email: jen@doe.com
+  unread_messages_count: 0
+  unread_reports_count: 0
