@@ -51,7 +51,6 @@ class ApplicationController < ActionController::Base
 
         if villa.nil?
           villa = Villa.create_for(current_player)
-          current_player.recalc_points!
         end
       end
 

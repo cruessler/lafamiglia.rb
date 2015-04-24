@@ -71,10 +71,16 @@ class Villa < ActiveRecord::Base
   def self.create_for player
     return nil unless (coordinates = empty_coordinates)
 
-    Villa.create(x: coordinates[0],
-                 y: coordinates[1],
-                 name: I18n.t('villa.default_name'),
-                 player: player)
+    transaction do
+      new_villa = Villa.create(x: coordinates[0],
+                  y: coordinates[1],
+                  name: I18n.t('villa.default_name'),
+                  player: player)
+
+      player.recalc_points!
+
+      new_villa
+    end
   end
 
   def set_default_values
