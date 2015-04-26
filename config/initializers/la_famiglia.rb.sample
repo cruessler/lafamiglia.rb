@@ -15,7 +15,7 @@ LaFamiglia.buildings.add do |b|
     }
   end
   b.maxlevel = 8
-  b.defense = 10
+  b.defense = ->(level) { 10 }
   b.points = ->(level) { level ** 1.5 }
 end
 
@@ -30,7 +30,7 @@ LaFamiglia.buildings.add do |b|
     }
   end
   b.maxlevel = 8
-  b.defense = 0
+  b.defense = ->(level) { 0 }
   b.points = ->(level) { level ** 1.5 }
 end
 
