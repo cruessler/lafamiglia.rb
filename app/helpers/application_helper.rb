@@ -9,6 +9,8 @@ module ApplicationHelper
   end
 
   def time_diff diff
+    diff = 0 if diff < 0
+
     '%02d:%02d:%02d' % [ diff / 3600, (diff % 3600) / 60, diff % 60 ]
   end
 
