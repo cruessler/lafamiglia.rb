@@ -21,7 +21,7 @@ module LaFamiglia
                 :speed, :attack, :defense, :load
 
     def build_time number = 1
-      (number * @build_time / LaFamiglia.config.game_speed).round
+      number * @build_time / LaFamiglia.config.game_speed
     end
 
     def costs number = 1
