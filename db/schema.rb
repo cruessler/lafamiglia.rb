@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325222829) do
+ActiveRecord::Schema.define(version: 20150429202956) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -66,6 +66,19 @@ ActiveRecord::Schema.define(version: 20150325222829) do
 
   add_index "movements", ["origin_id"], name: "index_movements_on_origin_id"
   add_index "movements", ["target_id"], name: "index_movements_on_target_id"
+
+  create_table "occupations", force: true do |t|
+    t.datetime "succeeds_at"
+    t.integer  "occupied_villa_id"
+    t.integer  "occupying_villa_id"
+    t.integer  "unit_1"
+    t.integer  "unit_2"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "occupations", ["occupied_villa_id"], name: "index_occupations_on_occupied_villa_id", unique: true
+  add_index "occupations", ["occupying_villa_id"], name: "index_occupations_on_occupying_villa_id"
 
   create_table "players", force: true do |t|
     t.string   "name"
@@ -157,6 +170,7 @@ ActiveRecord::Schema.define(version: 20150325222829) do
     t.integer  "research_1"
     t.integer  "points"
     t.datetime "processed_until"
+    t.integer  "unit_2"
   end
 
   add_index "villas", ["player_id"], name: "index_villas_on_player_id"

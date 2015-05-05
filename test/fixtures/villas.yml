@@ -1,11 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+DEFAULTS: &DEFAULTS
   processed_until: <%= Time.now %>
-  player: one
-  x: 0
-  y: 0
-  name: New villa
   storage_capacity: 100
   resource_1: 100
   resource_2: 100
@@ -20,8 +16,16 @@ one:
   research_queue_items_count: 0
   unit_queue_items_count: 0
 
+one:
+  x: 0
+  y: 0
+  name: New villa
+  player: one
+  <<: *DEFAULTS
+
 two:
   x: 0
   y: 1
   name: New villa
   player: two
+  <<: *DEFAULTS
