@@ -1,6 +1,7 @@
 class Combat
   attr_accessor :winner
   attr_accessor :attacker, :defender
+  attr_accessor :attack_value, :defense_value
 
   attr_reader :plundered_resources
 

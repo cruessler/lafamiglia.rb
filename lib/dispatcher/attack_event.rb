@@ -34,10 +34,10 @@ module Dispatcher
       combat = Combat.new(attacker, defender)
       combat.calculate
 
-      logger.info { "attacker: #{@attacker}, defender: #{@defender}" }
-      logger.info { "attack value: #{@attack_value}, defense value: #{@defense_value}" }
-      logger.info { "attacker loss: #{attacker_loss}, defender loss: #{defender_loss}" }
-      logger.info { "plundered_resources: #{@plundered_resources}" }
+      logger.info { "attacker: #{combat.attacker}, defender: #{combat.defender}" }
+      logger.info { "attack value: #{combat.attack_value}, defense value: #{combat.defense_value}" }
+      logger.info { "attacker loss: #{combat.attacker_loss}, defender loss: #{combat.defender_loss}" }
+      logger.info { "plundered_resources: #{combat.plundered_resources}" }
 
       Villa.transaction do
         if combat.attacker_survived?
