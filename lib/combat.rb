@@ -33,11 +33,6 @@ class Combat
       @attacker_percent_loss = 1
       @defender_percent_loss = (@attack_value.to_f / @defense_value) ** 1.5
     end
-
-    puts "attacker: #{@attacker}, defender: #{@defender}"
-    puts "attack value: #{@attack_value}, defense value: #{@defense_value}"
-    puts "attacker loss: #{attacker_loss}, defender loss: #{defender_loss}"
-    puts "plundered_resources: #{@plundered_resources}"
   end
 
   def calculate_plundered_resources

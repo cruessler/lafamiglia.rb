@@ -21,7 +21,8 @@ module Dispatcher
     end
 
     def handle dispatcher
-      puts "processing build event (id: #{@queue_item.id}, time: #{happens_at})"
+      logger.info { "processing build event (id: #{@queue_item.id}, time: #{happens_at})" }
+
       @queue_item.villa.process_until!(@queue_item.completed_at)
     end
   end

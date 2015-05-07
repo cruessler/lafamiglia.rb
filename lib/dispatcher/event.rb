@@ -2,6 +2,10 @@ module Dispatcher
   class Event
     include Comparable
 
+    def logger
+      ::Dispatcher.logger
+    end
+
     def self.find_until time
       subclasses.collect do |c|
         c.find_until time

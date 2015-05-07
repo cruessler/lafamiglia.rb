@@ -21,7 +21,8 @@ module Dispatcher
     end
 
     def handle dispatcher
-      puts "processing attack movement (id: #{@attack_movement.id}, time: #{happens_at})"
+      logger.info { "processing attack movement (id: #{@attack_movement.id}, time: #{happens_at})" }
+
       origin, target = @attack_movement.origin, @attack_movement.target
 
       attacker = @attack_movement.units.merge(origin.researches)
@@ -32,6 +33,11 @@ module Dispatcher
 
       combat = Combat.new(attacker, defender)
       combat.calculate
+
+      logger.info { "attacker: #{@attacker}, defender: #{@defender}" }
+      logger.info { "attack value: #{@attack_value}, defense value: #{@defense_value}" }
+      logger.info { "attacker loss: #{attacker_loss}, defender loss: #{defender_loss}" }
+      logger.info { "plundered_resources: #{@plundered_resources}" }
 
       Villa.transaction do
         if combat.attacker_survived?

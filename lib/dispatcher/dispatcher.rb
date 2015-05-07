@@ -1,5 +1,9 @@
 module Dispatcher
   class Dispatcher
+    def logger
+      ::Dispatcher.logger
+    end
+
     def add_event_to_queue event
       if event.happens_at <= @process_until
         @events << event
@@ -12,14 +16,15 @@ module Dispatcher
       @events = Event.find_until @process_until
 
       if @events.count > 0
-        puts "handling #{@events.count} events until #{Time.at(@process_until)}"
+        logger.info { "handling #{@events.count} events until #{Time.at(@process_until)}" }
+
         until @events.empty?
           event = @events.shift
           LaFamiglia.clock event.happens_at
           event.handle self
         end
       else
-        puts "nothing to handle until #{Time.at(@process_until)}"
+        logger.info { "nothing to handle until #{Time.at(@process_until)}" }
       end
     end
 
@@ -54,11 +59,13 @@ module Dispatcher
 
           case
           when @time_of_next_event.nil?
-            puts "IO.select without timeout"
+            logger.info "IO.select without timeout"
+
             wait_for_next_event
           when @time_of_next_event > now
             timeout = (@time_of_next_event - now).ceil
-            puts "IO.select with timeout #{timeout}"
+            logger.info { "IO.select with timeout #{timeout}" }
+
             wait_for_next_event timeout
           else
             process_events_until! now

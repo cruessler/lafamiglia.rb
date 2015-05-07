@@ -21,7 +21,8 @@ module Dispatcher
     end
 
     def handle dispatcher
-      puts "processing comeback movement (id: #{@comeback_movement.id}, time: #{happens_at})"
+      logger.info { "processing comeback movement (id: #{@comeback_movement.id}, time: #{happens_at})" }
+
       @comeback_movement.arrive!
     end
   end
