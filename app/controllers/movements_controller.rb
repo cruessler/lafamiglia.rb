@@ -43,6 +43,6 @@ class MovementsController < ApplicationController
   end
 
   def movement_params
-    params.require(:movement).permit(:target_id, :unit_1)
+    params.require(:movement).permit(:target_id, :unit_1, :unit_2)
   end
 end

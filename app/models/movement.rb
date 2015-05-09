@@ -13,6 +13,7 @@ class Movement < ActiveRecord::Base
 
   def set_default_values
     self.unit_1 = 0 if self.unit_1.nil?
+    self.unit_2 = 0 if self.unit_2.nil?
     self.resource_1 = 0 if self.resource_1.nil?
     self.resource_2 = 0 if self.resource_2.nil?
     self.resource_3 = 0 if self.resource_3.nil?
