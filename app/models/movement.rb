@@ -7,9 +7,8 @@ class Movement < ActiveRecord::Base
 
   validates_presence_of :origin
   validates_presence_of :target
-  validates_presence_of :unit_1
 
-  before_create :set_default_values
+  before_validation :set_default_values, on: :create
 
   def set_default_values
     self.unit_1 = 0 if self.unit_1.nil?
