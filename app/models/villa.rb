@@ -103,6 +103,7 @@ class Villa < ActiveRecord::Base
     self.supply = 100
     self.used_supply = 0
     self.unit_1 = 0
+    self.unit_2 = 0
 
     recalc_points
   end

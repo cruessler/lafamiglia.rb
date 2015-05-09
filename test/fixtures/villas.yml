@@ -10,6 +10,7 @@ DEFAULTS: &DEFAULTS
   building_2: 0
   research_1: 0
   unit_1: 0
+  unit_2: 0
   supply: 100
   used_supply: 0
   building_queue_items_count: 0
