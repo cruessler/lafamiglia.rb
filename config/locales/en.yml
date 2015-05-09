@@ -17,6 +17,7 @@ en:
     research_1: "Tommy gun"
   units:
     unit_1: "Beppo"
+    unit_2: "The convincer"
   errors:
     no_villa_left: "There is no space on the map to create a new villa for you."
     buildings:
@@ -137,6 +138,7 @@ en:
     attributes:
       movement:
         unit_1: "Beppo"
+        unit_2: "The convincer"
 
   helpers:
     links:
