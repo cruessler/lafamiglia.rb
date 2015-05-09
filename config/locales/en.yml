@@ -63,6 +63,9 @@ en:
       arrives_at: "Arrives at"
       time_remaining: "Time remaining"
       no_movements: "There are no movements."
+      occupations: "Occupations"
+      occupied_villa: "Occupied villa"
+      succeeds_at: "Succeeds at"
     new:
       origin: "Origin"
       target: "Target"
