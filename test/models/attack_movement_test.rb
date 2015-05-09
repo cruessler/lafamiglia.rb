@@ -20,4 +20,14 @@ class AttackMovementTest < ActiveSupport::TestCase
 
     assert_equal (LaFamiglia.now + @attack.duration), @comeback.arrives_at
   end
+
+  test "should be valid when only one type of unit is present" do
+    @origin.unit_1 += 1
+
+    attack = AttackMovement.new(origin: @origin,
+                                target: @target,
+                                unit_1: 1)
+
+    assert attack.valid?
+  end
 end

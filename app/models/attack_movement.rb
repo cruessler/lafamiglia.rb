@@ -9,7 +9,7 @@ class AttackMovement < Movement
   def enough_units
     LaFamiglia.units.each do |u|
       number = self.send(u.key)
-      errors.add(u.key, I18n.t('errors.movements.invalid_number')) unless number > 0 && number <= origin.unit_number(u)
+      errors.add(u.key, I18n.t('errors.movements.invalid_number')) unless number >= 0 && number <= origin.unit_number(u)
     end
   end
 
