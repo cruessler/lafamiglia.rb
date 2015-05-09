@@ -64,6 +64,14 @@ class Combat
     end
   end
 
+  def attacker_can_occupy?
+    if @attacker_can_occupy.nil?
+      @attacker_can_occupy = attacker_after_combat[LaFamiglia.config.unit_for_occupation] > 0
+    end
+
+    @attacker_can_occupy
+  end
+
   def attacker_survived?
     @attacker_survived ||= attacker_after_combat.any? { |pair| pair[1] > 0 }
   end

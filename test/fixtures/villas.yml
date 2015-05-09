@@ -30,3 +30,19 @@ two:
   name: New villa
   player: two
   <<: *DEFAULTS
+
+occupying_villa:
+  <<: *DEFAULTS
+  x: 2
+  y: 0
+  name: Occupying villa
+  player: one
+  unit_1: 100
+  unit_2: 2
+
+occupied_villa:
+  <<: *DEFAULTS
+  x: 2
+  y: 1
+  name: Occupied villa
+  player: two

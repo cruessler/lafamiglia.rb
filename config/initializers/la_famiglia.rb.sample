@@ -10,6 +10,9 @@ Rails.application.config.to_prepare do
   LaFamiglia.config.game_speed = 1.0
   LaFamiglia.config.unit_speed = 10.0
 
+  LaFamiglia.config.duration_of_occupation = 1.day
+  LaFamiglia.config.unit_for_occupation = :unit_2
+
   LaFamiglia.buildings.add do |b|
     b.id = 1
     b.build_time = ->(level) { level * 1 + 4 }

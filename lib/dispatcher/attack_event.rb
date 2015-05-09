@@ -38,20 +38,30 @@ module Dispatcher
       logger.info { "attack value: #{combat.attack_value}, defense value: #{combat.defense_value}" }
       logger.info { "attacker loss: #{combat.attacker_loss}, defender loss: #{combat.defender_loss}" }
       logger.info { "plundered_resources: #{combat.plundered_resources}" }
+      logger.info { "attacker_can_occupy?: #{combat.attacker_can_occupy?}" }
 
       Villa.transaction do
-        if combat.attacker_survived?
-          comeback = @attack_movement.cancel!
+        if combat.attacker_can_occupy?
+          occupation = Occupation.create succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
+                                         occupied_villa: target,
+                                         occupying_villa: origin,
+                                         units: combat.attacker_after_combat
 
-          comeback.units = combat.attacker_after_combat
-          comeback.resources = combat.plundered_resources
-          target.subtract_resources!(combat.plundered_resources)
-
-          comeback.save
-
-          dispatcher.add_event_to_queue ComebackEvent.new(comeback)
-        else
           @attack_movement.destroy
+        else
+          if combat.attacker_survived?
+            comeback = @attack_movement.cancel!
+
+            comeback.units = combat.attacker_after_combat
+            comeback.resources = combat.plundered_resources
+            target.subtract_resources!(combat.plundered_resources)
+
+            comeback.save
+
+            dispatcher.add_event_to_queue ComebackEvent.new(comeback)
+          else
+            @attack_movement.destroy
+          end
         end
 
         target.subtract_units!(combat.defender_loss)
