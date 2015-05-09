@@ -27,6 +27,7 @@ class VillaTest < ActiveSupport::TestCase
 
   test "should return resources on cancel" do
     old_resources = @v.resources
+
     @v.building_queue_items.enqueue LaFamiglia.buildings.get_by_id 1
     @v.building_queue_items.dequeue @v.building_queue_items.last
 
