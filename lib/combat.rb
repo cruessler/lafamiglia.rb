@@ -73,7 +73,11 @@ class Combat
   end
 
   def attacker_survived?
-    @attacker_survived ||= attacker_after_combat.any? { |pair| pair[1] > 0 }
+    if @attacker_survived.nil?
+      @attacker_survived = attacker_after_combat.any? { |pair| pair[1] > 0 }
+    end
+
+    @attacker_survived
   end
 
   def attacker_before_combat
