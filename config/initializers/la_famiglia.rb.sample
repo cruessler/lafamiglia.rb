@@ -56,7 +56,6 @@ Rails.application.config.to_prepare do
   LaFamiglia.units.add do |u|
     u.id = 1
     u.build_time = 10
-
     u.costs = { resource_1: 1,
                 resource_2: 0,
                 resource_3: 1 }
@@ -66,5 +65,19 @@ Rails.application.config.to_prepare do
     u.attack = 2
     u.defense = 2
     u.load = 10
+  end
+
+  LaFamiglia.units.add do |u|
+    u.id = 2
+    u.build_time = 12.hours
+    u.costs = { resource_1: 50,
+                resource_2: 50,
+                resource_3: 50 }
+    u.supply = 20
+    u.building_id = 1
+    u.speed = 1
+    u.attack = 5
+    u.defense = 4
+    u.load = 0
   end
 end
