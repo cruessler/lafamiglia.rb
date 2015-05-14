@@ -18,8 +18,7 @@ class Player < ActiveRecord::Base
   def set_default_values
     self.unread_messages_count = 0
     self.unread_reports_count = 0
-
-    recalc_points!
+    self.points = 0
   end
 
   def recalc_points!

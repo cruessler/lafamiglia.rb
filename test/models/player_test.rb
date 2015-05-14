@@ -42,4 +42,13 @@ class PlayerTest < ActiveSupport::TestCase
 
     assert_equal 8, sender.unread_reports_count
   end
+
+  test "should have 0 points after creation" do
+    p = Player.create name: 'New player',
+                      email: 'pl@ay.er',
+                      password: 'unsafe password',
+                      password_confirmation: 'unsafe password'
+
+    assert_equal 0, p.points
+  end
 end
