@@ -1,11 +1,6 @@
 require 'test_helper'
 
 class AttackEventTest < ActiveSupport::TestCase
-  class NullDispatcher
-    def add_event_to_queue event
-    end
-  end
-
   setup do
     @origin = villas(:occupying_villa)
     @target = villas(:occupied_villa)

@@ -37,4 +37,9 @@ class ActiveSupport::TestCase
       assert_equal p, sess.assigns(:current_player)
     end
   end
+
+  class NullDispatcher
+    def add_event_to_queue event
+    end
+  end
 end
