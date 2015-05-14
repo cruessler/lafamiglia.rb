@@ -76,6 +76,7 @@ en:
       header: "Player ranking"
       position: "Position"
       name: "Name"
+      villas: "Villas"
       points: "Points"
   villas:
     index:
