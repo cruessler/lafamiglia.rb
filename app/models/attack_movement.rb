@@ -2,8 +2,6 @@ class AttackMovement < Movement
   validate :enough_units, :units_selected,
            :target_not_owned_by_attacker
 
-  after_validation :calculate_arrives_at, on: :create
-
   after_create :subtract_units_from_origin!
 
   def enough_units
@@ -27,10 +25,6 @@ class AttackMovement < Movement
 
   def target_not_owned_by_attacker
     errors.add(:base, I18n.t('errors.movements.target_is_own')) if target.player == origin.player
-  end
-
-  def calculate_arrives_at
-    self.arrives_at = LaFamiglia.now + duration
   end
 
   def subtract_units_from_origin!

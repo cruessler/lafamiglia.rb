@@ -10,12 +10,18 @@ class Movement < ActiveRecord::Base
 
   before_validation :set_default_values, on: :create
 
+  after_validation :calculate_arrives_at, on: :create
+
   def set_default_values
     self.unit_1 = 0 if self.unit_1.nil?
     self.unit_2 = 0 if self.unit_2.nil?
     self.resource_1 = 0 if self.resource_1.nil?
     self.resource_2 = 0 if self.resource_2.nil?
     self.resource_3 = 0 if self.resource_3.nil?
+  end
+
+  def calculate_arrives_at
+    self.arrives_at = LaFamiglia.now + duration if self.arrives_at.nil?
   end
 
   def duration
