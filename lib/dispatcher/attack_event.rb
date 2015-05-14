@@ -48,6 +48,8 @@ module Dispatcher
                                          units: combat.attacker_after_combat
 
           @attack_movement.destroy
+
+          dispatcher.add_event_to_queue ConquerEvent.new(occupation)
         else
           if combat.attacker_survived?
             comeback = @attack_movement.cancel!
