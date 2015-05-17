@@ -4,6 +4,8 @@ class VillaTest < ActiveSupport::TestCase
   setup do
     @v = villas(:one)
     @v.processed_until = LaFamiglia.now
+
+    @unit_1 = LaFamiglia.units.get_by_id 1
   end
 
   test "should update counter caches" do
@@ -54,26 +56,24 @@ class VillaTest < ActiveSupport::TestCase
   end
 
   test "should recruit units" do
-    u = LaFamiglia.units.get_by_id 1
     units = @v.units
 
-    @v.unit_queue_items.enqueue u, 10
+    @v.unit_queue_items.enqueue @unit_1, 10
 
-    @v.process_until! LaFamiglia.now + u.build_time(5)
-    assert_equal units[u.key] + 5, @v.unit_number(u)
+    @v.process_until! LaFamiglia.now + @unit_1.build_time(5)
+    assert_equal units[@unit_1.key] + 5, @v.unit_number(@unit_1)
 
-    @v.process_until! LaFamiglia.now + u.build_time(15)
-    assert_equal units[u.key] + 10, @v.unit_number(u)
+    @v.process_until! LaFamiglia.now + @unit_1.build_time(15)
+    assert_equal units[@unit_1.key] + 10, @v.unit_number(@unit_1)
   end
 
   test "should recruit units virtually" do
-    u = LaFamiglia.units.get_by_id 1
     units = @v.units
 
-    @v.unit_queue_items.enqueue u, 10
+    @v.unit_queue_items.enqueue @unit_1, 10
 
-    @v.process_virtually_until! LaFamiglia.now + u.build_time(5)
-    assert_equal units[u.key] + 5, @v.unit_number(u)
+    @v.process_virtually_until! LaFamiglia.now + @unit_1.build_time(5)
+    assert_equal units[@unit_1.key] + 5, @v.unit_number(@unit_1)
   end
 
   test "should find an empty space for a new villa" do
