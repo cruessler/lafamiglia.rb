@@ -122,7 +122,7 @@ en:
       delete: "Delete"
     destroy:
       deleted: "The report has been deleted."
-    attack:
+    combat:
       title:
         same_player: "Attack of %{origin} on %{target}"
         on_player: "Attack of %{origin} on %{target_player} – %{target}"

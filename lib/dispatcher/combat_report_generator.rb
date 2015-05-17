@@ -25,16 +25,16 @@ module Dispatcher
     def title_for villa
       case
       when @origin.player == @target.player
-        I18n.t('reports.attack.title.same_player',
+        I18n.t('reports.combat.title.same_player',
                origin: @origin.to_s,
                target: @target.to_s)
       when villa == @origin
-        I18n.t('reports.attack.title.on_player',
+        I18n.t('reports.combat.title.on_player',
                origin: @origin.to_s,
                target_player: @target.player.to_s,
                target: @target.to_s)
       when villa == @target
-        I18n.t('reports.attack.title.from_player',
+        I18n.t('reports.combat.title.from_player',
                origin_player: @origin.player.to_s,
                origin: @origin.to_s,
                target: @target.to_s)
