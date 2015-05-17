@@ -47,6 +47,8 @@ module Dispatcher
                                          occupying_villa: origin,
                                          units: combat.attacker_after_combat
 
+          target.unit_queue_items.delete_all
+
           @attack_movement.destroy
 
           dispatcher.add_event_to_queue ConquerEvent.new(occupation)

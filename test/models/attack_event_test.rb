@@ -11,18 +11,19 @@ class AttackEventTest < ActiveSupport::TestCase
     Dispatcher.logger = Logger.new File::NULL
   end
 
-  test "should begin an occupation" do
+  test "should begin an occupation when an attack is successful" do
+    @target.unit_queue_items.enqueue LaFamiglia.units.get_by_id(1), 5
+
     attack = AttackMovement.create(origin: @origin,
                                    target: @target,
-                                   unit_1: @origin.unit_1,
-                                   unit_2: @origin.unit_2)
+                                   units: @origin.units)
 
     LaFamiglia.clock(LaFamiglia.now + attack.duration)
 
     event = Dispatcher::AttackEvent.new attack
+    event.handle NullDispatcher.new
 
-    assert_difference 'Occupation.count' do
-      event.handle NullDispatcher.new
-    end
+    assert_equal @target, Occupation.last.occupied_villa
+    assert_equal 0, @target.unit_queue_items.count
   end
 end

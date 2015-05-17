@@ -100,4 +100,18 @@ class VillaTest < ActiveSupport::TestCase
 
     assert_not_equal build_time, building.build_time(1)
   end
+
+  test "should cancel recruiting" do
+    1.upto 3 do
+      @v.unit_queue_items.enqueue @unit_1, 5
+    end
+
+    assert_not_equal 0, @v.unit_queue_items.count
+    assert_not_equal 0, @v.unit_queue_items_count
+
+    @v.unit_queue_items.delete_all
+
+    assert_equal 0, @v.unit_queue_items_count
+    assert_equal 0, @v.unit_queue_items.count
+  end
 end
