@@ -16,6 +16,16 @@ class ActiveSupport::TestCase
     LaFamiglia.clock
   end
 
+  def setup_for_occupation_test
+    @origin = villas(:occupying_villa)
+    @target = villas(:occupied_villa)
+
+    @origin.processed_until = LaFamiglia.now
+    @target.processed_until = LaFamiglia.now
+
+    Dispatcher.logger = Logger.new File::NULL
+  end
+
   module Logout
     def logout
       delete_via_redirect "/players/sign_out"
@@ -36,6 +46,18 @@ class ActiveSupport::TestCase
 
       assert_equal p, sess.assigns(:current_player)
     end
+  end
+
+  def create_and_handle_occupation origin, target
+    occupation = Occupation.create(succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
+                                   occupied_villa: target,
+                                   occupying_villa: origin,
+                                   unit_2: 1)
+
+    LaFamiglia.clock(LaFamiglia.now + LaFamiglia.config.duration_of_occupation)
+
+    event = Dispatcher::ConquerEvent.new occupation
+    event.handle NullDispatcher.new
   end
 
   class NullDispatcher
