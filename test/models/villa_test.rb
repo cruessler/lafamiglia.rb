@@ -76,7 +76,7 @@ class VillaTest < ActiveSupport::TestCase
     assert_equal units[u.key] + 5, @v.unit_number(u)
   end
 
-  test "should find an empty space for a new ville" do
+  test "should find an empty space for a new villa" do
     assert_not_nil Villa.empty_coordinates
   end
 
