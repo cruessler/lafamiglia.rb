@@ -220,6 +220,10 @@ class Villa < ActiveRecord::Base
     end
   end
 
+  def occupied?
+    !occupied_by.nil?
+  end
+
   def has_supply?(supply)
     self.used_supply + supply <= self.supply
   end

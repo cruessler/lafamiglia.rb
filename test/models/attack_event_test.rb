@@ -12,6 +12,8 @@ class AttackEventTest < ActiveSupport::TestCase
   end
 
   test "should begin an occupation when an attack is successful" do
+    refute_predicate @target, :occupied?
+
     @target.unit_queue_items.enqueue LaFamiglia.units.get_by_id(1), 5
 
     attack = AttackMovement.create(origin: @origin,
@@ -23,7 +25,10 @@ class AttackEventTest < ActiveSupport::TestCase
     event = Dispatcher::AttackEvent.new attack
     event.handle NullDispatcher.new
 
+    @target.reload
+
     assert_equal @target, Occupation.last.occupied_villa
     assert_equal 0, @target.unit_queue_items.count
+    assert_predicate @target, :occupied?
   end
 end
