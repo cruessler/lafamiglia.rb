@@ -14,10 +14,5 @@ class ConquerEventTest < ActiveSupport::TestCase
 
     assert_equal @origin.player, @target.player
     assert_equal old_number_of_villas + 1, @origin.player.villas.count
-
-    comeback = ComebackMovement.last
-
-    assert_not_nil comeback.duration
-    assert_not_equal 0, comeback.duration
   end
 end
