@@ -1,0 +1,2 @@
+class ConquestReport < Report
+end

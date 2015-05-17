@@ -23,20 +23,28 @@ module Dispatcher
     def handle dispatcher
       logger.info { "processing conquer event (id: #{@occupation.id}, time: #{happens_at})" }
 
-      old_owner = @occupation.occupied_villa.player
-      new_owner = @occupation.occupying_villa.player
+      origin, target = @occupation.occupying_villa, @occupation.occupied_villa
 
-      logger.info { "#{new_owner} conquers #{@occupation.occupied_villa} from #{old_owner}" }
+      old_owner = target.player
+      new_owner = origin.player
+
+      logger.info { "#{new_owner} conquers #{target} from #{old_owner}" }
 
       Villa.transaction do
-        @occupation.occupied_villa.player = new_owner
-        @occupation.occupied_villa.save
+        # The report has to be delivered before the target’s player is changed
+        # as otherwise the target’s player would not receive the report which
+        # would instead be sent to the conquering player twice.
+        report = ConquestReportGenerator.new(@occupation.succeeds_at)
+        report.deliver!(origin, target)
+
+        target.player = new_owner
+        target.save
 
         old_owner.recalc_points!
         new_owner.recalc_points!
 
-        ComebackMovement.create(origin: @occupation.occupying_villa,
-                                target: @occupation.occupied_villa,
+        ComebackMovement.create(origin: origin,
+                                target: target,
                                 units: @occupation.units)
 
         @occupation.destroy

@@ -1,0 +1,20 @@
+<h3><%= @report.title %></h3>
+
+<div>
+  <%= l @report.delivered_at %>
+</div>
+
+<h4>
+  <%= t '.occupation_successful' %>
+</h4>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= t '.conquered_by' %>:
+    <%= @report.origin %>
+  </div>
+  <div class="col-md-6">
+    <%= t '.conquered' %>:
+    <%= @report.target %>
+  </div>
+</div>

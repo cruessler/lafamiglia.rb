@@ -127,6 +127,10 @@ en:
         same_player: "Attack of %{origin} on %{target}"
         on_player: "Attack of %{origin} on %{target_player} – %{target}"
         from_player: "Attack of %{origin_player} – %{origin} on %{target}"
+    conquest:
+      title:
+        on_player: "%{origin} has conquered %{target_player} – %{target}"
+        from_player: "%{target} has been conquered by %{origin_player} – %{origin}"
   combat_reports:
     combat_report:
       attacker: "Attacker"
@@ -137,6 +141,11 @@ en:
     units:
       before_combat: "before combat"
       losses: "losses"
+  conquest_reports:
+    conquest_report:
+      occupation_successful: "The occupation has been successful"
+      conquered_by: "Conquered by"
+      conquered: "Conquered"
 
   activerecord:
     attributes:
