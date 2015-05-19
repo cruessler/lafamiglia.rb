@@ -2,6 +2,7 @@
 
 DEFAULTS: &DEFAULTS
   processed_until: <%= Time.now %>
+  is_occupied: false
   storage_capacity: 100
   resource_1: 100
   resource_2: 100

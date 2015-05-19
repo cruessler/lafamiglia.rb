@@ -88,6 +88,7 @@ class Villa < ActiveRecord::Base
 
   def set_default_values
     self.processed_until = LaFamiglia.now
+    self.is_occupied = false
     self.building_queue_items_count = 0
     self.research_queue_items_count = 0
     self.unit_queue_items_count = 0
@@ -221,7 +222,7 @@ class Villa < ActiveRecord::Base
   end
 
   def occupied?
-    !occupied_by.nil?
+    is_occupied
   end
 
   def has_supply?(supply)
