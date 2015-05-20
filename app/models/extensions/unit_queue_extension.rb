@@ -18,6 +18,12 @@ module UnitQueueExtension
     costs = unit.costs number
     supply = unit.supply number
 
+    if villa.occupied?
+      villa.errors[:base] << I18n.t('errors.units.villa_is_occupied')
+
+      return false
+    end
+
     unless unit.requirements_met? villa
       villa.errors[:base] << I18n.t('errors.units.requirements_not_met')
 

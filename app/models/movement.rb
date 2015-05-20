@@ -7,10 +7,15 @@ class Movement < ActiveRecord::Base
 
   validates_presence_of :origin
   validates_presence_of :target
+  validate :villa_not_occupied
 
   before_validation :set_default_values, on: :create
 
   after_validation :calculate_arrives_at, on: :create
+
+  def villa_not_occupied
+    errors.add(:base, I18n.t('errors.movements.villa_is_occupied')) if origin.occupied?
+  end
 
   def set_default_values
     self.unit_1 = 0 if self.unit_1.nil?

@@ -21,6 +21,12 @@ module QueueExtension
     level = virtual_level object
     costs = object.costs level
 
+    if villa.occupied?
+      villa.errors[:base] << error_message('villa_is_occupied')
+
+      return false
+    end
+
     unless object.requirements_met? villa
       villa.errors[:base] << error_message('requirements_not_met')
 

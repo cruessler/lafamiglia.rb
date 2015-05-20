@@ -21,20 +21,24 @@ en:
   errors:
     no_villa_left: "There is no space on the map to create a new villa for you."
     buildings:
+      villa_is_occupied: "You can’t build in an occupied villa."
       already_at_maxlevel: "This building can’t be upgraded any further."
       not_the_last_one: "You can only cancel the last upgrade of this building."
       not_enough_resources: "You don’t have enough resources to build this building."
       requirements_not_met: "The requirements of this building are not met."
     researches:
+      villa_is_occupied: "You can’t research in an occupied villa."
       already_at_maxlevel: "This research can’t be researched any further."
       not_the_last_one: "You can only cancel the last research of a kind."
       not_enough_resources: "You don’t have enough resources for this research."
       requirements_not_met: "The requirements of this research are not met."
     units:
+      villa_is_occupied: "You can’t recruit units in an occupied villa."
       not_enough_supply: "You don’t have enough supply to build these units."
       not_enough_resources: "You don’t have enough resources to build these units."
       requirements_not_met: "The requirements of these units are not met."
     movements:
+      villa_is_occupied: "You can’t give your troops orders in an occupied villa."
       invalid_number: "The number of units is invalid."
       no_unit_selected: "You have to select units for an attack."
       target_is_own: "You can’t attack your own villa."
