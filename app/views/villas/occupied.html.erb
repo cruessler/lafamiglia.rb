@@ -1,0 +1,26 @@
+<h2>
+  <%= current_villa.name %> <%= coordinates current_villa %>
+</h2>
+
+<div class="occupied-header">
+  <p>
+    <%= t '.villa_occupied' %>
+  </p>
+  <p>
+    <%= t '.villa_lost_in_html', lost_in: countdown_to(current_villa.occupied_by.succeeds_at) %>
+  </p>
+</div>
+
+<div class="occupied-info">
+  <p>
+    <%= t '.villa_occupied_by', villa: current_villa.occupied_by.occupying_villa %>
+  </p>
+
+  <p>
+    <%= t '.occupation_will_end', end_of_occupation: l(current_villa.occupied_by.succeeds_at) %>
+  </p>
+
+  <p>
+    <%= t '.takeover_warning', occupied_by: current_villa.occupied_by.occupying_villa.player %>
+  </p>
+</div>

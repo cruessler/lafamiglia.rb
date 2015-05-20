@@ -5,3 +5,14 @@
 div.navbar div.resources {
   padding: 15px;
 }
+
+div.occupied-header {
+  @extend .h3;
+  @extend .alert;
+  @extend .alert-danger;
+}
+
+div.occupied-info {
+  @extend .alert;
+  @extend .alert-info;
+}

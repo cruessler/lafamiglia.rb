@@ -7,6 +7,7 @@ class VillasController < ApplicationController
 
   # GET /villas/1
   def show
+    render 'occupied' if current_villa.occupied?
   end
 
   # GET /villas

@@ -98,6 +98,14 @@ en:
       research: "Research"
       research_time: "Research time"
       research!: "Research"
+    occupied:
+      villa_occupied: "This villa is occupied. Your actions are limited."
+      villa_lost_in_html: "This villa will be lost in %{lost_in}."
+      villa_occupied_by: "This villa is occupied by villa %{villa}."
+      occupation_will_end: "The occupation will end %{end_of_occupation}."
+      takeover_warning: >
+                        When the occupying forces won’t be destroyed before that time the occupier
+                        %{occupied_by} will take over this villa.
   messages:
     create:
       created: "The message has been sent."
