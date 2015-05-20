@@ -3,7 +3,7 @@ require 'test_helper'
 class AttackEventTest < ActiveSupport::TestCase
   setup do
     @origin = villas(:occupying_villa)
-    @target = villas(:occupied_villa)
+    @target = villas(:villa_to_be_occupied)
 
     @origin.processed_until = LaFamiglia.now
     @target.processed_until = LaFamiglia.now

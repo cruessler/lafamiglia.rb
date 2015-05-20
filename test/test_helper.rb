@@ -18,7 +18,7 @@ class ActiveSupport::TestCase
 
   def setup_for_occupation_test
     @origin = villas(:occupying_villa)
-    @target = villas(:occupied_villa)
+    @target = villas(:villa_to_be_occupied)
 
     @origin.processed_until = LaFamiglia.now
     @target.processed_until = LaFamiglia.now
