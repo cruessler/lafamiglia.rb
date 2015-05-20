@@ -41,7 +41,8 @@ module Dispatcher
       logger.info { "attacker_can_occupy?: #{combat.attacker_can_occupy?}" }
 
       Villa.transaction do
-        if combat.attacker_can_occupy?
+        case
+        when combat.attacker_can_occupy?
           occupation = Occupation.create succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
                                          occupied_villa: target,
                                          occupying_villa: origin,
@@ -52,20 +53,18 @@ module Dispatcher
           @attack_movement.destroy
 
           dispatcher.add_event_to_queue ConquerEvent.new(occupation)
+        when combat.attacker_survived?
+          comeback = @attack_movement.cancel!
+
+          comeback.units = combat.attacker_after_combat
+          comeback.resources = combat.plundered_resources
+          target.subtract_resources!(combat.plundered_resources)
+
+          comeback.save
+
+          dispatcher.add_event_to_queue ComebackEvent.new(comeback)
         else
-          if combat.attacker_survived?
-            comeback = @attack_movement.cancel!
-
-            comeback.units = combat.attacker_after_combat
-            comeback.resources = combat.plundered_resources
-            target.subtract_resources!(combat.plundered_resources)
-
-            comeback.save
-
-            dispatcher.add_event_to_queue ComebackEvent.new(comeback)
-          else
-            @attack_movement.destroy
-          end
+          @attack_movement.destroy
         end
 
         target.subtract_units!(combat.defender_loss)
