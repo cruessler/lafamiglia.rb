@@ -14,96 +14,106 @@ module Dispatcher
 
     def initialize attack_movement
       @attack_movement = attack_movement
+      @origin, @target = @attack_movement.origin, @attack_movement.target
     end
 
     def happens_at
       @happens_at ||= @attack_movement.arrives_at
     end
 
+    def destroy_occupation
+      @target.occupation.destroy
+      @target.occupation.origin.used_supply -= @combat.defender_supply_loss
+    end
+
+    def handle_occupation dispatcher
+      destroy_occupation if @target.occupied?
+
+      occupation = Occupation.create succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
+                                      origin: @origin,
+                                      target: @target,
+                                      units: @combat.attacker_after_combat
+
+      @target.unit_queue_items.delete_all
+
+      @attack_movement.destroy
+
+      dispatcher.add_event_to_queue ConquerEvent.new(occupation)
+    end
+
+    def handle_plundering dispatcher
+      destroy_occupation if @target.occupied?
+
+      comeback = @attack_movement.cancel!
+
+      comeback.units = @combat.attacker_after_combat
+      comeback.resources = @combat.plundered_resources
+      @target.subtract_resources!(@combat.plundered_resources)
+
+      comeback.save
+
+      dispatcher.add_event_to_queue ComebackEvent.new(comeback)
+    end
+
+    def handle_defense dispatcher
+      @attack_movement.destroy
+
+      if @target.occupied?
+        if @combat.defender_after_combat[LaFamiglia.config.unit_for_occupation] == 0
+          if @combat.defender_survived?
+            @target.occupation.subtract_units!(@combat.defender_loss)
+            @target.occupation.cancel!
+          else
+            @target.occupation.destroy
+          end
+
+          @target.occupation.origin.used_supply -= @combat.defender_supply_loss
+        end
+      else
+        @target.subtract_units!(@combat.defender_loss)
+        @target.used_supply -= @combat.defender_supply_loss
+      end
+    end
+
     def handle dispatcher
       logger.info { "processing attack movement (id: #{@attack_movement.id}, time: #{happens_at})" }
 
-      origin, target = @attack_movement.origin, @attack_movement.target
-
       Villa.transaction do
-        origin.process_until! happens_at
-        target.process_until! happens_at
+        @origin.process_until! happens_at
+        @target.process_until! happens_at
 
-        target.occupation.origin.process_until! happens_at if target.occupied?
+        @target.occupation.origin.process_until! happens_at if @target.occupied?
       end
 
       attacker = @attack_movement.attack_values
       defender = @attack_movement.defense_values
 
-      combat = Combat.new(attacker, defender)
-      combat.calculate
+      @combat = Combat.new(attacker, defender)
+      @combat.calculate
 
-      logger.info { "attacker: #{combat.attacker}, defender: #{combat.defender}" }
-      logger.info { "attack value: #{combat.attack_value}, defense value: #{combat.defense_value}" }
-      logger.info { "attacker loss: #{combat.attacker_loss}, defender loss: #{combat.defender_loss}" }
-      logger.info { "plundered_resources: #{combat.plundered_resources}" }
-      logger.info { "attacker_can_occupy?: #{combat.attacker_can_occupy?}" }
+      logger.info { "attacker: #{@combat.attacker}, defender: #{@combat.defender}" }
+      logger.info { "attack value: #{@combat.attack_value}, defense value: #{@combat.defense_value}" }
+      logger.info { "attacker loss: #{@combat.attacker_loss}, defender loss: #{@combat.defender_loss}" }
+      logger.info { "plundered_resources: #{@combat.plundered_resources}" }
+      logger.info { "attacker_can_occupy?: #{@combat.attacker_can_occupy?}" }
 
       Villa.transaction do
         case
-        when combat.attacker_can_occupy?
-          if target.occupied?
-            target.occupation.destroy
-            target.occupation.origin.used_supply -= combat.defender_supply_loss
-          end
-
-          occupation = Occupation.create succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
-                                         origin: origin,
-                                         target: target,
-                                         units: combat.attacker_after_combat
-
-          target.unit_queue_items.delete_all
-
-          @attack_movement.destroy
-
-          dispatcher.add_event_to_queue ConquerEvent.new(occupation)
-        when combat.attacker_survived?
-          if target.occupied?
-            target.occupation.destroy
-            target.occupation.origin.used_supply -= combat.defender_supply_loss
-          end
-
-          comeback = @attack_movement.cancel!
-
-          comeback.units = combat.attacker_after_combat
-          comeback.resources = combat.plundered_resources
-          target.subtract_resources!(combat.plundered_resources)
-
-          comeback.save
-
-          dispatcher.add_event_to_queue ComebackEvent.new(comeback)
+        when @combat.attacker_can_occupy?
+          handle_occupation dispatcher
+        when @combat.attacker_survived?
+          handle_plundering dispatcher
         else
-          @attack_movement.destroy
-
-          if target.occupied?
-            if combat.defender_after_combat[LaFamiglia.config.unit_for_occupation] == 0
-              if combat.defender_survived?
-                target.occupation.subtract_units!(combat.defender_loss)
-                target.occupation.cancel!
-              else
-                target.occupation.destroy
-              end
-
-              target.occupation.origin.used_supply -= combat.defender_supply_loss
-            end
-          else
-            target.subtract_units!(combat.defender_loss)
-            target.used_supply -= combat.defender_supply_loss
-          end
+          handle_defense dispatcher
         end
 
-        origin.used_supply -= combat.attacker_supply_loss
-        target.save
-        origin.save
-        target.occupation.origin.save
+        @origin.used_supply -= @combat.attacker_supply_loss
+        @target.save
+        @origin.save
+        @target.occupation.origin.save
 
-        report = CombatReportGenerator.new(@attack_movement.arrives_at, combat.report_data)
-        report.deliver!(origin, target)
+        report = CombatReportGenerator.new(@attack_movement.arrives_at, @combat.report_data)
+        report.deliver!(@origin, @target)
       end
     end
   end
