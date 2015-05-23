@@ -110,6 +110,12 @@ class Combat
     end
   end
 
+  def defender_after_combat
+    @defender_after_combat ||= LaFamiglia.units.each_with_object({}) do |u, hash|
+      hash[u.key] = @defender[u.key] - defender_loss[u.key]
+    end
+  end
+
   def attacker_supply_loss
     @attacker_supply_loss ||= LaFamiglia.units.inject(0) do |supply, u|
       supply + u.supply(attacker_loss[u.key])
