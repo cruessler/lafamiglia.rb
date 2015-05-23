@@ -44,7 +44,9 @@ class AttackMovement < Movement
     new_attributes = attributes
     new_attributes.delete('type')
     new_attributes[:arrives_at] = new_arrives_at
+
     comeback = ComebackMovement.new(new_attributes)
+
     transaction do
       destroy
       comeback.save
