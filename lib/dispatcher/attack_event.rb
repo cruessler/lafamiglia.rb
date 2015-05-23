@@ -62,7 +62,9 @@ module Dispatcher
         if @combat.defender_after_combat[LaFamiglia.config.unit_for_occupation] == 0
           if @combat.defender_survived?
             @target.occupation.subtract_units!(@combat.defender_loss)
-            @target.occupation.cancel!
+            comeback = @target.occupation.cancel!
+
+            dispatcher.add_event_to_queue ComebackEvent.new(comeback)
           else
             @target.occupation.destroy
           end
