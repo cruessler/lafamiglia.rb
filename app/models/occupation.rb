@@ -14,4 +14,17 @@ class Occupation < ActiveRecord::Base
   def unset_is_occupied_for_villa
     target.update_attribute :is_occupied, false
   end
+
+  def cancel!
+    comeback = ComebackMovement.new(origin: origin,
+                                    target: target,
+                                    units: units)
+
+    transaction do
+      destroy
+      comeback.save
+
+      comeback
+    end
+  end
 end

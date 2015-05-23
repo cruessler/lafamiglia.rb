@@ -56,4 +56,21 @@ class AttackEventTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "should cancel an occupation if there is no unit left that can occupy" do
+    origin, target = villas(:villa_having_few_units,
+                            :occupied_villa)
+
+    target.occupation.send "#{LaFamiglia.config.unit_for_occupation}=", 0
+    target.occupation.save
+
+    assert_difference -> { ComebackMovement.count } do
+      assert_difference -> { Occupation.count }, -1 do
+        create_and_handle_attack origin, target
+      end
+    end
+
+    assert_nil target.occupation
+    assert_operator LaFamiglia.now, :<, ComebackMovement.last.arrives_at
+  end
 end

@@ -80,6 +80,14 @@ class Combat
     @attacker_survived
   end
 
+  def defender_survived?
+    if @defender_survived.nil?
+      @defender_survived = defender_after_combat.any? { |pair| pair[1] > 0 }
+    end
+
+    @defender_survived
+  end
+
   def attacker_before_combat
     @attacker_before_combat ||= LaFamiglia.units.each_with_object({}) do |u, hash|
       hash[u.key] = @attacker[u.key]

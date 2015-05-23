@@ -4,5 +4,5 @@ one:
   succeeds_at: <%= Time.now + 1.day %>
   origin: occupying_villa
   target: occupied_villa
-  unit_1: 1
+  unit_1: 20
   unit_2: 2

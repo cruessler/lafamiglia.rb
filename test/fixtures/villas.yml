@@ -64,3 +64,11 @@ villa_attacking_an_occupied_villa:
   player: player_who_attacks_an_occupied_villa
   unit_1: 100
   unit_2: 2
+
+villa_having_few_units:
+  <<: *DEFAULTS
+  x: 5
+  y: 6
+  name: Villa having few units
+  player: two
+  unit_1: 10

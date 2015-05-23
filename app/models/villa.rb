@@ -215,12 +215,6 @@ class Villa < ActiveRecord::Base
     end
   end
 
-  def subtract_units!(units)
-    units.each_pair do |key, number|
-      write_attribute(key, read_attribute(key) - number)
-    end
-  end
-
   def occupied?
     is_occupied
   end

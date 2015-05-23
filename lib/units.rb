@@ -73,13 +73,19 @@ module LaFamiglia
     module Accessors
       def units
         LaFamiglia.units.each_with_object({}) do |u, hash|
-          hash[u.key] = self.send(u.key)
+          hash[u.key] = self[u.key]
         end
       end
 
       def units= units
         LaFamiglia.units.each do |u|
           self[u.key] = units[u.key]
+        end
+      end
+
+      def subtract_units!(units)
+        units.each_pair do |key, number|
+          self[key] = self[key] - number
         end
       end
     end
