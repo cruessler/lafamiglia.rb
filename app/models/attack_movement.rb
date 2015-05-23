@@ -52,4 +52,22 @@ class AttackMovement < Movement
       comeback
     end
   end
+
+  def attack_values
+    units.merge(origin.researches)
+  end
+
+  def defense_values
+    if target.occupied?
+      origin_of_occupation = target.occupied_by.occupying_villa
+
+      target.buildings.merge(target.occupied_by.units)
+          .merge(origin_of_occupation.researches)
+          .merge(target.resources)
+    else
+      target.buildings.merge(target.units)
+          .merge(target.researches)
+          .merge(target.resources)
+    end
+  end
 end
