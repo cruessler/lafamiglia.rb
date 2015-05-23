@@ -2,7 +2,7 @@
 
 one:
   succeeds_at: <%= Time.now + 1.day %>
-  occupying_villa: occupying_villa
-  occupied_villa: occupied_villa
+  origin: occupying_villa
+  target: occupied_villa
   unit_1: 1
   unit_2: 2

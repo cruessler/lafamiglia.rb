@@ -35,7 +35,7 @@
     </tr>
     <% current_villa.occupations.each do |occupation| %>
       <tr>
-        <td><%= occupation.occupied_villa %></td>
+        <td><%= occupation.origin %></td>
         <td><%= l occupation.succeeds_at %></td>
         <td><%= countdown_to occupation.succeeds_at %></td>
         <td></td>

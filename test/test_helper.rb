@@ -50,8 +50,8 @@ class ActiveSupport::TestCase
 
   def create_and_handle_occupation origin, target
     occupation = Occupation.create(succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
-                                   occupied_villa: target,
-                                   occupying_villa: origin,
+                                   origin: origin,
+                                   target: target,
                                    unit_2: 1)
 
     LaFamiglia.clock(LaFamiglia.now + LaFamiglia.config.duration_of_occupation)

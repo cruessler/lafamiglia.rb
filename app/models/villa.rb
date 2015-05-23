@@ -28,8 +28,8 @@ class Villa < ActiveRecord::Base
            class_name: 'Movement',
            foreign_key: 'origin_id'
 
-  has_one :occupied_by, class_name: 'Occupation', foreign_key: 'occupied_villa_id'
-  has_many :occupations, foreign_key: 'occupying_villa_id'
+  has_one :occupation, foreign_key: 'target_id'
+  has_many :occupations, foreign_key: 'origin_id'
 
   before_create :set_default_values
 

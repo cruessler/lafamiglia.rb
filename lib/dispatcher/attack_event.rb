@@ -29,7 +29,7 @@ module Dispatcher
         origin.process_until! happens_at
         target.process_until! happens_at
 
-        target.occupied_by.occupying_villa.process_until! happens_at if target.occupied?
+        target.occupation.origin.process_until! happens_at if target.occupied?
       end
 
       attacker = @attack_movement.attack_values
@@ -48,13 +48,13 @@ module Dispatcher
         case
         when combat.attacker_can_occupy?
           if target.occupied?
-            target.occupied_by.destroy
-            target.occupied_by.occupying_villa.used_supply -= combat.defender_supply_loss
+            target.occupation.destroy
+            target.occupation.origin.used_supply -= combat.defender_supply_loss
           end
 
           occupation = Occupation.create succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
-                                         occupied_villa: target,
-                                         occupying_villa: origin,
+                                         origin: origin,
+                                         target: target,
                                          units: combat.attacker_after_combat
 
           target.unit_queue_items.delete_all
@@ -64,8 +64,8 @@ module Dispatcher
           dispatcher.add_event_to_queue ConquerEvent.new(occupation)
         when combat.attacker_survived?
           if target.occupied?
-            target.occupied_by.destroy
-            target.occupied_by.occupying_villa.used_supply -= combat.defender_supply_loss
+            target.occupation.destroy
+            target.occupation.origin.used_supply -= combat.defender_supply_loss
           end
 
           comeback = @attack_movement.cancel!
@@ -83,13 +83,13 @@ module Dispatcher
           if target.occupied?
             if combat.defender_after_combat[LaFamiglia.config.unit_for_occupation] == 0
               if combat.defender_survived?
-                target.occupied_by.subtract_units!(combat.defender_loss)
-                target.occupied_by.cancel!
+                target.occupation.subtract_units!(combat.defender_loss)
+                target.occupation.cancel!
               else
-                target.occupied_by.destroy
+                target.occupation.destroy
               end
 
-              target.occupied_by.occupying_villa.used_supply -= combat.defender_supply_loss
+              target.occupation.origin.used_supply -= combat.defender_supply_loss
             end
           else
             target.subtract_units!(combat.defender_loss)
@@ -100,7 +100,7 @@ module Dispatcher
         origin.used_supply -= combat.attacker_supply_loss
         target.save
         origin.save
-        target.occupied_by.occupying_villa.save
+        target.occupation.origin.save
 
         report = CombatReportGenerator.new(@attack_movement.arrives_at, combat.report_data)
         report.deliver!(origin, target)

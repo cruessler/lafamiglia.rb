@@ -15,7 +15,7 @@ module Dispatcher
 
       if @origin.player != @target.player
         deliver_to = if @target.occupied?
-          @target.occupied_by.occupying_villa.player
+          @target.occupation.origin.player
         else
           @target.player
         end

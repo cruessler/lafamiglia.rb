@@ -11,16 +11,16 @@ class OccupationTest < ActiveSupport::TestCase
 
     occupation_1 = Occupation.create(succeeds_at: LaFamiglia.now + 1.hour,
                                      unit_1: 1,
-                                     occupied_villa: @v1,
-                                     occupying_villa: @v2)
+                                     origin: @v2,
+                                     target: @v1)
     assert_not_nil occupation_1
     assert_predicate @v1, :occupied?
 
     assert_raises ActiveRecord::RecordNotUnique do
       occupation_2 = Occupation.create(succeeds_at: LaFamiglia.now + 1.hour,
                                        unit_1: 1,
-                                       occupied_villa: @v1,
-                                       occupying_villa: @v2)
+                                       origin: @v2,
+                                       target: @v1)
     end
 
     occupation_1.destroy

@@ -23,7 +23,7 @@ module Dispatcher
     def handle dispatcher
       logger.info { "processing conquer event (id: #{@occupation.id}, time: #{happens_at})" }
 
-      origin, target = @occupation.occupying_villa, @occupation.occupied_villa
+      origin, target = @occupation.origin, @occupation.target
 
       old_owner = target.player
       new_owner = origin.player

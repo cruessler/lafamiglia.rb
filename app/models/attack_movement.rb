@@ -59,9 +59,9 @@ class AttackMovement < Movement
 
   def defense_values
     if target.occupied?
-      origin_of_occupation = target.occupied_by.occupying_villa
+      origin_of_occupation = target.occupation.origin
 
-      target.buildings.merge(target.occupied_by.units)
+      target.buildings.merge(target.occupation.units)
           .merge(origin_of_occupation.researches)
           .merge(target.resources)
     else

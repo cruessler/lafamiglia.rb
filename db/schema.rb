@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519202422) do
+ActiveRecord::Schema.define(version: 20150523182037) do
 
   create_table "building_queue_items", force: true do |t|
     t.integer  "villa_id"
@@ -70,16 +70,16 @@ ActiveRecord::Schema.define(version: 20150519202422) do
 
   create_table "occupations", force: true do |t|
     t.datetime "succeeds_at"
-    t.integer  "occupied_villa_id"
-    t.integer  "occupying_villa_id"
+    t.integer  "target_id"
+    t.integer  "origin_id"
     t.integer  "unit_1"
     t.integer  "unit_2"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "occupations", ["occupied_villa_id"], name: "index_occupations_on_occupied_villa_id", unique: true
-  add_index "occupations", ["occupying_villa_id"], name: "index_occupations_on_occupying_villa_id"
+  add_index "occupations", ["origin_id"], name: "index_occupations_on_origin_id"
+  add_index "occupations", ["target_id"], name: "index_occupations_on_target_id", unique: true
 
   create_table "players", force: true do |t|
     t.string   "name"

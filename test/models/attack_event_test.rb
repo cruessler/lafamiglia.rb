@@ -27,7 +27,7 @@ class AttackEventTest < ActiveSupport::TestCase
 
     create_and_handle_attack origin, target
 
-    assert_equal target, Occupation.last.occupied_villa
+    assert_equal target, Occupation.last.target
     assert_equal 0, target.unit_queue_items.count
     assert_predicate target, :occupied?
   end
@@ -35,11 +35,11 @@ class AttackEventTest < ActiveSupport::TestCase
   test "should replace an existing occupation when an attack is successful" do
     origin, target = villas(:villa_attacking_an_occupied_villa, :occupied_villa)
 
-    old_occupation = target.occupied_by
+    old_occupation = target.occupation
 
     create_and_handle_attack origin, target
 
-    assert_not_equal old_occupation, target.occupied_by
+    assert_not_equal old_occupation, target.occupation
   end
 
   test "should send a report to the relevant players" do
