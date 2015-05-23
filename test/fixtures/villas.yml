@@ -55,3 +55,12 @@ occupied_villa:
   y: 2
   name: Villa already occupied
   player: two
+
+villa_attacking_an_occupied_villa:
+  <<: *DEFAULTS
+  x: 5
+  y: 5
+  name: Villa attacking an occupied villa
+  player: player_who_attacks_an_occupied_villa
+  unit_1: 100
+  unit_2: 2

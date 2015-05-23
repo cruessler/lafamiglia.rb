@@ -17,7 +17,7 @@ module Dispatcher
     end
 
     def happens_at
-      @attack_movement.arrives_at
+      @happens_at ||= @attack_movement.arrives_at
     end
 
     def handle dispatcher
@@ -25,11 +25,15 @@ module Dispatcher
 
       origin, target = @attack_movement.origin, @attack_movement.target
 
-      attacker = @attack_movement.units.merge(origin.researches)
-      defender = target.buildings.merge(target.units).merge(target.researches).merge(target.resources)
+      Villa.transaction do
+        origin.process_until! happens_at
+        target.process_until! happens_at
 
-      origin.process_until! @attack_movement.arrives_at
-      target.process_until! @attack_movement.arrives_at
+        target.occupied_by.occupying_villa.process_until! happens_at if target.occupied?
+      end
+
+      attacker = @attack_movement.attack_values
+      defender = @attack_movement.defense_values
 
       combat = Combat.new(attacker, defender)
       combat.calculate
@@ -43,6 +47,11 @@ module Dispatcher
       Villa.transaction do
         case
         when combat.attacker_can_occupy?
+          if target.occupied?
+            target.occupied_by.destroy
+            target.occupied_by.occupying_villa.used_supply -= combat.defender_supply_loss
+          end
+
           occupation = Occupation.create succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
                                          occupied_villa: target,
                                          occupying_villa: origin,
@@ -54,6 +63,11 @@ module Dispatcher
 
           dispatcher.add_event_to_queue ConquerEvent.new(occupation)
         when combat.attacker_survived?
+          if target.occupied?
+            target.occupied_by.destroy
+            target.occupied_by.occupying_villa.used_supply -= combat.defender_supply_loss
+          end
+
           comeback = @attack_movement.cancel!
 
           comeback.units = combat.attacker_after_combat
@@ -65,13 +79,28 @@ module Dispatcher
           dispatcher.add_event_to_queue ComebackEvent.new(comeback)
         else
           @attack_movement.destroy
+
+          if target.occupied?
+            if combat.defender_after_combat[LaFamiglia.config.unit_for_occupation] == 0
+              if combat.defender_survived?
+                target.occupied_by.subtract_units!(combat.defender_loss)
+                target.occupied_by.cancel!
+              else
+                target.occupied_by.destroy
+              end
+
+              target.occupied_by.occupying_villa.used_supply -= combat.defender_supply_loss
+            end
+          else
+            target.subtract_units!(combat.defender_loss)
+            target.used_supply -= combat.defender_supply_loss
+          end
         end
 
-        target.subtract_units!(combat.defender_loss)
-        target.used_supply -= combat.defender_supply_loss
         origin.used_supply -= combat.attacker_supply_loss
         target.save
         origin.save
+        target.occupied_by.occupying_villa.save
 
         report = CombatReportGenerator.new(@attack_movement.arrives_at, combat.report_data)
         report.deliver!(origin, target)

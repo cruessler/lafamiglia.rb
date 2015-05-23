@@ -14,7 +14,13 @@ module Dispatcher
                           delivered_at: @delivered_at)
 
       if @origin.player != @target.player
-        CombatReport.create(player: @target.player,
+        deliver_to = if @target.occupied?
+          @target.occupied_by.occupying_villa.player
+        else
+          @target.player
+        end
+
+        CombatReport.create(player: deliver_to,
                             title: title_for(@target),
                             data: data,
                             read: false,

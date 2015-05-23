@@ -1,19 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+DEFAULTS: &DEFAULTS
+  unread_messages_count: 0
+  unread_reports_count: 0
+
 one:
+  <<: *DEFAULTS
   name: First player
   email: jane@doe.com
-  unread_messages_count: 0
-  unread_reports_count: 0
 
 two:
+  <<: *DEFAULTS
   name: Second player
   email: john@doe.com
-  unread_messages_count: 0
-  unread_reports_count: 0
 
-three:
+player_without_a_villa:
+  <<: *DEFAULTS
   name: Third player
   email: jen@doe.com
-  unread_messages_count: 0
-  unread_reports_count: 0
+
+player_who_attacks_an_occupied_villa:
+  <<: *DEFAULTS
+  name: Player who attacks an occupied villa
+  email: jim@doe.com

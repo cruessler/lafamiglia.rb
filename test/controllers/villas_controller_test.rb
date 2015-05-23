@@ -4,7 +4,7 @@ class VillasControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   test "a player without villa should automatically get a new one" do
-    p = players :three
+    p = players :player_without_a_villa
     sign_in p
 
     p.recalc_points!
