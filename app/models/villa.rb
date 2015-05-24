@@ -27,6 +27,10 @@ class Villa < ActiveRecord::Base
            -> { includes(:target).order(:arrives_at) },
            class_name: 'Movement',
            foreign_key: 'origin_id'
+  has_many :incomings,
+           -> { includes(:origin).order(:arrives_at) },
+           class_name: 'Movement',
+           foreign_key: 'target_id'
 
   has_one :occupation, foreign_key: 'target_id'
   has_many :occupations, foreign_key: 'origin_id'
