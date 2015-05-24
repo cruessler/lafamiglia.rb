@@ -12,7 +12,7 @@
     </tr>
     <% @outgoings.each do |movement| %>
       <tr>
-        <td>&#8594; <%= movement.target %></td>
+        <td><%= movement.to_s false %></td>
         <td><%= l movement.arrives_at %></td>
         <td><%= countdown_to movement.arrives_at %></td>
         <td><%= link_to_movement_cancel movement if movement.cancellable? %></td>
@@ -35,7 +35,7 @@
     </tr>
     <% @occupations.each do |occupation| %>
       <tr>
-        <td>&#8594; <%= occupation.target %></td>
+        <td><%= occupation.to_s false %></td>
         <td><%= l occupation.succeeds_at %></td>
         <td><%= countdown_to occupation.succeeds_at %></td>
         <td></td>

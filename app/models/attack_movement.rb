@@ -72,4 +72,12 @@ class AttackMovement < Movement
           .merge(target.resources)
     end
   end
+
+  def to_s include_origin = true
+    if include_origin
+      "#{origin} → #{target}"
+    else
+      "→ #{target}"
+    end
+  end
 end
