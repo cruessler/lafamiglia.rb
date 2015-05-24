@@ -112,7 +112,8 @@ module Dispatcher
         @origin.used_supply -= @combat.attacker_supply_loss
         @target.save
         @origin.save
-        @target.occupation.origin.save
+
+        @target.occupation.origin.save if @target.occupied?
 
         report = CombatReportGenerator.new(@attack_movement.arrives_at, @combat.report_data)
         report.deliver!(@origin, @target)
