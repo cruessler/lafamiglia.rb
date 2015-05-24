@@ -5,6 +5,8 @@ class Player < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :villas
+  has_many :outgoings, through: :villas
+  has_many :occupations, through: :villas, source: :occupations
 
   has_many :reports
   has_many :message_statuses

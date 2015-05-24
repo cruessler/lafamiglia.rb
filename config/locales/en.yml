@@ -47,6 +47,7 @@ en:
     application:
       overview: "Overview"
       villas: "Villas"
+      troops: "Troops"
       players: "Players"
       movements: "Troop movements"
       map: "Map"
@@ -59,7 +60,7 @@ en:
     attack_modal:
       close: "Close"
       attack: "Attack"
-  movements:
+  movements: &MOVEMENTS
     created: "Your attack is on the way."
     cancelled: "Your attack has been cancelled."
     index:
@@ -83,6 +84,8 @@ en:
       villas: "Villas"
       points: "Points"
   villas:
+    movements:
+      <<: *MOVEMENTS
     index:
       header: "Your villas"
       name: "Name"

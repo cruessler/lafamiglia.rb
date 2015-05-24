@@ -12,10 +12,10 @@ Rails.application.routes.draw do
     resources :research_queue_items, only: [ :create, :destroy ]
     resources :unit_queue_items, only: [ :create, :destroy ]
 
-    resources :movements, only: [ :create, :index ]
+    resources :movements, only: [ :create, :index ], controller: 'villas/movements'
   end
 
-  resources :movements, only: :destroy
+  resources :movements, only: [ :index, :destroy ]
 
   resources :messages, only: [ :new, :create, :index, :show, :destroy ]
   resources :reports, only: [ :index, :show, :destroy ]
