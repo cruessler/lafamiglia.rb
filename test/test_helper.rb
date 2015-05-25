@@ -52,6 +52,19 @@ class ActiveSupport::TestCase
     end
   end
 
+  def create_and_handle_attack origin, target
+    attack = AttackMovement.create(origin: origin,
+                                   target: target,
+                                   units: origin.units)
+
+    LaFamiglia.clock(LaFamiglia.now + attack.duration)
+
+    event = Dispatcher::AttackEvent.new attack
+    event.handle NullDispatcher.new
+
+    target.reload
+  end
+
   def create_and_handle_occupation origin, target
     occupation = Occupation.create(succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
                                    origin: origin,

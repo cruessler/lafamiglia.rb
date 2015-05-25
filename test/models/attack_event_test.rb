@@ -5,19 +5,6 @@ class AttackEventTest < ActiveSupport::TestCase
     Dispatcher.logger = Logger.new File::NULL
   end
 
-  def create_and_handle_attack origin, target
-    attack = AttackMovement.create(origin: origin,
-                                   target: target,
-                                   units: origin.units)
-
-    LaFamiglia.clock(LaFamiglia.now + attack.duration)
-
-    event = Dispatcher::AttackEvent.new attack
-    event.handle NullDispatcher.new
-
-    target.reload
-  end
-
   test "should begin an occupation when an attack is successful" do
     origin, target = villas(:occupying_villa, :villa_to_be_occupied)
 
