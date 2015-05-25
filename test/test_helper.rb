@@ -26,6 +26,10 @@ class ActiveSupport::TestCase
     Dispatcher.logger = Logger.new File::NULL
   end
 
+  def null_dispatcher
+    @null_dispatcher ||= NullDispatcher.new
+  end
+
   module Logout
     def logout
       delete_via_redirect "/players/sign_out"

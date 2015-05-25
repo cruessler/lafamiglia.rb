@@ -26,4 +26,28 @@ class OccupationTest < ActiveSupport::TestCase
 
     refute_predicate @origin, :occupied?
   end
+
+  test "an occupation can be cancelled" do
+    attack = AttackMovement.create(origin: @origin,
+                                    target: @target,
+                                    units: @origin.units)
+
+    LaFamiglia.clock attack.arrives_at
+
+    event = Dispatcher::AttackEvent.new attack
+    event.handle null_dispatcher
+
+    occupation = Occupation.last
+
+    assert_difference -> { ComebackMovement.count } do
+      occupation.cancel!
+    end
+
+    @target.reload
+    comeback = ComebackMovement.last
+
+    refute_predicate @target, :occupied?
+    assert_equal @origin, comeback.origin
+    assert_equal @target, comeback.target
+  end
 end
