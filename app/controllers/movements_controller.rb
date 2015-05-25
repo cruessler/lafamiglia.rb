@@ -9,11 +9,14 @@ class MovementsController < ApplicationController
 
   # DELETE /movements/1
   def destroy
-    if @movement.cancellable? && @comeback = @movement.cancel!
-      notify_dispatcher @comeback.arrives_at
+    if @movement.cancellable?
+      comeback = @movement.cancel!
+
+      notify_dispatcher comeback.arrives_at
+
       redirect_to :back, notice: I18n.t('movements.cancelled')
     else
-      redirect_to villa_movements_url(current_villa), alert: @movement.errors[:base].join
+      redirect_to :back, alert: I18n.t('movements.cancel_not_possible')
     end
   end
 

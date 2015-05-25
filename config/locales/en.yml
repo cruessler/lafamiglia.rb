@@ -63,6 +63,7 @@ en:
   movements: &MOVEMENTS
     created: "Your attack is on the way."
     cancelled: "Your attack has been cancelled."
+    cancel_not_possible: "Your attack cannot be cancelled."
     index:
       header: "Troop movements"
       arrives_at: "Arrives at"
