@@ -14,4 +14,11 @@ class MovementTest < ActiveSupport::TestCase
   test "movement should have a positive duration" do
     assert @m.duration > 0
   end
+
+  test "should not raise an exception when no unit is set" do
+    assert_nothing_raised do
+      Movement.create(origin: villas(:one),
+                      target: villas(:two))
+    end
+  end
 end

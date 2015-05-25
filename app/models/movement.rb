@@ -26,7 +26,23 @@ class Movement < ActiveRecord::Base
   end
 
   def calculate_arrives_at
-    self.arrives_at = LaFamiglia.now + duration if self.arrives_at.nil?
+    if has_units?
+      self.arrives_at = LaFamiglia.now + duration if self.arrives_at.nil?
+    end
+  end
+
+  def units_count
+    @units_count ||= LaFamiglia.units.inject(0) do |sum, u|
+      if (number = self[u.key]) > 0
+        sum + number
+      else
+        sum
+      end
+    end
+  end
+
+  def has_units?
+    units_count > 0
   end
 
   def duration

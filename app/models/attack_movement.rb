@@ -12,15 +12,7 @@ class AttackMovement < Movement
   end
 
   def units_selected
-    total = LaFamiglia.units.inject(0) do |sum, u|
-      if (number = self.send(u.key)) > 0
-        sum + number
-      else
-        sum
-      end
-    end
-
-    errors.add(:base, I18n.t('errors.movements.no_unit_selected')) unless total > 0
+    errors.add(:base, I18n.t('errors.movements.no_unit_selected')) unless has_units?
   end
 
   def target_not_owned_by_attacker
