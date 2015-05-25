@@ -8,9 +8,9 @@ class ConquestReportTest < ActiveSupport::TestCase
   test "should deliver two conquest reports" do
     old_number_of_reports = ConquestReport.count
 
-    create_and_handle_occupation @origin, @target
-
-    assert_equal old_number_of_reports + 2, ConquestReport.count
+    assert_difference -> { ConquestReport.count }, 2 do
+      create_and_handle_occupation @origin, @target
+    end
 
     first_report, second_report = ConquestReport.order('id DESC').limit(2).all
 
