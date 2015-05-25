@@ -76,6 +76,8 @@ en:
       target: "Target"
       units_available: "Number of units available: %d"
       cancel: "Cancel"
+  occupations:
+    cancelled: "Your occupation has been cancelled."
   players:
     index:
       header: "Player ranking"

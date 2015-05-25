@@ -38,7 +38,7 @@
         <td><%= occupation %></td>
         <td><%= l occupation.succeeds_at %></td>
         <td><%= countdown_to occupation.succeeds_at %></td>
-        <td></td>
+        <td><%= link_to_occupation_cancel occupation %></td>
       </tr>
     <% end %>
   </table>

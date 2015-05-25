@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :movements, only: [ :index, :destroy ]
+  resources :occupations, only: [ :destroy ]
 
   resources :messages, only: [ :new, :create, :index, :show, :destroy ]
   resources :reports, only: [ :index, :show, :destroy ]
