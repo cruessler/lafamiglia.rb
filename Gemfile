@@ -71,7 +71,9 @@ gem 'kaminari', '~> 0.16.0'
 # https://github.com/leshill/handlebars_assets
 gem 'handlebars_assets', '~> 0.17'
 
-# https://github.com/deivid-rodriguez/byebug
 group :development do
+  # https://github.com/deivid-rodriguez/byebug
   gem 'byebug', '~> 4.0'
+
+  gem 'web-console', '~> 2.0'
 end
