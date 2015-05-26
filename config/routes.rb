@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :players, only: [ :index ] do
     collection do
-      get 'search(/:query)', to: :search, as: 'search', constraints: { query: /.*/ }
+      get 'search(/:query)', action: :search, as: 'search', constraints: { query: /.*/ }
     end
   end
 
