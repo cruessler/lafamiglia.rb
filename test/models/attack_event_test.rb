@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class AttackEventTest < ActiveSupport::TestCase
-  setup do
-    Dispatcher.logger = Logger.new File::NULL
-  end
-
   test "should begin an occupation when an attack is successful" do
     origin, target = villas(:occupying_villa, :villa_to_be_occupied)
 

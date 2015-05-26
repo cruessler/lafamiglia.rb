@@ -3,8 +3,6 @@ require 'test_helper'
 class ConquerEventTest < ActiveSupport::TestCase
   setup do
     setup_for_occupation_test
-
-    Dispatcher.logger = Logger.new File::NULL
   end
 
   test "should change owner of a conquered villa" do

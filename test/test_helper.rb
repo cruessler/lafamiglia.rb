@@ -14,6 +14,8 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   setup do
     LaFamiglia.clock
+
+    Dispatcher.logger = Logger.new File::NULL
   end
 
   def setup_for_occupation_test
@@ -22,8 +24,6 @@ class ActiveSupport::TestCase
 
     @origin.processed_until = LaFamiglia.now
     @target.processed_until = LaFamiglia.now
-
-    Dispatcher.logger = Logger.new File::NULL
   end
 
   def null_dispatcher
