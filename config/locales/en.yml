@@ -10,6 +10,9 @@ en:
   supply: "Supply"
   villa:
     default_name: "New Villa"
+    created: >
+             You just got a new villa! This happens as soon as you start playing as well as
+             when you have lost all your villas.
   buildings:
     building_1: "House of the family"
     building_2: "House of the inventor"

@@ -51,6 +51,8 @@ class ApplicationController < ActionController::Base
 
         if villa.nil?
           villa = Villa.create_for(current_player)
+
+          flash.now[:notice] = I18n.t('villa.created')
         end
       end
 
