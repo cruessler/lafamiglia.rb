@@ -69,7 +69,7 @@ class ActiveSupport::TestCase
     occupation = Occupation.create(succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
                                    origin: origin,
                                    target: target,
-                                   unit_2: 1)
+                                   LaFamiglia.config.unit_for_occupation => 1)
 
     LaFamiglia.clock(LaFamiglia.now + LaFamiglia.config.duration_of_occupation)
 
