@@ -142,6 +142,7 @@ class Combat
       attacker_loss: attacker_loss,
       defender_before_combat: defender_before_combat,
       defender_loss: defender_loss,
-      plundered_resources: plundered_resources }
+      plundered_resources: plundered_resources,
+      occupation_began: attacker_can_occupy? }
   end
 end

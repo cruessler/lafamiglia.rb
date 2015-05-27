@@ -159,6 +159,9 @@ en:
       attacker_won: "The attacker has won."
       defender_won: "The defender has won."
       plundered_resources: "Plundered resources"
+      occupation_began: >
+                        An occupation has begun that will lead to the target
+                        being conquered if the occupation won’t be interrupted.
     units:
       before_combat: "before combat"
       losses: "losses"

@@ -11,6 +11,7 @@ class CombatReportTest < ActiveSupport::TestCase
     first_report, second_report = CombatReport.order('id DESC').limit(2).all
 
     assert_not_equal first_report.player, second_report.player
+    assert_not_nil first_report.occupation_began?
   end
 end
 

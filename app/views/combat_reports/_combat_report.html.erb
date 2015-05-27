@@ -12,6 +12,12 @@
   <% end %>
 </h4>
 
+<% if @report.occupation_began? %>
+  <h4>
+    <%= t '.occupation_began' %>
+  </h4>
+<% end %>
+
 <div class="row">
   <div class="col-md-6">
     <%= t '.attacker' %>:
