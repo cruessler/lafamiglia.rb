@@ -114,4 +114,8 @@ class VillaTest < ActiveSupport::TestCase
     assert_equal 0, @v.unit_queue_items_count
     assert_equal 0, @v.unit_queue_items.count
   end
+
+  test "should have positive max_points" do
+    assert Villa.max_points > 0
+  end
 end

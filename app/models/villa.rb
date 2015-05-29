@@ -90,6 +90,12 @@ class Villa < ActiveRecord::Base
     end
   end
 
+  def self.max_points
+    @@max_points ||= LaFamiglia.buildings.inject(0) do |acc, b|
+      acc + b.points(b.maxlevel)
+    end
+  end
+
   def set_default_values
     self.processed_until = LaFamiglia.now
     self.is_occupied = false
