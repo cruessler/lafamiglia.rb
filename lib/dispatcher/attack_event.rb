@@ -29,10 +29,10 @@ module Dispatcher
     def handle_occupation dispatcher
       destroy_occupation if @target.occupied?
 
-      occupation = Occupation.create succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
-                                      origin: @origin,
-                                      target: @target,
-                                      units: @combat.attacker_after_combat
+      occupation = Occupation.create succeeds_at: LaFamiglia.now + @target.duration_of_occupation,
+                                     origin: @origin,
+                                     target: @target,
+                                     units: @combat.attacker_after_combat
 
       @target.unit_queue_items.delete_all
 

@@ -66,12 +66,12 @@ class ActiveSupport::TestCase
   end
 
   def create_and_handle_occupation origin, target
-    occupation = Occupation.create(succeeds_at: LaFamiglia.now + LaFamiglia.config.duration_of_occupation,
+    occupation = Occupation.create(succeeds_at: LaFamiglia.now + target.duration_of_occupation,
                                    origin: origin,
                                    target: target,
                                    LaFamiglia.config.unit_for_occupation => 1)
 
-    LaFamiglia.clock(LaFamiglia.now + LaFamiglia.config.duration_of_occupation)
+    LaFamiglia.clock(LaFamiglia.now + target.duration_of_occupation)
 
     event = Dispatcher::ConquerEvent.new occupation
     event.handle NullDispatcher.new

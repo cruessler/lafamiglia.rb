@@ -118,4 +118,9 @@ class VillaTest < ActiveSupport::TestCase
   test "should have positive max_points" do
     assert Villa.max_points > 0
   end
+
+  test "should have correct duration_of_occupation" do
+    assert_operator @v.duration_of_occupation, :>, LaFamiglia.config.duration_of_occupation_base
+    assert_operator @v.duration_of_occupation, :<, 2 * LaFamiglia.config.duration_of_occupation_base
+  end
 end

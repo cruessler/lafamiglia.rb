@@ -273,6 +273,10 @@ class Villa < ActiveRecord::Base
     }
   end
 
+  def duration_of_occupation
+    (1.0 + points.to_f / Villa.max_points) * LaFamiglia.config.duration_of_occupation_base
+  end
+
   def to_s
     "#{name} (#{x}|#{y})"
   end

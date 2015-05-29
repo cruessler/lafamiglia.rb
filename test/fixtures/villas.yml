@@ -17,6 +17,7 @@ DEFAULTS: &DEFAULTS
   building_queue_items_count: 0
   research_queue_items_count: 0
   unit_queue_items_count: 0
+  points: 1
 
 one:
   x: 0
