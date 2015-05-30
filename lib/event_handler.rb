@@ -1,3 +1,3 @@
-module Dispatcher
+module EventHandler
   mattr_accessor :logger
 end

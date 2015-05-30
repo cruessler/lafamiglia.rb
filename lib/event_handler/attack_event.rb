@@ -1,4 +1,4 @@
-module Dispatcher
+module EventHandler
   class AttackEvent < Event
     def self.find_until time
       attack_movements = AttackMovement.where([ 'arrives_at <= ?', time ])
@@ -26,7 +26,7 @@ module Dispatcher
       @target.occupation.origin.used_supply -= @combat.defender_supply_loss
     end
 
-    def handle_occupation dispatcher
+    def handle_occupation event_handler
       destroy_occupation if @target.occupied?
 
       occupation = Occupation.create origin: @origin,
@@ -37,10 +37,10 @@ module Dispatcher
 
       @attack_movement.destroy
 
-      dispatcher.add_event_to_queue ConquerEvent.new(occupation)
+      event_handler.add_event_to_queue ConquerEvent.new(occupation)
     end
 
-    def handle_plundering dispatcher
+    def handle_plundering event_handler
       destroy_occupation if @target.occupied?
 
       comeback = @attack_movement.cancel!
@@ -51,10 +51,10 @@ module Dispatcher
 
       comeback.save
 
-      dispatcher.add_event_to_queue ComebackEvent.new(comeback)
+      event_handler.add_event_to_queue ComebackEvent.new(comeback)
     end
 
-    def handle_defense dispatcher
+    def handle_defense event_handler
       @attack_movement.destroy
 
       if @target.occupied?
@@ -63,7 +63,7 @@ module Dispatcher
             @target.occupation.subtract_units!(@combat.defender_loss)
             comeback = @target.occupation.cancel!
 
-            dispatcher.add_event_to_queue ComebackEvent.new(comeback)
+            event_handler.add_event_to_queue ComebackEvent.new(comeback)
           else
             @target.occupation.destroy
           end
@@ -76,7 +76,7 @@ module Dispatcher
       end
     end
 
-    def handle dispatcher
+    def handle event_handler
       logger.info { "processing attack movement (id: #{@attack_movement.id}, time: #{happens_at})" }
 
       Villa.transaction do
@@ -107,11 +107,11 @@ module Dispatcher
 
         case
         when @combat.attacker_can_occupy?
-          handle_occupation dispatcher
+          handle_occupation event_handler
         when @combat.attacker_survived?
-          handle_plundering dispatcher
+          handle_plundering event_handler
         else
-          handle_defense dispatcher
+          handle_defense event_handler
         end
 
         @origin.used_supply -= @combat.attacker_supply_loss

@@ -12,7 +12,7 @@ class MovementsController < ApplicationController
     if @movement.cancellable?
       comeback = @movement.cancel!
 
-      notify_dispatcher comeback.arrives_at
+      notify_event_handler comeback.arrives_at
 
       redirect_to :back, notice: I18n.t('movements.cancelled')
     else

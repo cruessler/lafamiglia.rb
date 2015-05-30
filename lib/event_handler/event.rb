@@ -1,9 +1,9 @@
-module Dispatcher
+module EventHandler
   class Event
     include Comparable
 
     def logger
-      ::Dispatcher.logger
+      EventHandler.logger
     end
 
     def self.find_until time
@@ -24,7 +24,7 @@ module Dispatcher
   end
 end
 
-require_dependency 'dispatcher/attack_event'
-require_dependency 'dispatcher/build_event'
-require_dependency 'dispatcher/comeback_event'
-require_dependency 'dispatcher/conquer_event'
+require_dependency 'event_handler/attack_event'
+require_dependency 'event_handler/build_event'
+require_dependency 'event_handler/comeback_event'
+require_dependency 'event_handler/conquer_event'

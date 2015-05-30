@@ -15,7 +15,7 @@ class ActiveSupport::TestCase
   setup do
     LaFamiglia.clock
 
-    Dispatcher.logger = Logger.new File::NULL
+    EventHandler.logger = Logger.new File::NULL
   end
 
   def setup_for_occupation_test
@@ -59,7 +59,7 @@ class ActiveSupport::TestCase
 
     LaFamiglia.clock(LaFamiglia.now + attack.duration)
 
-    event = Dispatcher::AttackEvent.new attack
+    event = EventHandler::AttackEvent.new attack
     event.handle null_event_loop
 
     target.reload
@@ -72,7 +72,7 @@ class ActiveSupport::TestCase
 
     LaFamiglia.clock(LaFamiglia.now + target.duration_of_occupation)
 
-    event = Dispatcher::ConquerEvent.new occupation
+    event = EventHandler::ConquerEvent.new occupation
     event.handle null_event_loop
   end
 

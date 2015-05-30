@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     Power.new(current_player)
   end
 
-  def notify_dispatcher time
+  def notify_event_handler time
     begin
       Socket.unix(Dir.home + "/tmp/lafamiglia.sock") do |socket|
         socket << time.to_s

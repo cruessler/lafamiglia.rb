@@ -1,4 +1,4 @@
-module Dispatcher
+module EventHandler
   class BuildEvent < Event
     def self.find_until time
       queue_items = BuildingQueueItem.where([ 'completed_at <= ?', time ])
@@ -20,7 +20,7 @@ module Dispatcher
       @queue_item.completed_at
     end
 
-    def handle dispatcher
+    def handle event_handler
       logger.info { "processing build event (id: #{@queue_item.id}, time: #{happens_at})" }
 
       @queue_item.villa.process_until!(@queue_item.completed_at)

@@ -5,7 +5,7 @@ class OccupationsController < ApplicationController
   def destroy
     comeback = @occupation.cancel!
 
-    notify_dispatcher comeback.arrives_at
+    notify_event_handler comeback.arrives_at
 
     redirect_to :back, notice: I18n.t('occupations.cancelled')
   end

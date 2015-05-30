@@ -2,7 +2,7 @@
 # in development mode.
 # http://api.rubyonrails.org/classes/Rails/Railtie/Configuration.html#method-i-to_prepare
 Rails.application.config.to_prepare do
-  Dispatcher.logger = Logger.new STDOUT
+  EventHandler.logger = Logger.new STDOUT
 
   LaFamiglia.config.max_x = 10
   LaFamiglia.config.max_y = 10

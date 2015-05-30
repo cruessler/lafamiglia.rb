@@ -2,4 +2,4 @@
 
 require_relative '../config/environment'
 
-Dispatcher::EventLoop.new.run
+EventHandler::EventLoop.new.run

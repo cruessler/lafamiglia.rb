@@ -12,7 +12,7 @@ class Villas::MovementsController < ApplicationController
     @movement = AttackMovement.create_with(origin: current_villa).new(movement_params)
 
     if @movement.save
-      notify_dispatcher @movement.arrives_at
+      notify_event_handler @movement.arrives_at
       redirect_to :back, notice: I18n.t('movements.created')
     else
       render action: 'new'

@@ -1,4 +1,4 @@
-module Dispatcher
+module EventHandler
   class ComebackEvent < Event
     def self.find_until time
       comeback_movements = ComebackMovement.where([ 'arrives_at <= ?', time ])
@@ -20,7 +20,7 @@ module Dispatcher
       @comeback_movement.arrives_at
     end
 
-    def handle dispatcher
+    def handle event_handler
       logger.info { "processing comeback movement (id: #{@comeback_movement.id}, time: #{happens_at})" }
 
       @comeback_movement.arrive!

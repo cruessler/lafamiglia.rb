@@ -1,4 +1,4 @@
-module Dispatcher
+module EventHandler
   class CombatReportGenerator
     def initialize(delivered_at, combat_data)
       @delivered_at, @combat_data = delivered_at, combat_data

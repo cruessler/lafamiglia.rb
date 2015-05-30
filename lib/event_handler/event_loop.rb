@@ -1,7 +1,7 @@
-module Dispatcher
+module EventHandler
   class EventLoop
     def logger
-      ::Dispatcher.logger
+      EventHandler.logger
     end
 
     def add_event_to_queue event

@@ -1,4 +1,4 @@
-module Dispatcher
+module EventHandler
   class ConquestReportGenerator
     def initialize(delivered_at)
       @delivered_at = delivered_at

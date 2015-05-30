@@ -1,4 +1,4 @@
-module Dispatcher
+module EventHandler
   class ConquerEvent < Event
     def self.find_until time
       occupations = Occupation.where([ 'succeeds_at <= ?', time ])
@@ -20,7 +20,7 @@ module Dispatcher
       @occupation.succeeds_at
     end
 
-    def handle dispatcher
+    def handle event_handler
       logger.info { "processing conquer event (id: #{@occupation.id}, time: #{happens_at})" }
 
       origin, target = @occupation.origin, @occupation.target
