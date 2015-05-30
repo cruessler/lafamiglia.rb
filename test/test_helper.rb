@@ -26,8 +26,8 @@ class ActiveSupport::TestCase
     @target.processed_until = LaFamiglia.now
   end
 
-  def null_dispatcher
-    @null_dispatcher ||= NullDispatcher.new
+  def null_event_loop
+    @null_event_loop ||= NullEventLoop.new
   end
 
   module Logout
@@ -60,7 +60,7 @@ class ActiveSupport::TestCase
     LaFamiglia.clock(LaFamiglia.now + attack.duration)
 
     event = Dispatcher::AttackEvent.new attack
-    event.handle NullDispatcher.new
+    event.handle null_event_loop
 
     target.reload
   end
@@ -73,10 +73,10 @@ class ActiveSupport::TestCase
     LaFamiglia.clock(LaFamiglia.now + target.duration_of_occupation)
 
     event = Dispatcher::ConquerEvent.new occupation
-    event.handle NullDispatcher.new
+    event.handle null_event_loop
   end
 
-  class NullDispatcher
+  class NullEventLoop
     def add_event_to_queue event
     end
   end

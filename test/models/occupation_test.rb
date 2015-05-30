@@ -33,7 +33,7 @@ class OccupationTest < ActiveSupport::TestCase
     LaFamiglia.clock attack.arrives_at
 
     event = Dispatcher::AttackEvent.new attack
-    event.handle null_dispatcher
+    event.handle null_event_loop
 
     occupation = Occupation.last
 

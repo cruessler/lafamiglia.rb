@@ -1,5 +1,5 @@
 module Dispatcher
-  class Dispatcher
+  class EventLoop
     def logger
       ::Dispatcher.logger
     end
