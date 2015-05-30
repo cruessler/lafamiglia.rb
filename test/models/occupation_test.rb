@@ -8,16 +8,14 @@ class OccupationTest < ActiveSupport::TestCase
   test "a villa should not be not occupied by more than one occupation" do
     refute_predicate @origin, :occupied?
 
-    occupation_1 = Occupation.create(succeeds_at: LaFamiglia.now + 1.hour,
-                                     unit_1: 1,
+    occupation_1 = Occupation.create(unit_1: 1,
                                      origin: @target,
                                      target: @origin)
     assert_not_nil occupation_1
     assert_predicate @origin, :occupied?
 
     assert_raises ActiveRecord::RecordNotUnique do
-      occupation_2 = Occupation.create(succeeds_at: LaFamiglia.now + 1.hour,
-                                       unit_1: 1,
+      occupation_2 = Occupation.create(unit_1: 1,
                                        origin: @target,
                                        target: @origin)
     end
@@ -29,8 +27,8 @@ class OccupationTest < ActiveSupport::TestCase
 
   test "an occupation can be cancelled" do
     attack = AttackMovement.create(origin: @origin,
-                                    target: @target,
-                                    units: @origin.units)
+                                   target: @target,
+                                   units: @origin.units)
 
     LaFamiglia.clock attack.arrives_at
 

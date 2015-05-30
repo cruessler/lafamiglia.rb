@@ -66,8 +66,7 @@ class ActiveSupport::TestCase
   end
 
   def create_and_handle_occupation origin, target
-    occupation = Occupation.create(succeeds_at: LaFamiglia.now + target.duration_of_occupation,
-                                   origin: origin,
+    occupation = Occupation.create(origin: origin,
                                    target: target,
                                    LaFamiglia.config.unit_for_occupation => 1)
 
