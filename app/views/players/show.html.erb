@@ -1,0 +1,29 @@
+<h2>
+  <%= @player.name %>
+</h2>
+
+<div>
+  <%= t '.info_points', count: @player.points %>
+  <%= t '.info_villas', count: @player.villas.count %>
+</div>
+
+<% if @player.villas.count > 0 %>
+  <h3>
+    <%= t '.villas' %>
+  </h3>
+
+  <table class="table table-striped">
+    <tr>
+      <th><%= t '.name' %></th>
+      <th><%= t '.points' %></th>
+    </tr>
+    <% @player.villas.order(points: :desc).each do |v| %>
+      <tr>
+        <td><%= v %></td>
+        <td><%= v.points %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p><%= t '.no_villas' %></p>
+<% end %>

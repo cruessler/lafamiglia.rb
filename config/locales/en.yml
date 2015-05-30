@@ -89,6 +89,17 @@ en:
       name: "Name"
       villas: "Villas"
       points: "Points"
+    show:
+      info_points:
+        one: "This player has 1 point"
+        other: "This player has %{count} points"
+      info_villas:
+        one: "and 1 villa."
+        other: "and %{count} villas."
+      villas: "Villas"
+      name: "Name"
+      points: "Points"
+      no_villas: "This player doesn’t have a villa."
   villas:
     movements:
       <<: *MOVEMENTS

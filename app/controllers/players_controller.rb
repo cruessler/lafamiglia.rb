@@ -2,6 +2,12 @@ class PlayersController < ApplicationController
   SEARCH_FIELD_ITEM_LIMIT = 10
   RANKING_PLAYERS_PER_PAGE = 20
 
+  before_action :set_player, only: [ :show ]
+
+  # GET /players/1
+  def show
+  end
+
   # GET /players
   def index
     @players = Player.order('players.points DESC')
@@ -23,5 +29,11 @@ class PlayersController < ApplicationController
                          .collect
       end
     end
+  end
+
+  private
+
+  def set_player
+    @player = Player.find(params[:id])
   end
 end
