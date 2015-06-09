@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to messages_path, notice: t('.created') }
+        format.html { redirect_to :back, notice: t('.created') }
       else
         format.html do
           set_message_statuses

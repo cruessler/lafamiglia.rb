@@ -1,35 +1,54 @@
-<div class="page-header">
-  <h1><%= t '.header' %></h1>
-</div>
+<div class="row tabpanel">
+  <div class="col-md-9 tab-content">
+    <div id="messages" class="tab-pane active">
+      <div class="page-header">
+        <h1><%= t '.header' %></h1>
+      </div>
 
-<% unless @message_statuses.empty? %>
-  <table class="table table-striped messages">
-    <tr>
-      <th class="sent_at"><%= t '.sent_at' %></th>
-      <th class="sender"><%= t '.sender' %></th>
-      <th class="receivers"><%= t '.receivers' %></th>
-      <th class="status"></th>
-    </tr>
-    <% @message_statuses.each do |status| %>
-      <% message = status.message %>
-      <tr>
-        <td><%= link_to (l message.sent_at), message_path(message) %></td>
-        <td><%= message.sender %></td>
-        <td><%= message.receivers.join ', ' %></td>
-        <td>
-          <% unless status.read %>
-            <span class="glyphicon glyphicon-envelope"></span>
+      <% unless @message_statuses.empty? %>
+        <table class="table table-striped messages">
+          <tr>
+            <th class="sent_at"><%= t '.sent_at' %></th>
+            <th class="sender"><%= t '.sender' %></th>
+            <th class="receivers"><%= t '.receivers' %></th>
+            <th class="status"></th>
+          </tr>
+          <% @message_statuses.each do |status| %>
+            <% message = status.message %>
+            <tr>
+              <td><%= link_to (l message.sent_at), message_path(message) %></td>
+              <td><%= message.sender %></td>
+              <td><%= message.receivers.join ', ' %></td>
+              <td>
+                <% unless status.read %>
+                  <span class="glyphicon glyphicon-envelope"></span>
+                <% end %>
+              </td>
+            </tr>
           <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-<% else %>
-  <p><%= t '.no_messages' %></p>
-<% end %>
+        </table>
+      <% else %>
+        <p><%= t '.no_messages' %></p>
+      <% end %>
+    </div>
 
-<h3>
-  <%= t '.new' %>
-</h3>
+    <div id="new-message" class="tab-pane">
+      <h3>
+        <%= t '.new_message' %>
+      </h3>
 
-<%= render partial: 'form' %>
+      <%= render 'form' %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <ul class="nav nav-pills nav-stacked" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"><%= t '.sidebar.messages' %></a>
+      </li>
+      <li role="presentation">
+        <a href="#new-message" aria-controls="new-message" role="tab" data-toggle="tab"><%= t '.sidebar.new_message' %></a>
+      </li>
+    </ul>
+  </div>
+</div>

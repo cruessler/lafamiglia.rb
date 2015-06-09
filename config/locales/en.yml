@@ -100,6 +100,10 @@ en:
       name: "Name"
       points: "Points"
       no_villas: "This player doesn’t have a villa."
+      new_message: "Send a message"
+      sidebar:
+        villas: "Villas"
+        new_message: "Send a message"
   villas:
     movements:
       <<: *MOVEMENTS
@@ -135,7 +139,10 @@ en:
       receivers: "To"
       sent_at: "Sent at"
       no_messages: "You have no messages."
-      new: "New message"
+      new_message: "Send new message"
+      sidebar:
+        messages: "Messages"
+        new_message: "Send new message"
     show:
       message_from: "Message from %{from}"
       sent_to: "sent to: %{receivers}"

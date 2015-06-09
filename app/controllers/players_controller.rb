@@ -6,6 +6,7 @@ class PlayersController < ApplicationController
 
   # GET /players/1
   def show
+    @message = Message.new(sender: current_player, receivers: [ @player ])
   end
 
   # GET /players
