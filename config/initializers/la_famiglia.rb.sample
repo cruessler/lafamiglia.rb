@@ -7,6 +7,8 @@ Rails.application.config.to_prepare do
   LaFamiglia.config.max_x = 10
   LaFamiglia.config.max_y = 10
 
+  LaFamiglia.config.map_radius = 4
+
   LaFamiglia.config.game_speed = 1.0
   LaFamiglia.config.unit_speed = 10.0
 

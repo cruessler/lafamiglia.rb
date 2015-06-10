@@ -1,6 +1,4 @@
 class MapController < ApplicationController
-  MAP_RADIUS = 3
-
   def show
     x, y = params[:x].to_i, params[:y].to_i
 
@@ -18,8 +16,8 @@ class MapController < ApplicationController
       y = LaFamiglia.config.max_y
     end
 
-    @min_x, @max_x = x - MAP_RADIUS, x + MAP_RADIUS
-    @min_y, @max_y = y - MAP_RADIUS, y + MAP_RADIUS
+    @min_x, @max_x = x - LaFamiglia.config.map_radius, x + LaFamiglia.config.map_radius
+    @min_y, @max_y = y - LaFamiglia.config.map_radius, y + LaFamiglia.config.map_radius
 
     villas = Villa.in_rectangle(@min_x, @max_x, @min_y, @max_y).includes(:player).load
 
