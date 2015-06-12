@@ -63,6 +63,12 @@ en:
     attack_modal:
       close: "Close"
       attack: "Attack"
+    sidebar:
+      header: "Actions"
+      info: "Click on a villa to see the available actions."
+      attack: "Attack"
+      switch: "Switch to villa"
+      center_on_map: "Center on map"
   movements: &MOVEMENTS
     created: "Your attack is on the way."
     cancelled: "Your attack has been cancelled."
