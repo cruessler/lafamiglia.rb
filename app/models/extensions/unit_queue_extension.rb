@@ -13,6 +13,24 @@ module UnitQueueExtension
     end
   end
 
+  def enqueued_count_until unit, time
+    inject(0) do |number, i|
+      if i.completed_at <= time
+        if i.unit_id == unit.id
+          number += i.number
+        end
+      else
+        if i.unit_id == unit.id
+          number += i.units_recruited_until(time)
+        end
+
+        return number
+      end
+
+      number
+    end
+  end
+
   def enqueue unit, number
     villa = proxy_association.owner
     costs = unit.costs number

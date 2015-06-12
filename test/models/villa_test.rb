@@ -6,6 +6,7 @@ class VillaTest < ActiveSupport::TestCase
     @v.processed_until = LaFamiglia.now
 
     @unit_1 = LaFamiglia.units.get_by_id 1
+    @unit_2 = LaFamiglia.units.get_by_id 2
   end
 
   test "should update counter caches" do
@@ -74,6 +75,18 @@ class VillaTest < ActiveSupport::TestCase
 
     @v.process_virtually_until! LaFamiglia.now + @unit_1.build_time(5)
     assert_equal units[@unit_1.key] + 5, @v.unit_number(@unit_1)
+  end
+
+  test "should return virtual unit number" do
+    assert_difference -> { @v.virtual_unit_number(@unit_1) }, 10 do
+      assert_difference -> { @v.virtual_unit_number(@unit_2) } do
+        @v.unit_queue_items.enqueue @unit_1, 2
+        @v.unit_queue_items.enqueue @unit_2, 1
+        @v.unit_queue_items.enqueue @unit_1, 8
+
+        LaFamiglia.clock(LaFamiglia.now + @unit_1.build_time(10) + @unit_2.build_time(1))
+      end
+    end
   end
 
   test "should find an empty space for a new villa" do

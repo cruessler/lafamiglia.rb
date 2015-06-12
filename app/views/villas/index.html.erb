@@ -17,7 +17,7 @@
       <td><%= v.points %></td>
       <td><%= link_to coordinates(v), map_url(x: v.x, y: v.y) %></td>
       <% LaFamiglia.units.each do |u| %>
-        <td><%= v.unit_number u %></td>
+        <td><%= v.virtual_unit_number u %></td>
       <% end %>
     </tr>
   <% end %>

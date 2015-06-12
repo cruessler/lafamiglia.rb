@@ -265,6 +265,17 @@ class Villa < ActiveRecord::Base
     send unit.key
   end
 
+  # Beware that virtual has a different meaning here than it has in
+  # virtual_building_level. Since building levels are updated by the event
+  # handler they are always current when loaded from the database. Virtual
+  # means: the building level has not yet been reached.
+  # Since unit numbers are not regularly updated by the event handler values
+  # loaded from the database may belong to the past. Virtual means: the
+  # database does not get changed when this number is calculated.
+  def virtual_unit_number unit
+    self[unit.key] + unit_queue_items.enqueued_count_until(unit, LaFamiglia.now)
+  end
+
   def resource_gains time_diff
     {
       resource_1: time_diff * 0.01,
