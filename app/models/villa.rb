@@ -221,7 +221,7 @@ class Villa < ActiveRecord::Base
 
   def add_units!(units)
     units.each_pair do |key, number|
-      write_attribute(key, read_attribute(key) + number)
+      self[key] += number
     end
   end
 
@@ -234,7 +234,7 @@ class Villa < ActiveRecord::Base
   end
 
   def level building_or_research
-    send building_or_research.key
+    self[building_or_research.key]
   end
 
   def enqueued_count building
@@ -246,7 +246,7 @@ class Villa < ActiveRecord::Base
   end
 
   def virtual_building_level building
-    send(building.key) + enqueued_count(building)
+    self[building.key] + enqueued_count(building)
   end
 
   def enqueued_researches_count research
@@ -258,11 +258,11 @@ class Villa < ActiveRecord::Base
   end
 
   def virtual_research_level research
-    send(research.key) + enqueued_researches_count(research)
+    self[research.key] + enqueued_researches_count(research)
   end
 
   def unit_number unit
-    send unit.key
+    self[unit.key]
   end
 
   # Beware that virtual has a different meaning here than it has in
