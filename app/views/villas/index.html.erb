@@ -7,12 +7,18 @@
     <th><%= t '.name' %></th>
     <th><%= t '.points' %></th>
     <th><%= t '.show_on_map' %></th>
+    <% LaFamiglia.units.each do |u| %>
+      <th><%= u.name %></th>
+    <% end %>
   </tr>
   <% @villas.each do |v| %>
     <tr>
       <td><%= link_to v.name, villa_url(v) %></td>
       <td><%= v.points %></td>
       <td><%= link_to coordinates(v), map_url(x: v.x, y: v.y) %></td>
+      <% LaFamiglia.units.each do |u| %>
+        <td><%= v.unit_number u %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
