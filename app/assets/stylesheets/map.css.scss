@@ -9,7 +9,7 @@ div.map div.row {
 
 div.x-axis-label {
   float: left;
-  width: percentage(1/<%= 2 * LaFamiglia.config.map_radius + 1 %>);
+  width: $map-cell-width;
   text-align: center;
   margin-bottom: 0.3em;
 }
@@ -30,7 +30,7 @@ div.y-axis-label {
 div.row div.cell {
   float: left;
   position: relative;
-  width: percentage(1/<%= 2 * LaFamiglia.config.map_radius + 1 %>);
+  width: $map-cell-width;
 }
 div.row div.cell:before {
   content: "";
