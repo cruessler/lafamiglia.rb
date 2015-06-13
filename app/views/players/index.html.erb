@@ -1,6 +1,6 @@
 <h2><%= t '.header' %></h2>
 
-<h4>Currently the number of players is <%= Player.count %>.</h4>
+<h4><%= t '.info', count: Player.count %></h4>
 
 <table class="table table-striped table-condensed">
   <tr>

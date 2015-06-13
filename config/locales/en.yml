@@ -90,6 +90,9 @@ en:
     cancelled: "Your occupation has been cancelled."
   players:
     index:
+      info:
+        one: "Currently you are the only player."
+        other: "Currently the number of players is %{count}."
       header: "Player ranking"
       position: "Position"
       name: "Name"
@@ -119,15 +122,20 @@ en:
       points: "Points"
       show_on_map: "Show on map"
     show:
+      info_html: >
+            You’re viewing the villa located at %{coordinates}.<br />
+            This villa has %{points} points.
       points: "Points"
-      building: "Building"
+      buildings: "Buildings"
       level: "Level"
       costs: "Costs"
       build_time: "Build time"
-      build: "Build"
-      research: "Research"
+      build!: "Build"
+      researches: "Researches"
       research_time: "Research time"
       research!: "Research"
+      units: "Units"
+      number: "Number"
       sidebar:
         overview: "Overview"
         troops: "Troops"

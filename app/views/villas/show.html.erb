@@ -6,22 +6,21 @@
       </h2>
 
       <div>
-        You’re viewing the villa located at <%= coordinates current_villa %>.<br />
-        This villa has <%= current_villa.points %> points.
+        <%= t '.info_html', coordinates: coordinates(current_villa), points: current_villa.points %>
       </div>
 
       <h3>
-        Buildings
+        <%= t '.buildings' %>
       </h3>
 
       <table class="col-md-8 table table-striped">
         <tr>
-          <th><%= t '.building' %></th>
+          <th><%= t 'building' %></th>
           <th><%= t '.level' %></th>
           <th><%= t '.points' %></th>
           <th><%= t '.costs' %></th>
           <th><%= t '.build_time' %></th>
-          <th><%= t '.build' %></th>
+          <th><%= t '.build!' %></th>
         </tr>
         <% LaFamiglia.buildings.each do |b| %>
           <tr>
@@ -43,12 +42,12 @@
       </table>
 
       <h3>
-        Researches
+        <%= t '.researches' %>
       </h3>
 
       <table class="col-md-8 table table-striped">
         <tr>
-          <th><%= t '.research' %></th>
+          <th><%= t 'research' %></th>
           <th><%= t '.level' %></th>
           <th><%= t '.costs' %></th>
           <th><%= t '.research_time' %></th>
@@ -73,16 +72,16 @@
       </table>
 
       <h3>
-        Units
+        <%= t '.units' %>
       </h3>
 
       <table class="col-md-8 table table-striped">
         <tr>
           <th><%= t 'unit' %></th>
-          <th>Number</th>
-          <th>Costs</th>
-          <th>Build time</th>
-          <th>Build</th>
+          <th><%= t '.number' %></th>
+          <th><%= t '.costs' %></th>
+          <th><%= t '.build_time' %></th>
+          <th><%= t '.build!' %></th>
         </tr>
         <% LaFamiglia.units.each do |u| %>
           <tr>
@@ -101,16 +100,16 @@
 
       <% if current_villa.building_queue_items_count > 0 %>
         <h3>
-          Building queue
+          <%= t '.building_queue' %>
         </h3>
 
         <table class="col-md-8 table table-striped">
           <tr>
             <th><%= t 'building' %></th>
-            <th>Build time</th>
-            <th>Completion time</th>
+            <th><%= t '.build_time' %></th>
+            <th><%= t '.completion_time' %></th>
             <th></th>
-            <th>Cancel</th>
+            <th><%= t '.cancel' %></th>
           </tr>
           <% current_villa.building_queue_items.each do |i| %>
             <tr>
@@ -128,16 +127,16 @@
 
       <% if current_villa.research_queue_items_count > 0 %>
         <h3>
-          Research queue
+          <%= t '.research_queue' %>
         </h3>
 
         <table class="col-md-8 table table-striped">
           <tr>
             <th><%= t 'research' %></th>
-            <th>Research time</th>
-            <th>Completion time</th>
+            <th><%= t '.research_time' %></th>
+            <th><%= t '.completion_time' %></th>
             <th></th>
-            <th>Cancel</th>
+            <th><%= t '.cancel' %></th>
           </tr>
           <% current_villa.research_queue_items.each do |i| %>
             <tr>
@@ -155,17 +154,17 @@
 
       <% if current_villa.unit_queue_items_count > 0 %>
         <h3>
-          Unit queue
+          <th><%= t '.unit_queue' %></th>
         </h3>
 
         <table class="col-md-8 table table-striped">
           <tr>
-            <th><%= t 'unit' %></th>
-            <th>Number</th>
-            <th>Build time</th>
-            <th>Completion time</th>
+            <th><%= t '.unit' %></th>
+            <th><%= t '.number' %></th>
+            <th><%= t '.build_time' %></th>
+            <th><%= t '.completion_time' %></th>
             <th></th>
-            <th>Cancel</th>
+            <th><%= t '.cancel' %></th>
           </tr>
           <% current_villa.unit_queue_items.each do |i| %>
             <tr>
