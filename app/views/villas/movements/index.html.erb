@@ -1,45 +1,62 @@
-<div class="page-header">
-  <h1><%= t '.header' %></h1>
+<div class="row tabpanel">
+  <div class="col-md-9 tab-content">
+    <div class="tab-pane active">
+      <div class="page-header">
+        <h1><%= t '.header' %></h1>
+      </div>
+
+      <% unless @outgoings.empty? %>
+        <table class="table table-striped">
+          <tr>
+            <th></th>
+            <th><%= t '.arrives_at' %></th>
+            <th><%= t '.time_remaining' %></th>
+            <th></th>
+          </tr>
+          <% @outgoings.each do |movement| %>
+            <tr>
+              <td><%= movement.to_s false %></td>
+              <td><%= l movement.arrives_at %></td>
+              <td><%= countdown_to movement.arrives_at %></td>
+              <td><%= link_to_movement_cancel movement if movement.cancellable? %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <p><%= t '.no_movements' %></p>
+      <% end %>
+
+      <% unless @occupations.empty? %>
+        <h2><%= t '.occupations' %></h2>
+
+        <table class="table table-striped">
+          <tr>
+            <th><%= t '.occupied_villa' %></th>
+            <th><%= t '.succeeds_at' %></th>
+            <th><%= t '.time_remaining' %></th>
+            <th></th>
+          </tr>
+          <% @occupations.each do |occupation| %>
+            <tr>
+              <td><%= occupation.to_s false %></td>
+              <td><%= l occupation.succeeds_at %></td>
+              <td><%= countdown_to occupation.succeeds_at %></td>
+              <td></td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <ul class="nav nav-pills nav-stacked" role="tablist">
+      <li role="presentation">
+        <a href="<%= villa_url current_villa %>" aria-controls="overview" role="tab"><%= t 'villas.show.sidebar.overview' %></a>
+      </li>
+      <li role="presentation" class="active">
+        <a href="#" aria-controls="troops" role="tab"><%= t 'villas.show.sidebar.troops' %></a>
+      </li>
+    </ul>
+  </div>
 </div>
-
-<% unless @outgoings.empty? %>
-  <table class="table table-striped">
-    <tr>
-      <th></th>
-      <th><%= t '.arrives_at' %></th>
-      <th><%= t '.time_remaining' %></th>
-      <th></th>
-    </tr>
-    <% @outgoings.each do |movement| %>
-      <tr>
-        <td><%= movement.to_s false %></td>
-        <td><%= l movement.arrives_at %></td>
-        <td><%= countdown_to movement.arrives_at %></td>
-        <td><%= link_to_movement_cancel movement if movement.cancellable? %></td>
-      </tr>
-    <% end %>
-  </table>
-<% else %>
-  <p><%= t '.no_movements' %></p>
-<% end %>
-
-<% unless @occupations.empty? %>
-  <h2><%= t '.occupations' %></h2>
-
-  <table class="table table-striped">
-    <tr>
-      <th><%= t '.occupied_villa' %></th>
-      <th><%= t '.succeeds_at' %></th>
-      <th><%= t '.time_remaining' %></th>
-      <th></th>
-    </tr>
-    <% @occupations.each do |occupation| %>
-      <tr>
-        <td><%= occupation.to_s false %></td>
-        <td><%= l occupation.succeeds_at %></td>
-        <td><%= countdown_to occupation.succeeds_at %></td>
-        <td></td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
