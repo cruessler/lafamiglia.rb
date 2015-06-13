@@ -12,7 +12,7 @@ class VillasController < ApplicationController
 
   # GET /villas
   def index
-    @villas = current_power.villas
+    @villas = current_power.villas.includes(:unit_queue_items)
   end
 
   private
