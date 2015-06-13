@@ -133,7 +133,7 @@ class VillaTest < ActiveSupport::TestCase
   end
 
   test "should have correct duration_of_occupation" do
-    assert_operator @v.duration_of_occupation, :>, LaFamiglia.config.duration_of_occupation_base
-    assert_operator @v.duration_of_occupation, :<, 2 * LaFamiglia.config.duration_of_occupation_base
+    assert_operator @v.duration_of_occupation, :>, LaFamiglia.config.base_duration_of_occupation
+    assert_operator @v.duration_of_occupation, :<, 2 * LaFamiglia.config.base_duration_of_occupation
   end
 end
