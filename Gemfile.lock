@@ -46,6 +46,7 @@ GEM
       tzinfo (~> 1.1)
     arel (6.0.0)
     bcrypt (3.1.10)
+    benchmark-ips (2.2.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
@@ -205,6 +206,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  benchmark-ips (~> 2.2.0)
   byebug (~> 4.0)
   capistrano-rails (~> 1.1.1)
   coffee-rails (~> 4.0.0)

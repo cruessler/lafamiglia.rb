@@ -76,4 +76,7 @@ group :development do
   gem 'byebug', '~> 4.0'
 
   gem 'web-console', '~> 2.0'
+
+  # https://github.com/evanphx/benchmark-ips
+  gem 'benchmark-ips', '~> 2.2.0'
 end
