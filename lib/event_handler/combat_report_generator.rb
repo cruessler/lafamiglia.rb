@@ -54,7 +54,7 @@ module EventHandler
                                  :occupation_began?
 
       if @combat.attacker_survived? && !@combat.occupation_began?
-        data.merge! @combat.plundered_resources
+        data.merge!({ plundered_resources: @combat.plundered_resources })
       end
 
       data.merge({ origin_id: @origin.id, target_id: @target.id })

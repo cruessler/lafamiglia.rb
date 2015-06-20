@@ -15,5 +15,14 @@ class CombatReportTest < ActiveSupport::TestCase
     assert_not_nil second_report.data[:occupation_began?]
     assert_instance_of HashWithIndifferentAccess, first_report.data
   end
+
+  test "should include plundered resources in report" do
+    origin, target = villas(:villa_having_lots_of_units,
+                            :villa_having_few_units)
+
+    create_and_handle_attack origin, target
+
+    assert_instance_of HashWithIndifferentAccess, Report.last.data[:plundered_resources]
+  end
 end
 
