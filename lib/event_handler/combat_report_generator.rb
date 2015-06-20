@@ -48,7 +48,7 @@ module EventHandler
     end
 
     def data
-      ActiveSupport::JSON.encode @combat_data.merge({ origin_id: @origin.id, target_id: @target.id })
+      @combat_data.merge({ origin_id: @origin.id, target_id: @target.id })
     end
   end
 end

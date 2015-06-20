@@ -36,7 +36,7 @@ module EventHandler
     end
 
     def data
-      ActiveSupport::JSON.encode({ origin_id: @origin.id, target_id: @target.id })
+      { origin_id: @origin.id, target_id: @target.id }
     end
   end
 end

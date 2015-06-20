@@ -1,6 +1,8 @@
 class Report < ActiveRecord::Base
   belongs_to :player
 
+  serialize :data, JSON
+
   validates_inclusion_of :read, in: [ true, false ]
 
   after_create :increment_unread_counter_cache_for_player
@@ -15,7 +17,7 @@ class Report < ActiveRecord::Base
   end
 
   def data
-    @data ||= ActiveSupport::JSON.decode(read_attribute(:data)).with_indifferent_access
+    @data ||= self[:data].with_indifferent_access
   end
 
   def origin
