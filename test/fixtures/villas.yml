@@ -73,3 +73,11 @@ villa_having_few_units:
   name: Villa having few units
   player: two
   unit_1: 10
+
+villa_having_lots_of_resources:
+  <<: *DEFAULTS
+  x: 5
+  y: 7
+  name: Villa having lots of resources
+  player: one
+  building_2: 1

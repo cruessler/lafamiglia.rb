@@ -136,6 +136,11 @@ en:
       research!: "Research"
       units: "Units"
       number: "Number"
+      building_queue: "Building queue"
+      completion_time: "Completion time"
+      cancel: "Cancel"
+      research_queue: "Research queue"
+      unit_queue: "Unit queue"
       sidebar:
         overview: "Overview"
         troops: "Troops"
