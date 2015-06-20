@@ -1,7 +1,7 @@
 module EventHandler
   class CombatReportGenerator
-    def initialize(delivered_at, combat_data)
-      @delivered_at, @combat_data = delivered_at, combat_data
+    def initialize(delivered_at, combat)
+      @delivered_at, @combat = delivered_at, combat
     end
 
     def deliver!(origin, target)
@@ -48,7 +48,16 @@ module EventHandler
     end
 
     def data
-      @combat_data.merge({ origin_id: @origin.id, target_id: @target.id })
+      data = @combat.report_data :winner,
+                                 :attacker_before_combat, :attacker_loss,
+                                 :defender_before_combat, :defender_loss,
+                                 :occupation_began?
+
+      if @combat.attacker_survived? && !@combat.occupation_began?
+        data.merge! @combat.plundered_resources
+      end
+
+      data.merge({ origin_id: @origin.id, target_id: @target.id })
     end
   end
 end

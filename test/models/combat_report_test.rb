@@ -12,6 +12,8 @@ class CombatReportTest < ActiveSupport::TestCase
 
     assert_not_equal first_report.player, second_report.player
     assert_not_nil first_report.occupation_began?
+    assert_not_nil second_report.data[:occupation_began?]
+    assert_instance_of HashWithIndifferentAccess, first_report.data
   end
 end
 

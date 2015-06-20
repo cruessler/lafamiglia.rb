@@ -102,7 +102,7 @@ module EventHandler
         # The report has to be delivered before the target is possibly occupied
         # as otherwise the target’s player would not receive the report which
         # would instead be sent to the occupying player twice.
-        report = CombatReportGenerator.new(@attack_movement.arrives_at, @combat.report_data)
+        report = CombatReportGenerator.new(@attack_movement.arrives_at, @combat)
         report.deliver!(@origin, @target)
 
         case

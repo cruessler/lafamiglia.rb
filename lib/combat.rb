@@ -72,6 +72,10 @@ class Combat
     @attacker_can_occupy
   end
 
+  def occupation_began?
+    attacker_can_occupy?
+  end
+
   def attacker_survived?
     if @attacker_survived.nil?
       @attacker_survived = attacker_after_combat.any? { |pair| pair[1] > 0 }
@@ -136,13 +140,9 @@ class Combat
     end
   end
 
-  def report_data
-    { winner: winner,
-      attacker_before_combat: attacker_before_combat,
-      attacker_loss: attacker_loss,
-      defender_before_combat: defender_before_combat,
-      defender_loss: defender_loss,
-      plundered_resources: plundered_resources,
-      occupation_began: attacker_can_occupy? }
+  def report_data *keys
+    keys.each_with_object({}) do |key, hash|
+      hash[key] = self.send key
+    end
   end
 end
