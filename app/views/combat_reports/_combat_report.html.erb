@@ -39,7 +39,7 @@
            locals: { before_combat: @report.data[:defender_before_combat],
                      losses: @report.data[:defender_loss] } %>
 
-<% if @report.attacker_won? %>
+<% if @report.attacker_won? && !@report.occupation_began? %>
   <h4><%= t '.plundered_resources' %></h4>
   <div class="plundered-resources">
     P: <%= @report.data[:plundered_resources][:resource_1].to_i %>,
