@@ -48,7 +48,7 @@ module QueueExtension
     new_item = build_item object, level
     villa.subtract_resources! costs
 
-    return transaction do
+    transaction do
       new_item.save
       villa.save
 
@@ -69,7 +69,7 @@ module QueueExtension
       time_diff = queue_item.build_time
     end
 
-    return transaction do
+    transaction do
       # refunds has to be called before destroy(queue_item) as it uses
       # villa.building_queue_items to calculate the refunds. If the item
       # would have been destroyed here already, the villa would gain
@@ -81,7 +81,7 @@ module QueueExtension
 
       each do |i|
         if i.completed_at > queue_item.completed_at
-          i.completed_at = i.completed_at - time_diff
+          i.completed_at -= time_diff
           i.save
         end
       end

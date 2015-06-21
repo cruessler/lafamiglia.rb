@@ -67,9 +67,9 @@ module UnitQueueExtension
                                       number: number,
                                       completed_at: completed_at + unit.build_time(number))
     villa.subtract_resources! costs
-    villa.used_supply = villa.used_supply + supply
+    villa.used_supply += supply
 
-    return transaction do
+    transaction do
       new_item.save
       villa.save
 
@@ -92,12 +92,12 @@ module UnitQueueExtension
     # Thus, the number of units left has to be computed here.
     number_left = ((queue_item.completed_at - LaFamiglia.now) / unit.build_time).to_i
 
-    return transaction do
+    transaction do
       destroy(queue_item)
 
       each do |i|
         if i.completed_at > queue_item.completed_at
-          i.completed_at = i.completed_at - time_diff
+          i.completed_at -= time_diff
           i.save
         end
       end
