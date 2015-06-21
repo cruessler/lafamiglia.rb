@@ -1,4 +1,8 @@
 module UnitQueueExtension
+  def villa
+    proxy_association.owner
+  end
+
   def finished_until time
     select do |i|
       i.completed_at <= time
@@ -32,7 +36,6 @@ module UnitQueueExtension
   end
 
   def enqueue unit, number
-    villa = proxy_association.owner
     costs = unit.costs number
     supply = unit.supply number
 
@@ -75,8 +78,6 @@ module UnitQueueExtension
   end
 
   def dequeue queue_item
-    villa = proxy_association.owner
-
     if queue_item == first
       time_diff = queue_item.completed_at - LaFamiglia.now
     else
