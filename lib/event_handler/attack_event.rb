@@ -26,6 +26,11 @@ module EventHandler
       @target.occupation.origin.used_supply -= @combat.defender_supply_loss
     end
 
+    def subtract_units_from_target
+      @target.subtract_units!(@combat.defender_loss)
+      @target.used_supply -= @combat.defender_supply_loss
+    end
+
     def handle_occupation event_handler
       destroy_occupation if @target.occupied?
 
@@ -33,6 +38,7 @@ module EventHandler
                                      target: @target,
                                      units: @combat.attacker_after_combat
 
+      subtract_units_from_target
 
       if @target.unit_queue_items.count > 0
         @target.unit_queue_items.cancel_all
@@ -50,9 +56,11 @@ module EventHandler
 
       comeback.units = @combat.attacker_after_combat
       comeback.resources = @combat.plundered_resources
-      @target.subtract_resources!(@combat.plundered_resources)
 
       comeback.save
+
+      subtract_units_from_target
+      @target.subtract_resources!(@combat.plundered_resources)
 
       event_handler.add_event_to_queue ComebackEvent.new(comeback)
     end
@@ -74,8 +82,7 @@ module EventHandler
           @target.occupation.origin.used_supply -= @combat.defender_supply_loss
         end
       else
-        @target.subtract_units!(@combat.defender_loss)
-        @target.used_supply -= @combat.defender_supply_loss
+        subtract_units_from_target
       end
     end
 

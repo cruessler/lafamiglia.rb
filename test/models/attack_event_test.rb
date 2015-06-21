@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class AttackEventTest < ActiveSupport::TestCase
+  def assert_no_units villa
+    LaFamiglia.units.each do |u|
+      assert_equal 0, villa.unit_number(u)
+    end
+  end
+
   test "should begin an occupation when an attack is successful" do
     origin, target = villas(:occupying_villa,
                             :villa_to_be_occupied)
@@ -23,7 +29,13 @@ class AttackEventTest < ActiveSupport::TestCase
     create_and_handle_attack origin, target
 
     assert_predicate target, :occupied?
+
+    # If there were any troop movements originating from target used_supply
+    # would be greater than 0. Because it is known there are none we can test
+    # for used_supply being 0.
+    assert_equal 0, target.used_supply
     assert_equal 0, target.unit_queue_items.count
+    assert_no_units target
   end
 
   test "should replace an existing occupation when an attack is successful" do
@@ -66,5 +78,18 @@ class AttackEventTest < ActiveSupport::TestCase
 
     assert_nil target.occupation
     assert_operator LaFamiglia.now, :<, ComebackMovement.last.arrives_at
+  end
+
+  test "test should destroy all units when an attack is successful" do
+    origin, target = villas(:villa_having_lots_of_units,
+                            :villa_having_few_units)
+
+    target.unit_queue_items.enqueue LaFamiglia.units.get_by_id(1), 10
+    target.unit_queue_items.enqueue LaFamiglia.units.get_by_id(1), 10
+
+    create_and_handle_attack origin, target
+
+    assert_operator 0, :<, target.unit_queue_items.count
+    assert_no_units target
   end
 end
