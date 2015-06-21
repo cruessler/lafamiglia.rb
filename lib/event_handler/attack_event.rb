@@ -33,7 +33,10 @@ module EventHandler
                                      target: @target,
                                      units: @combat.attacker_after_combat
 
-      @target.unit_queue_items.delete_all
+
+      if @target.unit_queue_items.count > 0
+        @target.unit_queue_items.cancel_all
+      end
 
       @attack_movement.destroy
 

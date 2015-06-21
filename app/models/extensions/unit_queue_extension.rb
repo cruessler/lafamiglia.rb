@@ -109,4 +109,15 @@ module UnitQueueExtension
       true
     end
   end
+
+  def cancel_all
+    transaction do
+      each do |i|
+        villa.used_supply -= i.unit.supply(i.number)
+      end
+
+      delete_all
+      villa.save
+    end
+  end
 end

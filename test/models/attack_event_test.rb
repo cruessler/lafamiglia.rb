@@ -2,17 +2,28 @@ require 'test_helper'
 
 class AttackEventTest < ActiveSupport::TestCase
   test "should begin an occupation when an attack is successful" do
-    origin, target = villas(:occupying_villa, :villa_to_be_occupied)
+    origin, target = villas(:occupying_villa,
+                            :villa_to_be_occupied)
 
     refute_predicate target, :occupied?
-
-    target.unit_queue_items.enqueue LaFamiglia.units.get_by_id(1), 5
 
     create_and_handle_attack origin, target
 
     assert_equal target, Occupation.last.target
-    assert_equal 0, target.unit_queue_items.count
     assert_predicate target, :occupied?
+  end
+
+  test "should cancel all recruiting orders when an occupation begins" do
+    origin, target = villas(:occupying_villa,
+                            :villa_to_be_occupied)
+
+    target.unit_queue_items.enqueue LaFamiglia.units.get_by_id(1), 10
+    target.unit_queue_items.enqueue LaFamiglia.units.get_by_id(1), 10
+
+    create_and_handle_attack origin, target
+
+    assert_predicate target, :occupied?
+    assert_equal 0, target.unit_queue_items.count
   end
 
   test "should replace an existing occupation when an attack is successful" do
