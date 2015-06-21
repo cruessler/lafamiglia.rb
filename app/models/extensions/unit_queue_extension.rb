@@ -84,13 +84,8 @@ module UnitQueueExtension
       time_diff = queue_item.build_time
     end
 
-    unit = queue_item.unit
-    # On dequeuing an item, it is freshly loaded from the database
-    # and not taken from current_villa.unit_queue_items. Because it
-    # has not been touched by current_villa.process_until!
-    # queue_item.number is likely to return a wrong number.
-    # Thus, the number of units left has to be computed here.
-    number_left = ((queue_item.completed_at - LaFamiglia.now) / unit.build_time).to_i
+    unit        = queue_item.unit
+    number_left = queue_item.units_recruited_between LaFamiglia.now, completed_at
 
     transaction do
       destroy(queue_item)
@@ -102,8 +97,10 @@ module UnitQueueExtension
         end
       end
 
-      villa.add_resources!(queue_item.unit.costs number_left)
-      villa.used_supply = villa.used_supply - unit.supply(number_left + 1)
+      # Don’t refund resources for the first unit that has already started
+      # being recruited.
+      villa.add_resources!(unit.costs number_left - 1)
+      villa.used_supply -= unit.supply(number_left)
       villa.save
 
       true
