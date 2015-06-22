@@ -4,17 +4,6 @@ class AttackMovement < Movement
 
   after_create :subtract_units_from_origin!
 
-  def enough_units
-    LaFamiglia.units.each do |u|
-      number = self.send(u.key)
-      errors.add(u.key, I18n.t('errors.movements.invalid_number')) unless number >= 0 && number <= origin.unit_number(u)
-    end
-  end
-
-  def units_selected
-    errors.add(:base, I18n.t('errors.movements.no_unit_selected')) unless has_units?
-  end
-
   def target_not_owned_by_attacker
     errors.add(:base, I18n.t('errors.movements.target_is_own')) if target.player == origin.player
   end

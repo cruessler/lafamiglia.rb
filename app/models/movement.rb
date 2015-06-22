@@ -17,6 +17,17 @@ class Movement < ActiveRecord::Base
     errors.add(:base, I18n.t('errors.movements.villa_is_occupied')) if origin.occupied?
   end
 
+  def enough_units
+    LaFamiglia.units.each do |u|
+      number = self.send(u.key)
+      errors.add(u.key, I18n.t('errors.movements.invalid_number')) unless number >= 0 && number <= origin.unit_number(u)
+    end
+  end
+
+  def units_selected
+    errors.add(:base, I18n.t('errors.movements.no_unit_selected')) unless has_units?
+  end
+
   def set_default_values
     self.unit_1 = 0 if self.unit_1.nil?
     self.unit_2 = 0 if self.unit_2.nil?
