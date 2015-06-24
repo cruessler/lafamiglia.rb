@@ -53,7 +53,7 @@ class Combat
 
       break unless resources_remaining > 0
 
-      plunderable_per_resource = [ [ load_remaining, resources_remaining ].min / 3, 1 ].max
+      plunderable_per_resource = [ [ load_remaining, resources_remaining ].min / LaFamiglia.resources.count, 1 ].max
 
       LaFamiglia.resources.each do |resource|
         amount = [ plunderable_per_resource, @unplundered_resources[resource] ].min
