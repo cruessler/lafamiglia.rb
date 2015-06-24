@@ -10,11 +10,7 @@ module UnitQueueExtension
   end
 
   def completed_at
-    if last
-      last.completed_at
-    else
-      LaFamiglia.now
-    end
+    last.completed_at if last
   end
 
   def enqueued_count_until unit, time
@@ -65,7 +61,7 @@ module UnitQueueExtension
 
     new_item = proxy_association.build(unit_id: unit.id,
                                       number: number,
-                                      completed_at: completed_at + unit.build_time(number))
+                                      completed_at: (completed_at || LaFamiglia.now) + unit.build_time(number))
     villa.subtract_resources! costs
     villa.used_supply += supply
 
