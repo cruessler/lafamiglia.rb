@@ -7,6 +7,14 @@ class Report < ActiveRecord::Base
 
   after_create :increment_unread_counter_cache_for_player
 
+  def self.report_data *keys
+    keys.each do |k|
+      define_method k do
+        self.data[k]
+      end
+    end
+  end
+
   def increment_unread_counter_cache_for_player
     player.increment! :unread_reports_count
   end
