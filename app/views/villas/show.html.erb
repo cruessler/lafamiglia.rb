@@ -80,6 +80,7 @@
           <th><%= t 'unit' %></th>
           <th><%= t '.number' %></th>
           <th><%= t '.costs' %></th>
+          <th><%= t 'supply' %></th>
           <th><%= t '.build_time' %></th>
           <th><%= t '.build!' %></th>
         </tr>
@@ -88,6 +89,7 @@
             <td><%= u.name %></td>
             <td><%= current_villa.unit_number(u) %></td>
             <td><%= costs u.costs %></td>
+            <td><%= u.supply %></td>
             <td><%= u.build_time %></td>
             <td>
               <% [ 1, 5, 20, 100 ].each do |n| %>
