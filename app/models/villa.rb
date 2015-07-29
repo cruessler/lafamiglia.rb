@@ -41,8 +41,8 @@ class Villa < ActiveRecord::Base
 
   def self.empty_coordinates(x_1 = 0, x_2 = LaFamiglia.config.max_x,
                              y_1 = 0, y_2 = LaFamiglia.config.max_y)
-    x_range_length = x_2 - x_1
-    y_range_length = y_2 - y_1
+    x_range_length = x_2 - x_1 + 1
+    y_range_length = y_2 - y_1 + 1
     max_villas_in_rectangle = x_range_length * y_range_length
 
     if Villa.in_rectangle(x_1, x_2, y_1, y_2).count < max_villas_in_rectangle

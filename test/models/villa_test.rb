@@ -97,12 +97,13 @@ class VillaTest < ActiveSupport::TestCase
     p = players :one
 
     villas_count = p.villas.count
+    number_to_create = 10
 
-    1.upto 5 do
+    1.upto number_to_create do
       assert Villa.create_for(p).persisted?
     end
 
-    assert_equal villas_count + 5, p.villas.count
+    assert_equal villas_count + number_to_create, p.villas.count
   end
 
   test "should respect game speed" do
