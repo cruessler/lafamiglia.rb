@@ -50,22 +50,18 @@ class Villa < ActiveRecord::Base
         return [ x_1, y_1 ]
       end
 
-      if x_range_length < y_range_length
-        y_range_mean = y_1 + y_range_length / 2
+      x_range_mean = x_1 + x_range_length / 2
+      y_range_mean = y_1 + y_range_length / 2
 
-        new_y_ranges = [ [ y_1, y_range_mean - 1 ],
-                         [ y_range_mean, y_2 ] ].sort_by { rand }
-
-        empty_coordinates(x_1, x_2, *new_y_ranges.first) or
-          empty_coordinates(x_1, x_2, *new_y_ranges.last)
-      else
-        x_range_mean = x_1 + x_range_length / 2
-
-        new_x_ranges = [ [ x_1, x_range_mean - 1 ],
-                         [ x_range_mean, x_2 ] ].sort_by { rand }
-
-        empty_coordinates(*new_x_ranges.first, y_1, y_2) or
-          empty_coordinates(*new_x_ranges.last, y_1, y_2)
+      [ [ x_1, x_2, y_1, y_range_mean - 1 ],
+        [ x_1, x_2, y_range_mean, y_2 ],
+        [ x_1, x_range_mean - 1, y_1, y_2 ],
+        [ x_range_mean, x_2, y_1, y_2 ] ]
+      .sort_by { rand }
+      .each do |p|
+        if empty_coordinates = empty_coordinates(*p)
+          return empty_coordinates
+        end
       end
     end
   end
