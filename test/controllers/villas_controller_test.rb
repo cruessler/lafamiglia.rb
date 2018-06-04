@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class VillasControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   test "a player without villa should automatically get a new one" do
     p = players :player_without_a_villa
