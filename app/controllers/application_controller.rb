@@ -5,9 +5,9 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  before_filter :authenticate_player!
+  before_action :authenticate_player!
   before_action :clock, if: -> { player_signed_in? }
-  before_filter :check_for_villa!, if: -> { player_signed_in? }
+  before_action :check_for_villa!, if: -> { player_signed_in? }
 
   helper_method :current_villa
 

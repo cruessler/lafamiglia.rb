@@ -21,9 +21,9 @@ class SendMessageTest < ActionDispatch::IntegrationTest
   module TestSendMessage
     def send_message_to receiver, message
       get "/messages"
-      post "/messages", { message: { receiver_ids: [ receiver.id ],
-                                     text: message } },
-                        { referer: messages_path }
+      post "/messages",
+        params: { message: { receiver_ids: [ receiver.id ], text: message } },
+        headers: { referer: messages_path }
     end
   end
 end

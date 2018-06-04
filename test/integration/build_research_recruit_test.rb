@@ -14,7 +14,8 @@ class BuildResearchRecruitTest < ActionDispatch::IntegrationTest
 
   module TestBuildResearchRecruit
     def build_buildings villa
-      post_via_redirect "/villas/#{villa.id}/building_queue_items?building_id=1"
+      post "/villas/#{villa.id}/building_queue_items?building_id=1"
+      follow_redirect!
 
       item = BuildingQueueItem.last
 
@@ -22,7 +23,8 @@ class BuildResearchRecruitTest < ActionDispatch::IntegrationTest
     end
 
     def do_research villa
-      post_via_redirect "/villas/#{villa.id}/research_queue_items?research_id=1"
+      post "/villas/#{villa.id}/research_queue_items?research_id=1"
+      follow_redirect!
 
       item = ResearchQueueItem.last
 
@@ -30,7 +32,8 @@ class BuildResearchRecruitTest < ActionDispatch::IntegrationTest
     end
 
     def recruit_units villa
-      post_via_redirect "/villas/#{villa.id}/unit_queue_items?unit_id=1&number=5"
+      post "/villas/#{villa.id}/unit_queue_items?unit_id=1&number=5"
+      follow_redirect!
 
       item = UnitQueueItem.last
 

@@ -46,7 +46,9 @@ class ActiveSupport::TestCase
       p.password = 'password'
       p.save
 
-      sess.post_via_redirect "/players/sign_in", player: { email: p.email, password: 'password' }
+      sess.post "/players/sign_in",
+        params: { player: { email: p.email, password: 'password' } }
+      sess.follow_redirect!
 
       assert_equal p, sess.assigns(:current_player)
     end

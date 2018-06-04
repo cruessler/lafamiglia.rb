@@ -13,7 +13,9 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to :back, notice: t('.created') }
+        format.html do
+          redirect_back(fallback_location: root_path, notice: t('.created'))
+        end
       else
         format.html do
           set_message_statuses
