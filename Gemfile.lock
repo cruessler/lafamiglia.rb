@@ -96,9 +96,9 @@ GEM
       tilt (>= 1.2)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
-    jbuilder (1.5.3)
-      activesupport (>= 3.0.0)
-      multi_json (>= 1.2.0)
+    jbuilder (2.7.0)
+      activesupport (>= 4.2.0)
+      multi_json (>= 1.2)
     json (1.8.6)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
@@ -224,7 +224,7 @@ DEPENDENCIES
   devise (~> 4.0)
   devise-i18n
   handlebars_assets (~> 0.17)
-  jbuilder (~> 1.2)
+  jbuilder (~> 2.7)
   kaminari (~> 0.17)
   mysql2
   rails (>= 5.0, < 5.1)
