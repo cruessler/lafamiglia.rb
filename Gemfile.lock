@@ -55,13 +55,13 @@ GEM
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
     capistrano-stats (1.1.1)
-    coffee-rails (4.0.1)
+    coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
-      railties (>= 4.0.0, < 5.0)
-    coffee-script (2.3.0)
+      railties (>= 4.0.0)
+    coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.8.0)
+    coffee-script-source (1.12.2)
     colorize (0.7.5)
     columnize (0.9.0)
     concurrent-ruby (1.0.5)
@@ -215,7 +215,7 @@ DEPENDENCIES
   benchmark-ips (~> 2.2.0)
   byebug (~> 4.0)
   capistrano-rails (~> 1.1.1)
-  coffee-rails (~> 4.0.0)
+  coffee-rails (~> 4.2)
   consul (~> 0.12.0)
   devise (~> 4.0)
   devise-i18n
