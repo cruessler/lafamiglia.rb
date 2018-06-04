@@ -52,10 +52,7 @@ gem 'thin'
 gem 'rails-i18n', '~> 4.0.0.pre' # For 4.0.x
 
 # https://github.com/plataformatec/simple_form
-# Support for Bootstrap 3 available since April 2014
-# https://github.com/rafaelfranca/simple_form-bootstrap/pull/28
-# Be sure to go back to using the gem as soon as appropriate
-gem 'simple_form', git: 'https://github.com/plataformatec/simple_form.git'
+gem 'simple_form', '~> 3.2'
 
 gem 'devise', '~> 3.5.0'
 gem 'devise-i18n'
