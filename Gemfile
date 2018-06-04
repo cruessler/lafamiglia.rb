@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# gem 'rails', '>= 5.0', '< 5.1'
 gem 'rails', '~> 4.2.0'
 
 # Use sqlite3 as the database for Active Record
@@ -56,7 +57,7 @@ gem 'simple_form', '~> 3.2'
 
 gem 'devise', '~> 4.0'
 gem 'devise-i18n'
-gem 'responders', '~> 2.0'
+gem 'responders', '~> 2.4'
 
 # https://github.com/makandra/consul
 # Used for authorization and access control
