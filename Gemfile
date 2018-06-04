@@ -63,7 +63,7 @@ gem 'responders', '~> 2.4'
 gem 'consul', '~> 0.12.0'
 
 # https://github.com/amatsuda/kaminari
-gem 'kaminari', '~> 0.16.0'
+gem 'kaminari', '~> 0.17'
 
 # https://github.com/leshill/handlebars_assets
 gem 'handlebars_assets', '~> 0.17'
