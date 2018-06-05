@@ -79,5 +79,5 @@ group :development do
   # https://github.com/deivid-rodriguez/byebug
   gem 'byebug', '~> 4.0'
 
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 3.0'
 end
