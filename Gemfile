@@ -80,4 +80,8 @@ group :development do
   gem 'byebug', '~> 4.0'
 
   gem 'web-console', '~> 3.0'
+
+  # This gem was added to address an error message provided by ActiveSupport
+  # 5.1.6.
+  gem 'listen'
 end
