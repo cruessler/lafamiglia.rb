@@ -15,8 +15,8 @@
 /log/*.log
 /tmp
 
-# Ignore all files managed by bower.
-/vendor/assets/components/*
+# Ignore all files managed by npm.
+/node_modules/*
 
 # Ignore all precompiled assets.
 /public/assets/*

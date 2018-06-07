@@ -25,6 +25,6 @@ module Lafamiglia
 
     config.autoload_paths << Rails.root.join('lib')
 
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+    config.assets.paths << Rails.root.join('node_modules')
   end
 end
