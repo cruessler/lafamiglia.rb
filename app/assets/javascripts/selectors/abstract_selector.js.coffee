@@ -18,6 +18,7 @@ class @lafamiglia.AbstractSelector
       limit: 10
       remote:
         url: "#{@objectUrl}/search/%QUERY"
+        wildcard: "%QUERY"
     )
 
     @bloodhound.initialize()
