@@ -1,0 +1,6 @@
+/* This file holds variables that depend on external config values.
+*/
+
+// The denominator should be set to `2 * LaFamiglia.config.map_radius + 1`
+// (which is set in `config/initializers/la_famiglia.rb`).
+$map-cell-width: percentage(1/9);

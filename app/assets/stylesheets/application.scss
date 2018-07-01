@@ -1,14 +1,11 @@
-$icon-font-path: 'bootstrap-sass/assets/fonts/bootstrap/';
 $font-family-sans-serif: Lato, 'DejaVu Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $headings-font-weight: normal;
 
 $dropdown-link-hover-bg: darken(#f5f5f5, 7.5%);
 
-@import "bootstrap-sass/assets/stylesheets/bootstrap-sprockets";
-@import "bootstrap-sass/assets/stylesheets/bootstrap";
-@import "bootstrap-sass/assets/stylesheets/bootstrap/theme";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap";
 
-@import "typeahead.js-bootstrap-css/typeaheadjs";
+@import "../../../node_modules/typeahead.js-bootstrap-css/typeaheadjs.css";
 
 @import "variables";
 

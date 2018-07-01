@@ -10,8 +10,10 @@
 
     <title>La Famiglia – un’offerta nessuno può rifiutare</title>
 
-    <%= javascript_include_tag "application" %>
-    <%= stylesheet_link_tag    "application", media: "all" %>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href="<%= asset_url "assets/app.css", skip_pipeline: true %>" media="all" rel="stylesheet" />
+
+    <script src="<%= asset_url "assets/app.js", skip_pipeline: true %>"></script>
     <%= csrf_meta_tags %>
   </head>
 

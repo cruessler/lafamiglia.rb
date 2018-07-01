@@ -5,14 +5,30 @@
   "author": "Christoph Rüßler <christoph.ruessler@mailbox.org>",
   "version": "0.1.0",
   "repository": "",
-  "scripts": {},
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack --mode development --watch"
+  },
   "dependencies": {},
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
     "bootstrap-sass": "^3.3.7",
+    "copy-webpack-plugin": "^4.5.1",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
     "handlebars": "^4.0.11",
     "jquery": "^3.3.1",
     "jquery-ujs": "^1.2.2",
+    "mini-css-extract-plugin": "^0.4.0",
+    "node-sass": "^4.9.0",
+    "optimize-css-assets-webpack-plugin": "^4.0.2",
+    "resolve-url-loader": "^2.3.0",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
     "typeahead.js": "^0.11.1",
-    "typeahead.js-bootstrap-css": "^1.2.1"
+    "typeahead.js-bootstrap-css": "^1.2.1",
+    "webpack": "^4.11.1",
+    "webpack-cli": "^3.0.3"
   }
 }
