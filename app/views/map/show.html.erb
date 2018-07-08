@@ -1,60 +1,7 @@
-<div class="row">
-  <div class="col-md-8">
-    <div>
-      <div class="page-header">
-        <h1>Map</h1>
-      </div>
-
-      <div class="container-fluid">
-        <div class="row">
-          <div class="map">
-            <div class="row">
-              <% @min_x.upto @max_x do |x| %>
-                <div class="x-axis-label"><%= x %></div>
-              <% end %>
-            </div>
-
-            <% @villas.each do |row| %>
-              <div class="row">
-                <div class="y-axis-label"><%= @y = ((@y || @min_y - 1) + 1) %></div>
-
-                <% row.each do |v| %>
-                  <div class="cell">
-                    <% if v %>
-                      <% if v.player != current_player %>
-                        <div class="villa foreign"
-                      <% else %>
-                        <div class="villa"
-                      <% end %>
-                             data-target-id="<%= v.id %>"
-                             data-target-name="<%= v %>"
-                             data-target-href="<%= villa_url v %>"
-                             data-target-map-href="<%= map_url(x: v.x, y: v.y) %>">
-
-                        <%= v %>
-                      </div>
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <%= render partial: 'attack_modal' %>
-    </div>
-  </div>
-
-  <div class="col-md-4 map-sidebar">
-    <h2>
-      <%= t 'map.sidebar.header' %>
-    </h2>
-
-    <div id="map-actions">
-      <div class="alert alert-info">
-        <%= t 'map.sidebar.info' %>
-      </div>
-    </div>
-  </div>
-</div>
+<div id="map"
+  data-current-player="<%= current_player.to_json(only: [:id]) %>"
+  data-current-villa="<%= current_villa.to_json(only: [:id]) %>"
+  data-dimensions="<%= @dimensions.to_json %>"
+  data-villas="<%= @villas.to_json(only: [:id, :name, :x, :y], include: { player: { only: :id }}) %>"
+  data-authenticity-token="<%= @authenticity_token %>"
+></div>

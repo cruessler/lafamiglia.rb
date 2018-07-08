@@ -16,15 +16,20 @@ class MapController < ApplicationController
       y = LaFamiglia.config.max_y
     end
 
-    @min_x, @max_x = x - LaFamiglia.config.map_radius, x + LaFamiglia.config.map_radius
-    @min_y, @max_y = y - LaFamiglia.config.map_radius, y + LaFamiglia.config.map_radius
+    min_x, max_x = x - LaFamiglia.config.map_radius, x + LaFamiglia.config.map_radius
+    min_y, max_y = y - LaFamiglia.config.map_radius, y + LaFamiglia.config.map_radius
 
-    villas = Villa.in_rectangle(@min_x, @max_x, @min_y, @max_y).includes(:player).load
+    @villas =
+      Villa
+        .in_rectangle(min_x, max_x, min_y, max_y)
+        .includes(:player)
+        .load
 
-    @villas = Array.new(@max_y - @min_y + 1) { Array.new(@max_x - @min_x + 1) }
+    @dimensions = { min_x: min_x, max_x: max_x, min_y: min_y, max_y: max_y }
 
-    villas.each do |v|
-      @villas[v.y - @min_y][v.x - @min_x] = v
-    end
+    @authenticity_token =
+      form_authenticity_token form_options: {
+        action: "/villas/#{current_villa.id}/movements", method: "POST"
+      }
   end
 end
