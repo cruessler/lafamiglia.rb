@@ -1,0 +1,88 @@
+# The block is called once in production as well as on every code reload
+# in development mode.
+# http://api.rubyonrails.org/classes/Rails/Railtie/Configuration.html#method-i-to_prepare
+Rails.application.config.to_prepare do
+  EventHandler.logger = Logger.new STDOUT
+
+  LaFamiglia.config.max_x = 10
+  LaFamiglia.config.max_y = 10
+
+  LaFamiglia.config.map_radius = 4
+
+  LaFamiglia.config.game_speed = 1.0
+  LaFamiglia.config.unit_speed = 500.0
+
+  LaFamiglia.config.base_duration_of_occupation = 1.day
+  LaFamiglia.config.unit_for_occupation = :unit_2
+
+  LaFamiglia.buildings.add do |b|
+    b.id = 1
+    b.build_time = ->(level) { level * 1 + 4 }
+    b.costs = ->(level) do
+      {
+        resource_1: level * 1 + 1,
+        resource_2: level * 1 + 1,
+        resource_3: level * 1 + 1
+      }
+    end
+    b.maxlevel = 8
+    b.defense = ->(level) { 10 }
+    b.points = ->(level) { level ** 1.5 }
+  end
+
+  LaFamiglia.buildings.add do |b|
+    b.id = 2
+    b.build_time = ->(level) { level * 1 + 4 }
+    b.costs = ->(level) do
+      {
+        resource_1: level * 1 + 1,
+        resource_2: level * 1 + 1,
+        resource_3: level * 1 + 1
+      }
+    end
+    b.maxlevel = 8
+    b.defense = ->(level) { 0 }
+    b.points = ->(level) { level ** 1.5 }
+  end
+
+  LaFamiglia.researches.add do |r|
+    r.id = 1
+    r.research_time = ->(level) { level * 1 + 4 }
+    r.costs = ->(level) do
+      {
+        resource_1: level * 1 + 1,
+        resource_2: level * 1 + 1,
+        resource_3: level * 1 + 1
+      }
+    end
+    r.maxlevel = 8
+  end
+
+  LaFamiglia.units.add do |u|
+    u.id = 1
+    u.build_time = 10
+    u.costs = { resource_1: 1,
+                resource_2: 0,
+                resource_3: 1 }
+    u.supply = 2
+    u.building_id = 1
+    u.speed = 2
+    u.attack = 2
+    u.defense = 2
+    u.load = 10
+  end
+
+  LaFamiglia.units.add do |u|
+    u.id = 2
+    u.build_time = 12.hours
+    u.costs = { resource_1: 50,
+                resource_2: 50,
+                resource_3: 50 }
+    u.supply = 20
+    u.building_id = 1
+    u.speed = 1
+    u.attack = 5
+    u.defense = 4
+    u.load = 0
+  end
+end

@@ -7,10 +7,8 @@ gem 'rails', '>= 5.1', '< 5.2'
 # functionality to a gem.
 gem 'rails-controller-testing'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-# Use MySQL for the deployed installation
-gem 'mysql2'
+# Use PostgreSQL as the database for Active Record
+gem 'pg', '~> 0.18'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

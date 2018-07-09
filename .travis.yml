@@ -1,0 +1,12 @@
+language: ruby
+cache: bundler
+services:
+  - postgresql
+addons:
+  postgresql: "9.6"
+before_script:
+  - cp config/secrets.travis.yml config/secrets.yml
+  - cp config/database.travis.yml config/database.yml
+  - cp config/initializers/devise.rb.travis config/initializers/devise.rb
+  - cp config/initializers/la_famiglia.rb.travis config/initializers/la_famiglia.rb
+  - psql -c 'create database travis_ci_test;' -U postgres

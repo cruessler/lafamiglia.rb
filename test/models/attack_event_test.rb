@@ -89,6 +89,10 @@ class AttackEventTest < ActiveSupport::TestCase
 
     create_and_handle_attack origin, target
 
+    # This assertion implicitly relies on `LaFamiglia.config.unit_speed`. The
+    # lower `unit_speed` is, the longer the attack will take. It is thus
+    # possible that the attack only arrives when the unit queue has processed
+    # all items and is empty.
     assert_operator 0, :<, target.unit_queue_items.count
     assert_no_units target
   end
