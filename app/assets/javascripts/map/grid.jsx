@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Navigation from './navigation.jsx';
+
 class Grid extends Component {
   constructor(props) {
     super(props);
@@ -90,6 +92,12 @@ class Grid extends Component {
   }
 
   render() {
+    const { min_x, max_x, min_y, max_y } = this.props.dimensions;
+    const center = {
+      x: min_x + (max_x - min_x) / 2,
+      y: min_y + (max_y - min_y) / 2,
+    };
+
     return (
       <div className="col-md-8">
         <div>
@@ -101,6 +109,8 @@ class Grid extends Component {
                 {this.xAxis()}
 
                 {this.grid()}
+
+                <Navigation onCenter={this.props.onCenter} center={center} />
               </div>
             </div>
           </div>

@@ -11,6 +11,20 @@ div.map {
   }
 }
 
+div.navigation {
+  margin-top: 2em;
+
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 1em;
+
+  a {
+    display: block;
+  }
+}
+
 div.map-sidebar {
   margin-top: 60px;
 
