@@ -54,7 +54,7 @@ gem 'thin'
 gem 'rails-i18n', '~> 4.0.0.pre' # For 4.0.x
 
 # https://github.com/plataformatec/simple_form
-gem 'simple_form', '~> 3.2'
+gem 'simple_form', '~> 5.0'
 
 gem 'devise', '~> 4.7'
 gem 'devise-i18n'
