@@ -1,21 +1,21 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, options) => ({
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: false }),
-      new OptimizeCSSAssetsPlugin({})
-    ]
+      new TerserPlugin({ cache: true, parallel: true, sourceMap: false }),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
   },
   entry: './app/assets/javascripts/application.js',
   output: {
     filename: 'app.js',
-    path: path.resolve(__dirname, 'public/assets/')
+    path: path.resolve(__dirname, 'public/assets/'),
   },
   module: {
     rules: [
@@ -25,35 +25,39 @@ module.exports = (env, options) => ({
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['react']
-          }
-        }
+            presets: ['react'],
+          },
+        },
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader, 'css-loader', 'resolve-url-loader',
-          { loader: 'sass-loader',
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'resolve-url-loader',
+          {
+            loader: 'sass-loader',
             options: {
-              sourceMap: true
-            }
-          }
-        ]
+              sourceMap: true,
+            },
+          },
+        ],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         use: [
-          { loader: 'file-loader',
+          {
+            loader: 'file-loader',
             options: {
-              name: '[name].[ext]'
-            }
-          }
-        ]
-      }
+              name: '[name].[ext]',
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
@@ -61,7 +65,7 @@ module.exports = (env, options) => ({
     new CopyWebpackPlugin([{ from: 'app/assets/images', to: '' }]),
     new webpack.ProvidePlugin({
       $: 'jquery',
-      jQuery: 'jquery'
-    })
-  ]
+      jQuery: 'jquery',
+    }),
+  ],
 });
