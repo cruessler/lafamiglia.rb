@@ -18,7 +18,7 @@
     "bloodhound-js": "^1.2.2",
     "bootstrap-sass": "^3.4.1",
     "copy-webpack-plugin": "^4.5.1",
-    "css-loader": "^0.28.11",
+    "css-loader": "^3.3.2",
     "file-loader": "^1.1.11",
     "jquery": "^3.4.1",
     "jquery-ujs": "^1.2.2",
