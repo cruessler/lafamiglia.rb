@@ -1,77 +1,41 @@
-// https://github.com/pqx/bloodhound
-import Bloodhound from 'bloodhound-js';
-import React, {
-  Component,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { Component, useEffect, useMemo, useRef, useState } from 'react';
 // https://github.com/twitter/typeahead.js
 import Typeahead from 'typeahead.js';
 
-const PlayerSelector = props => {
-  const bloodhound = useMemo(
-    () =>
-      new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.whitespace,
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 10,
-        identify: p => p.id,
-        remote: {
-          url: 'players/search/%QUERY',
-          wildcard: '%QUERY',
-        },
-      }),
-    []
-  );
+const defaultFetchSuggestions = async (query, setSuggestions) => {
+  if (query.length > 2) {
+    const response = await fetch(`players/search/${query}`);
 
-  const datasets = useMemo(
-    () => ({
-      name: 'players',
-      display: 'name',
-      templates: {
-        header: '<h4>Players</h4>',
-        suggestion: p => `<a href="#">${p.name}</a>`,
-      },
-      source: bloodhound.ttAdapter(),
-    }),
-    [bloodhound]
-  );
+    setSuggestions(await response.json());
+  }
+};
+
+const PlayerSelector = props => {
+  const { fetchSuggestions = defaultFetchSuggestions } = props;
 
   const inputRef = useRef();
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
   const [players, setPlayers] = useState(props.players);
 
-  const addPlayer = useCallback(
-    (event, player) => {
-      if (!players.some(p => p.id == player.id)) {
-        const newPlayers = [...players, player];
+  const clickPlayer = player => {
+    if (players.every(p => p.id != player.id)) {
+      const newPlayers = [...players, player];
 
-        setPlayers(newPlayers);
-      }
-    },
-    [players]
-  );
+      setPlayers(newPlayers);
+      setIsOpen(false);
+    }
+  };
 
-  const onClick = useCallback(
-    id => {
-      setPlayers(players.filter(p => p.id != id));
-    },
-    [players]
-  );
+  const removePlayer = id => {
+    setPlayers(players.filter(p => p.id != id));
+  };
 
-  useEffect(() => {
-    $(inputRef.current).typeahead({ minLength: 0 }, datasets);
-  }, []);
-
-  useEffect(
-    () => {
-      $(inputRef.current).bind('typeahead:select', addPlayer);
-    },
-    [addPlayer]
-  );
+  const onChange = event => {
+    setQuery(event.target.value);
+  };
 
   const item = player => (
     <div key={player.id} className="btn-group player-selected">
@@ -87,7 +51,7 @@ const PlayerSelector = props => {
           <a
             href="#"
             className="remove-player"
-            onClick={() => onClick(player.id)}
+            onClick={() => removePlayer(player.id)}
           >
             Remove
           </a>
@@ -105,15 +69,72 @@ const PlayerSelector = props => {
     />
   );
 
+  useEffect(
+    () => {
+      const updateSuggestions = async () =>
+        fetchSuggestions(query, setSuggestions);
+
+      updateSuggestions();
+    },
+    [query, setSuggestions]
+  );
+
+  const suggestion = player => (
+    <a
+      key={player.id}
+      href="#"
+      className="tt-suggestion tt-selectable"
+      // By default, `onMouseDown` causes the active element to lose focus. In
+      // this case, this would cause a blur in the <input> which would bubble
+      // up and call the topmost <span>’s `onBlur` handler and close the menu
+      // such that the `onClick` would never be called.
+      onMouseDown={event => event.preventDefault()}
+      onClick={() => clickPlayer(player)}
+    >
+      {player.name}
+    </a>
+  );
+
+  const menu = isOpen ? (
+    <div className="tt-menu">
+      <div className="tt-dataset tt-dataset-players">
+        <h4>Players</h4>
+        {suggestions.map(suggestion)}
+      </div>
+    </div>
+  ) : null;
+
+  const input = (
+    <span className="twitter-typeahead" onBlur={() => setIsOpen(false)}>
+      <input
+        type="text"
+        className="form-control player-search tt-hint"
+        readOnly=""
+        autoComplete="off"
+        spellCheck="false"
+        tabIndex="-1"
+        dir="ltr"
+      />
+      <input
+        type="text"
+        className="form-control player-search tt-input"
+        placeholder="Type to search …"
+        autoComplete="off"
+        spellCheck="false"
+        dir="auto"
+        value={query}
+        onFocus={() => setIsOpen(true)}
+        onChange={onChange}
+      />
+      <pre aria-hidden="true" />
+      {menu}
+    </span>
+  );
+
   return (
     <div>
       <div className="has-feedback">
-        <input
-          ref={inputRef}
-          type="text"
-          className="form-control player-search"
-          placeholder="Type to search …"
-        />
+        {input}
         <span className="glyphicon glyphicon-search form-control-feedback" />
         {players.map(item)}
         {players.map(hiddenItem)}

@@ -27,6 +27,14 @@ div.player-selected {
 }
 
 .tt-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+  // By default, `.tt-menu` is hidden by a selector that has a higher
+  // specificity.
+  display: block !important;
+
   h4 {
     padding: 3px 20px;
   }
@@ -45,5 +53,43 @@ div.player-selected {
     &.tt-cursor {
       background-color: $dropdown-link-hover-bg;
     }
+  }
+}
+
+// The following styles were set as inline styles by typeahead.
+input.tt-hint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-color: transparent;
+  box-shadow: none;
+  opacity: 1;
+  background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+}
+
+input.tt-input {
+  position: relative;
+  vertical-align: top;
+  background-color: transparent;
+}
+
+.twitter-typeahead {
+  position: relative;
+  display: inline-block;
+
+  pre {
+    position: absolute;
+    visibility: hidden;
+    white-space: pre;
+    font-family: Lato, "DejaVu Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    word-spacing: 0;
+    letter-spacing: 0;
+    text-indent: 0;
+    text-rendering: optimizelegibility;
+    text-transform: none;
   }
 }
