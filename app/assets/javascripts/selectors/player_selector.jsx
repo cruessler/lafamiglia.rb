@@ -69,15 +69,12 @@ const PlayerSelector = props => {
     />
   );
 
-  useEffect(
-    () => {
-      const updateSuggestions = async () =>
-        fetchSuggestions(query, setSuggestions);
+  useEffect(() => {
+    const updateSuggestions = async () =>
+      fetchSuggestions(query, setSuggestions);
 
-      updateSuggestions();
-    },
-    [query, setSuggestions]
-  );
+    updateSuggestions();
+  }, [query, setSuggestions]);
 
   const suggestion = player => (
     <a
