@@ -26,7 +26,7 @@ class Grid extends Component {
 
     return (
       <div className="row">
-        {range.map(x => (
+        {range.map((x) => (
           <div key={x} className="x-axis-label">
             {x}
           </div>
@@ -40,7 +40,7 @@ class Grid extends Component {
   }
 
   villa(x, y) {
-    const v = this.props.villas.find(v => v.x == x && v.y == y);
+    const v = this.props.villas.find((v) => v.x == x && v.y == y);
 
     if (v) {
       const classes =
@@ -50,7 +50,7 @@ class Grid extends Component {
         <div
           key={x}
           className={classes}
-          onClick={e => this.props.onSelect(v, e)}
+          onClick={(e) => this.props.onSelect(v, e)}
         >
           {this.display(v)}
         </div>
@@ -73,7 +73,7 @@ class Grid extends Component {
 
     const range = this.range(min_x, max_x);
 
-    const cells = range.map(x => this.cell(x, y));
+    const cells = range.map((x) => this.cell(x, y));
 
     return (
       <div key={y} className="row">
@@ -88,7 +88,7 @@ class Grid extends Component {
 
     const range = this.range(min_y, max_y);
 
-    return <div>{range.map(y => this.row(y))}</div>;
+    return <div>{range.map((y) => this.row(y))}</div>;
   }
 
   render() {

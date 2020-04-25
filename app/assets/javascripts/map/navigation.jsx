@@ -24,7 +24,7 @@ class Navigation extends Component {
     return (
       <a
         className="btn btn-primary"
-        onClick={e => this.props.onCenter(newX, newY, e)}
+        onClick={(e) => this.props.onCenter(newX, newY, e)}
       >
         {direction}
       </a>

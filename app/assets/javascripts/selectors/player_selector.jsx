@@ -10,7 +10,7 @@ const defaultFetchSuggestions = async (query, setSuggestions) => {
   }
 };
 
-const PlayerSelector = props => {
+const PlayerSelector = (props) => {
   const { fetchSuggestions = defaultFetchSuggestions } = props;
 
   const inputRef = useRef();
@@ -20,8 +20,8 @@ const PlayerSelector = props => {
   const [suggestions, setSuggestions] = useState([]);
   const [players, setPlayers] = useState(props.players);
 
-  const clickPlayer = player => {
-    if (players.every(p => p.id != player.id)) {
+  const clickPlayer = (player) => {
+    if (players.every((p) => p.id != player.id)) {
       const newPlayers = [...players, player];
 
       setPlayers(newPlayers);
@@ -29,15 +29,15 @@ const PlayerSelector = props => {
     }
   };
 
-  const removePlayer = id => {
-    setPlayers(players.filter(p => p.id != id));
+  const removePlayer = (id) => {
+    setPlayers(players.filter((p) => p.id != id));
   };
 
-  const onChange = event => {
+  const onChange = (event) => {
     setQuery(event.target.value);
   };
 
-  const item = player => (
+  const item = (player) => (
     <div key={player.id} className="btn-group player-selected">
       <button
         className="btn btn-default btn-sm dropdown-toggle"
@@ -60,7 +60,7 @@ const PlayerSelector = props => {
     </div>
   );
 
-  const hiddenItem = player => (
+  const hiddenItem = (player) => (
     <input
       key={player.id}
       type="hidden"
@@ -76,7 +76,7 @@ const PlayerSelector = props => {
     updateSuggestions();
   }, [query, setSuggestions]);
 
-  const suggestion = player => (
+  const suggestion = (player) => (
     <a
       key={player.id}
       href="#"
@@ -85,7 +85,7 @@ const PlayerSelector = props => {
       // this case, this would cause a blur in the <input> which would bubble
       // up and call the topmost <span>’s `onBlur` handler and close the menu
       // such that the `onClick` would never be called.
-      onMouseDown={event => event.preventDefault()}
+      onMouseDown={(event) => event.preventDefault()}
       onClick={() => clickPlayer(player)}
     >
       {player.name}

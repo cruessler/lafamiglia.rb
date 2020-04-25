@@ -59,7 +59,7 @@ div.row div.cell {
   width: $map-cell-width;
 }
 div.row div.cell:before {
-  content: "";
+  content: '';
   display: block;
   padding-top: 100%;
 }

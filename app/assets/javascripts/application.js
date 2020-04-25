@@ -10,8 +10,8 @@ import ReactDom from 'react-dom';
 import InteractiveMap from './interactive_map.jsx';
 import PlayerSelector from './selectors/player_selector.jsx';
 
-document.addEventListener('DOMContentLoaded', function(_) {
-  document.querySelectorAll('.player-select').forEach(function(e) {
+document.addEventListener('DOMContentLoaded', function (_) {
+  document.querySelectorAll('.player-select').forEach(function (e) {
     ReactDom.render(
       <PlayerSelector
         name={e.dataset.name}

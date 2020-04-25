@@ -3,8 +3,16 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 table.messages {
-  th.time { width: 40%; }
-  th.sender { width: 20%; }
-  th.receivers { width: 30%; }
-  th.status { width: 10%; }
+  th.time {
+    width: 40%;
+  }
+  th.sender {
+    width: 20%;
+  }
+  th.receivers {
+    width: 30%;
+  }
+  th.status {
+    width: 10%;
+  }
 }

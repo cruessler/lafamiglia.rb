@@ -42,7 +42,8 @@ div.player-selected {
   .tt-suggestion {
     padding: 0px;
 
-    & > a, & > p {
+    & > a,
+    & > p {
       @extend .dropdown-block-element;
 
       span {
@@ -81,7 +82,8 @@ input.tt-input {
     position: absolute;
     visibility: hidden;
     white-space: pre;
-    font-family: Lato, "DejaVu Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Lato, 'DejaVu Sans', 'Helvetica Neue', Helvetica, Arial,
+      sans-serif;
     font-size: 14px;
     font-style: normal;
     font-variant: normal;
