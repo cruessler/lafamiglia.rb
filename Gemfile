@@ -42,7 +42,7 @@ end
 # Use Capistrano for deployment
 # http://capistranorb.com/documentation/getting-started/installation/
 group :development do
-  gem 'capistrano-rails', '~> 1.1.1'
+  gem 'capistrano-rails', '~> 1.4.0'
 
   # Reduces boot times through caching; required in config/boot.rb
   gem 'bootsnap', '>= 1.1.0', require: false
