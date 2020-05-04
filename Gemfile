@@ -68,7 +68,7 @@ gem 'responders', '~> 2.4'
 gem 'consul', '~> 1.0.3'
 
 # https://github.com/amatsuda/kaminari
-gem 'kaminari', '~> 0.17'
+gem 'kaminari', '~> 1.2'
 
 # https://github.com/evanphx/benchmark-ips
 gem 'benchmark-ips', '~> 2.2.0'

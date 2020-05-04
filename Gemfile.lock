@@ -100,9 +100,18 @@ GEM
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
     json (1.8.6)
-    kaminari (0.17.0)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
+    kaminari (1.2.0)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.0)
+      kaminari-activerecord (= 1.2.0)
+      kaminari-core (= 1.2.0)
+    kaminari-actionview (1.2.0)
+      actionview
+      kaminari-core (= 1.2.0)
+    kaminari-activerecord (1.2.0)
+      activerecord
+      kaminari-core (= 1.2.0)
+    kaminari-core (1.2.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -237,7 +246,7 @@ DEPENDENCIES
   devise (~> 4.7)
   devise-i18n
   jbuilder (~> 2.7)
-  kaminari (~> 0.17)
+  kaminari (~> 1.2)
   listen
   pg (~> 0.18)
   rails (>= 5.2, < 6.0)
