@@ -75,7 +75,7 @@ gem 'benchmark-ips', '~> 2.2.0'
 
 group :development do
   # https://github.com/deivid-rodriguez/byebug
-  gem 'byebug', '~> 4.0'
+  gem 'byebug', '~> 11.1'
 
   gem 'web-console', '~> 3.0'
 
