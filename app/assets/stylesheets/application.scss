@@ -4,6 +4,7 @@ $headings-font-weight: normal;
 
 $dropdown-link-hover-bg: darken(#f5f5f5, 7.5%);
 
+$icon-font-path: '../../fonts/bootstrap/';
 @import '../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap';
 
 @import '../../../node_modules/typeahead.js-bootstrap-css/typeaheadjs.css';
