@@ -61,7 +61,7 @@ gem 'simple_form', '~> 5.0'
 
 gem 'devise', '~> 4.7'
 gem 'devise-i18n'
-gem 'responders', '~> 2.4'
+gem 'responders', '~> 3.0'
 
 # https://github.com/makandra/consul
 # Used for authorization and access control
