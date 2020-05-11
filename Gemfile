@@ -8,7 +8,7 @@ gem 'rails', '>= 5.2', '< 6.0'
 gem 'rails-controller-testing'
 
 # Use PostgreSQL as the database for Active Record
-gem 'pg', '~> 0.18'
+gem 'pg', '~> 1.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
