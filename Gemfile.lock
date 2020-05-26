@@ -47,7 +47,7 @@ GEM
     arel (9.0.0)
     bcrypt (3.1.13)
     benchmark-ips (2.8.2)
-    bindex (0.5.0)
+    bindex (0.8.1)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
     builder (3.2.4)
@@ -192,7 +192,7 @@ GEM
       thread_safe (~> 0.1)
     warden (1.2.8)
       rack (>= 2.0.6)
-    web-console (3.6.2)
+    web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
@@ -223,7 +223,7 @@ DEPENDENCIES
   sdoc
   simple_form (~> 5.0)
   thin
-  web-console (~> 3.0)
+  web-console (~> 3.7)
 
 BUNDLED WITH
    1.17.2
