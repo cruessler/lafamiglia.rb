@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 5.2', '< 6.0'
+gem 'rails', '>= 5.2', '< 7.0'
 
 # Rails 5.0 has removed `assigns` in controller tests and extracted the
 # functionality to a gem.
@@ -45,7 +45,7 @@ end
 gem 'thin'
 
 # https://github.com/svenfuchs/rails-i18n
-gem 'rails-i18n', '~> 5.1.3' # For 4.0.x
+gem 'rails-i18n', '~> 6.0.0' # For 4.0.x
 
 # https://github.com/plataformatec/simple_form
 gem 'simple_form', '~> 5.0'
@@ -68,7 +68,7 @@ group :development do
   # https://github.com/deivid-rodriguez/byebug
   gem 'byebug', '~> 11.1'
 
-  gem 'web-console', '~> 3.7'
+  gem 'web-console', '~> 4.0'
 
   # This gem was added to address an error message provided by ActiveSupport
   # 5.1.6.
