@@ -62,7 +62,9 @@ module.exports = (env, options) => ({
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: 'app.css' }),
-    new CopyWebpackPlugin([{ from: 'app/assets/images', to: '' }]),
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'app/assets/images', to: '' }],
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
