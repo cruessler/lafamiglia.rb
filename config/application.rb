@@ -17,7 +17,5 @@ module Lafamiglia
     # the framework and any gems in your application.
 
     config.autoload_paths << Rails.root.join('lib')
-
-    config.assets.paths << Rails.root.join('node_modules')
   end
 end
