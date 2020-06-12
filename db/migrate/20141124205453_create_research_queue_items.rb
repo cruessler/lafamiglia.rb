@@ -1,4 +1,4 @@
-class CreateResearchQueueItems < ActiveRecord::Migration
+class CreateResearchQueueItems < ActiveRecord::Migration[4.2]
   def change
     create_table :research_queue_items do |t|
       t.integer :villa_id

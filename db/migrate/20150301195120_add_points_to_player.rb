@@ -1,4 +1,4 @@
-class AddPointsToPlayer < ActiveRecord::Migration
+class AddPointsToPlayer < ActiveRecord::Migration[4.2]
   def change
     change_table :players do |t|
       t.integer :points

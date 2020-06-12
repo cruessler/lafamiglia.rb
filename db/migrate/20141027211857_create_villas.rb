@@ -1,4 +1,4 @@
-class CreateVillas < ActiveRecord::Migration
+class CreateVillas < ActiveRecord::Migration[4.2]
   def change
     create_table :villas do |t|
       t.integer :x

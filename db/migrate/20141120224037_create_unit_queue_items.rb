@@ -1,4 +1,4 @@
-class CreateUnitQueueItems < ActiveRecord::Migration
+class CreateUnitQueueItems < ActiveRecord::Migration[4.2]
   def change
     create_table :unit_queue_items do |t|
       t.integer :villa_id

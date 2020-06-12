@@ -1,4 +1,4 @@
-class AddCounterCachesToPlayer < ActiveRecord::Migration
+class AddCounterCachesToPlayer < ActiveRecord::Migration[4.2]
   def change
     change_table :players do |t|
       t.integer :unread_messages_count

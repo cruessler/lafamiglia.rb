@@ -1,4 +1,4 @@
-class RenameColumnsOfVilla < ActiveRecord::Migration
+class RenameColumnsOfVilla < ActiveRecord::Migration[4.2]
   def change
     change_table :villas do |t|
       t.rename :pizzas, :resource_1

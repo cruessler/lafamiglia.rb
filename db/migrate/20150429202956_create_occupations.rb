@@ -1,4 +1,4 @@
-class CreateOccupations < ActiveRecord::Migration
+class CreateOccupations < ActiveRecord::Migration[4.2]
   def change
     create_table :occupations do |t|
       t.datetime :succeeds_at

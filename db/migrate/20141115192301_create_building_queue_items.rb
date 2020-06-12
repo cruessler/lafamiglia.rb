@@ -1,4 +1,4 @@
-class CreateBuildingQueueItems < ActiveRecord::Migration
+class CreateBuildingQueueItems < ActiveRecord::Migration[4.2]
   def change
     create_table :building_queue_items do |t|
       t.integer :villa_id

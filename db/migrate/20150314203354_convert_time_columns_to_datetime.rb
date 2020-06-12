@@ -1,4 +1,4 @@
-class ConvertTimeColumnsToDatetime < ActiveRecord::Migration
+class ConvertTimeColumnsToDatetime < ActiveRecord::Migration[4.2]
   def change
     change_table :building_queue_items do |t|
       t.remove :completion_time

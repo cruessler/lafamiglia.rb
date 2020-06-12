@@ -1,4 +1,4 @@
-class AddResourcesToVilla < ActiveRecord::Migration
+class AddResourcesToVilla < ActiveRecord::Migration[4.2]
   def change
     change_table(:villas) do |t|
       t.float :pizzas
