@@ -6,7 +6,6 @@ class CreateBuildingQueueItems < ActiveRecord::Migration[4.2]
       t.integer :completion_time
 
       t.index :villa_id
-      t.integer :completion_time
 
       t.timestamps
     end
