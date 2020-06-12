@@ -1,0 +1,86 @@
+on: [push]
+name: build
+jobs:
+  build:
+    # PostgreSQL setup according to [postgres-setup].
+    #
+    # [postgres-setup]: https://help.github.com/en/actions/configuring-and-managing-workflows/creating-postgresql-service-containers
+    runs-on: ubuntu-18.04
+
+    services:
+      postgres:
+        image: postgres
+
+        env:
+          POSTGRES_USER: lafamiglia_test
+          POSTGRES_PASSWORD: lafamiglia_test
+          # We prefer to explicitly set `POSTGRES_DB`.
+          #
+          # “If it is not specified, then the value of POSTGRES_USER will be
+          # used.”
+          #
+          # https://hub.docker.com/_/postgres
+          POSTGRES_DB: lafamiglia_test
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+        ports:
+          - 5432:5432
+
+    strategy:
+      matrix:
+        ruby: [ 2.6, 2.7 ]
+        node: [ 10.x, 12.x ]
+
+    name: Build and test [Ruby ${{ matrix.ruby }}, Node.js ${{ matrix.node }}]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: Set up Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Copy test configuration
+        run: |
+          cp config/secrets.ci.yml config/secrets.yml
+          cp config/database.ci.yml config/database.yml
+          cp config/initializers/devise.rb.ci config/initializers/devise.rb
+          cp config/initializers/la_famiglia.rb.ci config/initializers/la_famiglia.rb
+
+      - name: Install dependencies
+        env:
+          RAILS_ENV: test
+        run: |
+          sudo apt-get -yqq install libpq-dev
+          bundle install --jobs 4 --retry 3
+          npm ci
+
+      - name: Run migrations
+        env:
+          RAILS_ENV: test
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+
+      - name: Run tests
+        run: |
+          bundle exec rails test
+          npm test
+
+      - name: Build assets
+        run: |
+          npm run build
+
+      - name: Check formatting
+        run: |
+          npx prettier --check "app/assets/**/*.{js,jsx,scss}" "*.js"

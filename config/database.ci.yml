@@ -1,0 +1,6 @@
+test:
+  adapter: postgresql
+  database: lafamiglia_test
+  user: lafamiglia_test
+  password: lafamiglia_test
+  host: localhost
