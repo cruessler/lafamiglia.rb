@@ -59,7 +59,7 @@ GEM
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
     bcrypt (3.1.13)
-    benchmark-ips (2.8.2)
+    benchmark-ips (2.8.3)
     bindex (0.8.1)
     bootsnap (1.4.8)
       msgpack (~> 1.0)
@@ -221,7 +221,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  benchmark-ips (~> 2.8.2)
+  benchmark-ips (~> 2.8.3)
   bootsnap (>= 1.1.0)
   byebug (~> 11.1)
   capistrano-rails (~> 1.6.1)
