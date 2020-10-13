@@ -37,7 +37,7 @@
     "terser-webpack-plugin": "^4.2.2",
     "typeahead.js": "^0.11.1",
     "typeahead.js-bootstrap-css": "^1.2.1",
-    "webpack": "^4.44.1",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   },
   "jest": {
