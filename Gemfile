@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 6.0', '< 6.1'
+gem 'rails', '>= 6.1', '< 6.2'
 
 # Rails 5.0 has removed `assigns` in controller tests and extracted the
 # functionality to a gem.
