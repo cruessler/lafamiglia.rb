@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // https://github.com/twitter/typeahead.js
 import Typeahead from 'typeahead.js';
 
@@ -12,8 +12,6 @@ const defaultFetchSuggestions = async (query, setSuggestions) => {
 
 const PlayerSelector = (props) => {
   const { fetchSuggestions = defaultFetchSuggestions } = props;
-
-  const inputRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
