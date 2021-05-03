@@ -37,7 +37,7 @@
     "typeahead.js": "^0.11.1",
     "typeahead.js-bootstrap-css": "^1.2.1",
     "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^4.6.0"
   },
   "jest": {
     "setupFiles": [
