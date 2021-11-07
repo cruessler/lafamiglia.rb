@@ -62,7 +62,7 @@ gem 'consul', '~> 1.0.3'
 gem 'kaminari', '~> 1.2'
 
 # https://github.com/evanphx/benchmark-ips
-gem 'benchmark-ips', '~> 2.9.1'
+gem 'benchmark-ips', '~> 2.9.2'
 
 group :development do
   # https://github.com/deivid-rodriguez/byebug
