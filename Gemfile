@@ -68,7 +68,7 @@ group :development do
   # https://github.com/deivid-rodriguez/byebug
   gem 'byebug', '~> 11.1'
 
-  gem 'web-console', '~> 4.1'
+  gem 'web-console', '~> 4.2'
 
   # This gem was added to address an error message provided by ActiveSupport
   # 5.1.6.
