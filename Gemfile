@@ -56,7 +56,7 @@ gem 'responders', '~> 3.0'
 
 # https://github.com/makandra/consul
 # Used for authorization and access control
-gem 'consul', '~> 1.0.3'
+gem 'consul', '~> 1.1.0'
 
 # https://github.com/amatsuda/kaminari
 gem 'kaminari', '~> 1.2'
