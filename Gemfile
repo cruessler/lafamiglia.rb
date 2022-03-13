@@ -45,7 +45,7 @@ end
 gem 'thin'
 
 # https://github.com/svenfuchs/rails-i18n
-gem 'rails-i18n', '~> 6.0.0'
+gem 'rails-i18n', '~> 7.0.3'
 
 # https://github.com/plataformatec/simple_form
 gem 'simple_form', '~> 5.1'
